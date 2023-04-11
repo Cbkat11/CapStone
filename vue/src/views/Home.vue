@@ -2,18 +2,20 @@
   <div class="home">
     <navigation/>
     <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
+    <restaurant-list/>
   </div>
 </template>
 
 <script>
 
 import Navigation from "../components/Navigation.vue"
+import RestaurantList from "../components/RestaurantList.vue"
 
 export default {
   name: "home",
   components: {
-    Navigation
+    Navigation,
+    RestaurantList
   }
 };
 </script>
