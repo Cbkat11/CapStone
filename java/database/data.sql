@@ -13,6 +13,6 @@ VALUES ('Il Rione', 'pizza', '1303 W 65th St, Cleveland, OH 44102', '4:00PM-10:0
 ('Vaccaros Trattoria', 'italian', '1000 Ghent Rd, Akron, OH 44333', '4:00PM-9:00PM', '(330) 666-6158', 4.5, 'https://images.squarespace-cdn.com/content/v1/5ced88f707e45200015bc757/1562940757034-P3AUDKRCPU85DZ0ZP3AA/Vaccaro-Logo-1957-BLKjpg.jpg', true, false),
 ('Cilantro Thai & Sushi Restaurant', 'thai', '326 S Main St #1204, Akron, OH 44308', '11:00AM-2:30PM, 5:00PM-9:00PM', '(330) 434-2876', 4.5, 'https://cilantrothai.com/wp-content/uploads/2020/07/Cilantro-Logo-scaled.jpg', true, true),
 ('El Rancho', 'mexican', '1666 W Exchange St, Akron, OH 44313', '11:00AM-10:00PM', '(330) 864-3300', 4.2, 'https://elranchoinc.com/wp-content/uploads/2019/03/logo-copy.png', true, false),
-('Irie Jamaican Kitchen', 'jamaican', '837 W Market St, Akron, OH 44303', '11:00AM-9:00PM', '(330) 333-9020', 4.2, 'https://static.wixstatic.com/media/096fd0_e6aea8ebb07b4c7f94f2eb542d1b47d1~mv2.png/v1/fit/w_2500,h_1330,al_c/096fd0_e6aea8ebb07b4c7f94f2eb542d1b47d1~mv2.png', true, true)
+('Irie Jamaican Kitchen', 'jamaican', '837 W Market St, Akron, OH 44303', '11:00AM-9:00PM', '(330) 333-9020', 4.2, 'https://static.wixstatic.com/media/096fd0_e6aea8ebb07b4c7f94f2eb542d1b47d1~mv2.png/v1/fit/w_2500,h_1330,al_c/096fd0_e6aea8ebb07b4c7f94f2eb542d1b47d1~mv2.png', true, true);
 
 COMMIT TRANSACTION;
