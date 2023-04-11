@@ -6,7 +6,7 @@
         {{ registrationErrorMsg }}
       </div>
       <div class="form-input-group">
-        <label for="username">Username</label>
+        <label for="username">Email</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
       <div class="form-input-group">
@@ -45,6 +45,15 @@ export default {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+      } else if ((this.user.password.search[/a-z/i] < 1) || (this.user.password.search[/A-Z/i] < 1) || (this.user.password.search[/0-9/i] < 1)) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = "Password must contain at least one capital letter, one lowercase letter, and one number.";
+      } else if (this.user.password.length < 8) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = "Password must be at least 8 characters long.";
+      } else if (!(this.user.username.includes('@'))) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = "Must be a valid email address";
       } else {
         authService
           .register(this.user)
@@ -60,7 +69,7 @@ export default {
             const response = error.response;
             this.registrationErrors = true;
             if (response.status === 400) {
-              this.registrationErrorMsg = 'Bad Request: Validation Errors';
+              this.registrationErrorMsg = 'This email is already registered';
             }
           });
       }
