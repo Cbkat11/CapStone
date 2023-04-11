@@ -6,10 +6,10 @@
             <input type="text" v-model="locationFilter">
             <input type="text" v-model="typeFilter">
         </div>
-        <div>
+        <div v-if="!($store.state.token)">
             <router-link to="/login">Login</router-link>
         </div>
-        <div >
+        <div v-else>
             <router-link to="/logout">Logout</router-link> <!-- Also need addEvent -->
         </div>
     </div>
