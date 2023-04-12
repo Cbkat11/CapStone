@@ -2,8 +2,8 @@
     <div class="navigation">
         <!-- <img src="./assets/Amurrica.jpg"> -->
         <h1>Restaurant Tinder</h1>
-            <input type="text" v-model="locationFilter" placeholder="City or Zip">
-            <input type="text" v-model="typeFilter" placeholder="Cuisine">
+            <input type="text" v-on:keyup="updateLocationFilter()" v-model="location" placeholder="City or Zip">
+            <input type="text" v-on:keyup="updateTypeFilter()" v-model="type" placeholder="Cuisine">
         <div v-if="!($store.state.token)">
             <router-link to="/login">Login</router-link>
         </div>
@@ -20,8 +20,16 @@ export default {
   name: "navigation",
   data() {
       return {
-        locationFilter: '',
-        typeFilter: ''
+          location: '',
+          type: ''
+      }
+  },
+  methods: {
+      updateLocationFilter() {
+          this.$store.commit("UPDATE_LOCATION", this.location);
+      },
+      updateTypeFilter() {
+          this.$store.commit("UPDATE_TYPE", this.type);
       }
   }
 };

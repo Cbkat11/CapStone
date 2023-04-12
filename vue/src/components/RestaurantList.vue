@@ -2,23 +2,21 @@
   <div class="container">
     <h2>Restaurants</h2>
     <div class="restaurants">
-      <div
-        class="restaurant"
-        v-for="restaurant in $store.state.restaurants"
-        v-bind:key="restaurant.id"
-        v-on:click="viewRestaurantDetails(restaurant.id)"
-      >
-        <div class="header">
-          <h3>{{ restaurant.name }}</h3>
-          <img :src="restaurant.imgUrl" class="avatar" />
-        </div>
-        <div class="footer">
-          <span class="address">{{ restaurant.address }}</span>
-          <span class="type">{{ restaurant.type }}</span>
-          <span class="hours">{{
-            openOrClosed(restaurant) ? "open" : "closed"
-          }}</span>
-        </div>
+        <div class="restaurant" 
+            v-for="restaurant in filterRestaurants()"
+            v-bind:key="restaurant.id"
+            v-on:click="viewRestaurantDetails(restaurant.id)">
+            <div class="header">
+                <h3>{{ restaurant.name }}</h3>
+                <img :src="restaurant.imgUrl" class="avatar" />
+            </div>
+          <div class="footer">
+            <span class="address">{{ restaurant.address }}</span>
+            <span class="type">{{ restaurant.type }}</span>
+            <span class="hours">{{
+              openOrClosed(restaurant) ? "open" : "closed"
+            }}</span>
+          </div>
       </div>
     </div>
   </div>
@@ -38,17 +36,36 @@ export default {
       isOpen: false,
     };
   },
-  computed: {
-    restaurants() {
-      return this.$store.state.restaurants;
-    },
-  },
   methods: {
     retrieveRestaurants() {
-      return restaurantService.getRestaurants().then((response) => {
+       restaurantService.getRestaurants().then((response) => {
         this.$store.commit("SET_RESTAURANTS", response.data);
       });
     },
+    filterRestaurants() {
+      
+      const locationFilter = this.$store.state.locationFilter;
+      const typeFilter = this.$store.state.typeFilter;
+      let restaurants = this.$store.state.restaurants;
+      restaurants = restaurants.filter((restaurant) => {
+        if (locationFilter == "") {
+          return true;
+        } else if (restaurant.address.includes(locationFilter)) {
+          return restaurant;
+        }
+      });
+      restaurants = restaurants.filter((restaurant) => {
+        if (typeFilter == "") {
+          return true;
+        } else if (restaurant.type.includes(typeFilter)) {
+          return restaurant;
+        }
+      });
+      return restaurants;
+    },
+    // viewRestaurantDetails(restaurantID) {
+    //     this.$router.push(`/restaurant/${restaurantID}`);
+    // }
     openOrClosed(restaurant) {
       const now = new Date();
       const currentHours = now.getHours();
@@ -64,7 +81,7 @@ export default {
 
         return `${hour24}:${minute}`;
       });
-      
+
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
