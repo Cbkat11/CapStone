@@ -16,6 +16,9 @@
             <span class="hours">{{
               openOrClosed(restaurant) ? "open" : "closed"
             }}</span>
+            <span v-if="restaurant.takeout">takeout</span>
+            <span v-if="restaurant.delivery">delivery</span>
+            <span v-if="!(restaurant.phone_number == '')"><button>Call to Order</button></span>
           </div>
       </div>
     </div>
@@ -84,7 +87,7 @@ export default {
 
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
-    },
+    }
   },
 };
 </script>
