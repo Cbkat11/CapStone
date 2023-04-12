@@ -2,24 +2,36 @@
   <div class="container">
     <h2>Restaurants</h2>
     <div class="restaurants">
-        <div class="restaurant" 
-            v-for="restaurant in filterRestaurants()"
-            v-bind:key="restaurant.id"
-            v-on:click="viewRestaurantDetails(restaurant.id)">
-            <div class="header">
-                <h3>{{ restaurant.name }}</h3>
-                <img :src="restaurant.imgUrl" class="avatar" />
-            </div>
-          <div class="footer">
-            <span class="address">{{ restaurant.address }}</span>
-            <span class="type">{{ restaurant.type }}</span>
-            <span class="hours">{{
-              openOrClosed(restaurant) ? "open" : "closed"
-            }}</span>
-            <span v-if="restaurant.takeout">takeout</span>
-            <span v-if="restaurant.delivery">delivery</span>
-            <span v-if="!(restaurant.phone_number == '')"><button>Call to Order</button></span>
-          </div>
+      <div
+        class="restaurant"
+        v-for="restaurant in filterRestaurants()"
+        v-bind:key="restaurant.id"
+        v-on:click="viewRestaurantDetails(restaurant.id)"
+      >
+        <div class="header">
+          <h3>{{ restaurant.name }}</h3>
+          <span class="type">{{ restaurant.type }}</span>
+          <img :src="restaurant.imgUrl" class="avatar" />
+        </div>
+        <div class="footer">
+          <span class="address">{{ restaurant.address }}</span>
+          <span class="hours">{{ restaurant.hours }}</span>
+          <span class="open?">{{
+            openOrClosed(restaurant) ? "open" : "closed"
+          }}</span>
+          <span v-if="restaurant.takeout">takeout</span>
+          <span v-if="restaurant.delivery">delivery</span>
+          <span v-if="(restaurant.phoneNumber)">
+            <button id="myButton" v-on:click="openPop(restaurant)">Call to Order</button>
+            <!-- <div id="myPopup" class="popup" v-if="show">
+              <div class="popup-content">
+                <h1>GeekforGeeks !</h1>
+                <p>This is a popup box!</p>
+                <button id="closePopup" :click="closePop">Close</button>
+              </div> -->
+            <!-- </div> -->
+            </span>
+        </div>
       </div>
     </div>
   </div>
@@ -37,16 +49,16 @@ export default {
     return {
       hours: null,
       isOpen: false,
+      show: false,
     };
   },
   methods: {
     retrieveRestaurants() {
-       restaurantService.getRestaurants().then((response) => {
+      restaurantService.getRestaurants().then((response) => {
         this.$store.commit("SET_RESTAURANTS", response.data);
       });
     },
     filterRestaurants() {
-      
       const locationFilter = this.$store.state.locationFilter;
       const typeFilter = this.$store.state.typeFilter;
       let restaurants = this.$store.state.restaurants;
@@ -87,7 +99,14 @@ export default {
 
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
-    }
+    },
+    openPop(restaurant) {
+      this.show = true;
+      alert("Phone Number: " + restaurant.phoneNumber)
+    },
+    // closePop() {
+    //   this.show = false;
+    // },
   },
 };
 </script>
@@ -123,4 +142,30 @@ export default {
   border-radius: 20px;
   font-size: 0.7rem;
 }
+/* .popup {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+}
+.popup-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888888;
+  width: 30%;
+  font-weight: bolder;
+}
+.popup-content button {
+  display: block;
+  margin: 0 auto;
+}
+.show {
+  display: block;
+} */
 </style>
