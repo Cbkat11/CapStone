@@ -42,7 +42,6 @@ export default new Vuex.Store({
       axios.defaults.headers.common = {};
     },
     SET_RESTAURANTS(state, data) {
-      alert("got to set")
       state.restaurants = data;
     },
     UPDATE_LOCATION(state, filter) {
