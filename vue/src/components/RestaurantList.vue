@@ -2,47 +2,74 @@
   <div class="container">
     <h2>Restaurants</h2>
     <div class="restaurants">
-        <div class="restaurant" 
-            v-for="restaurant in $store.state.restaurants"
-            v-bind:key="restaurant.id"
-            v-on:click="viewRestaurantDetails(restaurant.id)">
-            <div class="header">
-                <h3>{{ restaurant.name }}</h3>
-                <img :src="restaurant.imgUrl" class="avatar" />
-            </div>
-            <div class="footer">
-                <span class="address">{{ restaurant.address }}</span>
-                <span class="type">{{ restaurant.type}}</span>
-                <span class="hours">{{ restaurant.hours}}</span>
-            </div>
-
+      <div
+        class="restaurant"
+        v-for="restaurant in $store.state.restaurants"
+        v-bind:key="restaurant.id"
+        v-on:click="viewRestaurantDetails(restaurant.id)"
+      >
+        <div class="header">
+          <h3>{{ restaurant.name }}</h3>
+          <img :src="restaurant.imgUrl" class="avatar" />
         </div>
-
+        <div class="footer">
+          <span class="address">{{ restaurant.address }}</span>
+          <span class="type">{{ restaurant.type }}</span>
+          <span class="hours">{{
+            openOrClosed(restaurant) ? "open" : "closed"
+          }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import restaurantService from '../services/RestaurantService'
+import restaurantService from "../services/RestaurantService";
 
 export default {
-    name: 'restaurant-list',
-    created() {
-        this.retrieveRestaurants();
+  name: "restaurant-list",
+  created() {
+    this.retrieveRestaurants();
+  },
+  data() {
+    return {
+      hours: null,
+      isOpen: false,
+    };
+  },
+  computed: {
+    restaurants() {
+      return this.$store.state.restaurants;
     },
-    methods: {
-        retrieveRestaurants() {
-            restaurantService.getRestaurants().then(response => {
-                this.$store.commit("SET_RESTAURANTS", response.data)
-                alert("got to retriveRestaurants")
-            })
-        },
-        // viewRestaurantDetails(restaurantID) {
-        //     this.$router.push(`/restaurant/${restaurantID}`);
-        // }
-    }
+  },
+  methods: {
+    retrieveRestaurants() {
+      return restaurantService.getRestaurants().then((response) => {
+        this.$store.commit("SET_RESTAURANTS", response.data);
+      });
+    },
+    openOrClosed(restaurant) {
+      const now = new Date();
+      const currentHours = now.getHours();
+      const currentMinutes = now.getMinutes();
+      const currentTime = `${currentHours}:${currentMinutes}`;
 
-}
+      const [startTime, endTime] = restaurant.hours.split("-").map((time) => {
+        const [hours, minutes] = time.split(":");
+        const [timeOfDay] = minutes.slice(-2);
+        const hour = parseInt(hours) % 12;
+        const minute = minutes.slice(0, 2).padStart(2, "0"); // minutes always two digits
+        const hour24 = timeOfDay === "P" ? hour + 12 : hour;
+
+        return `${hour24}:${minute}`;
+      });
+      
+      this.isOpen = currentTime >= startTime && currentTime <= endTime;
+      return this.isOpen;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -76,5 +103,4 @@ export default {
   border-radius: 20px;
   font-size: 0.7rem;
 }
-
 </style>
