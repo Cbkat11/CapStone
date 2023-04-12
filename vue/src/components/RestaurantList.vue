@@ -10,20 +10,13 @@
                 <h3>{{ restaurant.name }}</h3>
                 <img :src="restaurant.imgUrl" class="avatar" />
             </div>
-            <div class="footer">
-                <span class="address">{{ restaurant.address }}</span>
-                <span class="type">{{ restaurant.type}}</span>
-                <span class="hours">{{ restaurant.hours}}</span>
-            </div>
-
-        </div>
-        <div class="footer">
-          <span class="address">{{ restaurant.address }}</span>
-          <span class="type">{{ restaurant.type }}</span>
-          <span class="hours">{{
-            openOrClosed(restaurant) ? "open" : "closed"
-          }}</span>
-        </div>
+          <div class="footer">
+            <span class="address">{{ restaurant.address }}</span>
+            <span class="type">{{ restaurant.type }}</span>
+            <span class="hours">{{
+              openOrClosed(restaurant) ? "open" : "closed"
+            }}</span>
+          </div>
       </div>
     </div>
   </div>
@@ -43,18 +36,14 @@ export default {
       isOpen: false,
     };
   },
-  computed: {
-    restaurants() {
-      return this.$store.state.restaurants;
-    },
-  },
   methods: {
     retrieveRestaurants() {
-      return restaurantService.getRestaurants().then((response) => {
+       restaurantService.getRestaurants().then((response) => {
         this.$store.commit("SET_RESTAURANTS", response.data);
       });
     },
     filterRestaurants() {
+      
       const locationFilter = this.$store.state.locationFilter;
       const typeFilter = this.$store.state.typeFilter;
       let restaurants = this.$store.state.restaurants;
