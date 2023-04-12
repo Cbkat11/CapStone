@@ -3,7 +3,7 @@
     <h2>Restaurants</h2>
     <div class="restaurants">
         <div class="restaurant" 
-            v-for="restaurant in $store.state.restaurants"
+            v-for="restaurant in filterRestaurants()"
             v-bind:key="restaurant.id"
             v-on:click="viewRestaurantDetails(restaurant.id)">
             <div class="header">
@@ -34,9 +34,28 @@ export default {
         retrieveRestaurants() {
             restaurantService.getRestaurants().then(response => {
                 this.$store.commit("SET_RESTAURANTS", response.data)
-                alert("got to retriveRestaurants")
             })
         },
+        filterRestaurants() {
+          const locationFilter = this.$store.state.locationFilter;
+          const typeFilter = this.$store.state.typeFilter;
+          let restaurants = this.$store.state.restaurants;
+          restaurants = restaurants.filter(restaurant => {
+            if (locationFilter == '') {
+              return true;
+            } else if (restaurant.address.includes(locationFilter)) {
+            return restaurant;
+            }
+          })
+          restaurants = restaurants.filter(restaurant => {
+            if (typeFilter == '') {
+              return true;
+            } else if (restaurant.type.includes(typeFilter)) {
+              return restaurant;
+            }
+          })
+          return restaurants;
+        }
         // viewRestaurantDetails(restaurantID) {
         //     this.$router.push(`/restaurant/${restaurantID}`);
         // }
