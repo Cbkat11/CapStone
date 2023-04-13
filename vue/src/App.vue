@@ -3,3 +3,8 @@
     <router-view />
   </div>
 </template>
+<style scoped>
+div{
+  background:linear-gradient(red,yellow);
+}
+</style>
