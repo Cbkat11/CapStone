@@ -9,7 +9,11 @@
         </div>
         <div v-else>
             <h3>Hi, {{$store.state.user.username}}!</h3>
-            <router-link to="/logout">Logout</router-link> <!-- Also need addEvent -->
+            <router-link v-if="!(event)" to="/event">Create Event</router-link>
+            <br/>
+            <router-link v-if="(event)" to="/">Back to Home</router-link>
+            <br/>
+            <router-link to="/logout">Logout</router-link>
         </div>
     </div>
 </template>
@@ -18,6 +22,7 @@
 
 export default {
   name: "navigation",
+  props: ['event'],
   data() {
       return {
           location: '',
@@ -43,10 +48,20 @@ export default {
     
 }
 h1 {
+   
     flex-basis: 40%;
     justify-content: center;
     align-content: center;
 
 }
+ 
+
+
+input[type="text"]::placeholder {
+    border: 1px solid red;
+}
 
 </style>
+
+
+

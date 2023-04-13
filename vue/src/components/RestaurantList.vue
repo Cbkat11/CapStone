@@ -8,7 +8,7 @@
         v-bind:key="restaurant.id"
         v-on:click="viewRestaurantDetails(restaurant.id)"
       >
-        <div class="header">
+        <div class="header" >
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
@@ -21,8 +21,10 @@
           }}</span>
           <span v-if="restaurant.takeout">takeout</span>
           <span v-if="restaurant.delivery">delivery</span>
-          <span v-if="(restaurant.phoneNumber)">
-            <button id="myButton" v-on:click="openPop(restaurant)">Call to Order</button>
+          <span v-if="restaurant.phoneNumber">
+            <button id="myButton" v-on:click="openPop(restaurant)">
+              Call to Order
+            </button>
             <!-- <div id="myPopup" class="popup" v-if="show">
               <div class="popup-content">
                 <h1>GeekforGeeks !</h1>
@@ -30,7 +32,7 @@
                 <button id="closePopup" :click="closePop">Close</button>
               </div> -->
             <!-- </div> -->
-            </span>
+          </span>
         </div>
       </div>
     </div>
@@ -42,6 +44,7 @@ import restaurantService from "../services/RestaurantService";
 
 export default {
   name: "restaurant-list",
+  props: ['event'],
   created() {
     this.retrieveRestaurants();
   },
@@ -50,6 +53,7 @@ export default {
       hours: null,
       isOpen: false,
       show: false,
+      selected: 0
     };
   },
   methods: {
@@ -100,9 +104,24 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
+    selectRestaurant(click) {
+      if(this.event) {
+        if(click.target.classList.includes("selected")) {
+          click.target.classList.remove("selected");
+          this.selected -= 1;
+        } else {
+          if(this.selected == 5) {
+            alert("A max of five restaurants can be selected")
+          }else {
+            click.target.classList.add("selected");
+            this.selected += 1;
+          }
+        }
+      }
+    },
     openPop(restaurant) {
       this.show = true;
-      alert("Phone Number: " + restaurant.phoneNumber)
+      alert("Phone Number: " + restaurant.phoneNumber);
     },
     // closePop() {
     //   this.show = false;
@@ -123,6 +142,8 @@ export default {
 .restaurant .header {
   display: flex;
   justify-content: space-between;
+  text-align: center;
+  text-decoration: underline;
 }
 .restaurant .header img {
   border-radius: 9999px;
@@ -146,6 +167,9 @@ export default {
 h2{
 text-decoration: underline;
 text-align: center;
+}
+.selected {
+  background-color: aqua;
 }
 /* .popup {
   position: fixed;

@@ -1,7 +1,8 @@
- <template>
-  <div class="home">
-    <navigation v-bind:event="false" />
-    <restaurant-list v-bind:event="false" />
+<template>
+  <div class="createEvent">
+    <navigation v-bind:event="true" />
+    <h2>Please Select up to Five Establishments for Ranking</h2>
+    <restaurant-list v-bind:event="true" />
   </div>
 </template>
 
@@ -17,8 +18,8 @@ export default {
     RestaurantList
   }
 };
-
 </script>
+
 <style scoped>
 h1{
   text-decoration: underline;
