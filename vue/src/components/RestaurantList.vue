@@ -18,10 +18,21 @@
             }}</span>
             <span v-if="restaurant.takeout">takeout</span>
             <span v-if="restaurant.delivery">delivery</span>
-            <span><button @click="() => TogglePopup('buttonTrigger')">☎ Contact</button></span>
-            <Popup v-if="popupTriggers.buttonTrigger" :TogglePopup="() => TogglePopup('buttonTrigger')">
-              <h2> My Button Popup </h2>
-            </Popup>
+            <span><button @click="TogglePopup('buttonTrigger')">☎ Contact</button></span>
+            <div v-if="restaurant.popupTrigger" :TogglePopup="() => restaurant.popupTrigger = true">
+              <div class="popup">
+                <!-- img not working -->
+               <!-- <img :src="restaurant.imgUrl" style="position: absolute; top: 10px; left: 10px;"/> -->
+                <h2 id="contact-header"> Contact {{ restaurant.name }}</h2> <br>
+              <p id="contact-info">
+                {{ restaurant.phoneNumber }} <br>
+                <a href="restaurant.website"> {{ restaurant.website }}</a> <br>
+                <a href="restaurant.reviews"> {{ restaurant.reviews }} </a> <br>
+                {{ restaurant.address }}
+              </p>
+              <button id="close-popup" @click="() => restaurant.popupTrigger = false">Close</button>
+              </div>
+            </div> <!-- this -->
           </div>
       </div>
     </div>
@@ -95,6 +106,9 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
+    returnName(restaurant) {
+      return restaurant.name;
+    }
   },
   setup () {
     const popupTriggers = ref({
@@ -126,13 +140,6 @@ export default {
         }
       }
     },
-    openPop(restaurant) {
-      this.show = true;
-      alert("Phone Number: " + restaurant.phoneNumber)
-    },
-    // closePop() {
-    //   this.show = false;
-    // },
 
 };
 </script>
@@ -170,6 +177,44 @@ export default {
 }
 .selected {
   background-color: aqua;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 40%;
+  background-color: rgb(255, 251, 252);
+  border: 3px solid rgb(48, 48, 48);
+  padding: 10px;
+  border-radius: 2%;
+}
+
+#contact-header {
+color: rgb(233, 0, 0);
+font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+font-size: 333%;
+font-weight: 900;
+text-align: center;
+text-decoration: underline;
+}
+
+#contact-info {
+color:rgb(0, 0, 0);
+font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+font-size: 150%;
+font-weight: 100;
+text-align: center;
+}
+
+#close-popup {
+  border-radius: 0.25rem;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 /* .popup {
   position: fixed;

@@ -14,10 +14,13 @@ public class Restaurant {
     private String imgUrl;
     private boolean takeout;
     private boolean delivery;
+    private String website;
+    private String reviews;
+    private boolean popupTrigger;
 
     public Restaurant() { }
 
-    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery){
+    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, String website, String reviews, boolean popupTrigger){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -28,6 +31,9 @@ public class Restaurant {
         this.imgUrl = imgUrl;
         this.takeout = takeout;
         this.delivery = delivery;
+        this.website = website;
+        this.reviews = reviews;
+        this.popupTrigger = popupTrigger;
 
     }
     public int getId(){
@@ -109,4 +115,16 @@ public class Restaurant {
     public void setDelivery(boolean delivery) {
         this.delivery=delivery;
     }
+
+    public String getWebsite() { return website; }
+
+    public void setWebsite(String website) { this.website=website; }
+
+    public String getReviews() { return reviews; }
+
+    public void setReviews(String reviews) { this.reviews=reviews; }
+
+    public boolean getPopupTrigger() { return popupTrigger; }
+
+    public void setPopupTrigger(boolean popupTrigger) { this.popupTrigger=popupTrigger; }
 }
