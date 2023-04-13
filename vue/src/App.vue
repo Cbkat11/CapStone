@@ -5,6 +5,6 @@
 </template>
 <style scoped>
 div{
-  background: linear-gradient(white, red);
+  background:linear-gradient(red,yellow);
 }
 </style>
