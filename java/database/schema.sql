@@ -20,6 +20,8 @@ CREATE TABLE restaurant (
     img_url varchar(600),
     takeout boolean,
     delivery boolean,
+    website varchar(600),
+    reviews varchar(600),
     CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id)
 );
 
