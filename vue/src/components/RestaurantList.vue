@@ -35,6 +35,7 @@ import Popup from './Popup.vue'
 
 export default {
   name: "restaurant-list",
+  props: ['event'],
   created() {
     this.retrieveRestaurants();
   },
@@ -42,16 +43,17 @@ export default {
     return {
       hours: null,
       isOpen: false,
+      show: false,
+      selected: 0
     };
   },
   methods: {
     retrieveRestaurants() {
-       restaurantService.getRestaurants().then((response) => {
+      restaurantService.getRestaurants().then((response) => {
         this.$store.commit("SET_RESTAURANTS", response.data);
       });
     },
     filterRestaurants() {
-      
       const locationFilter = this.$store.state.locationFilter;
       const typeFilter = this.$store.state.typeFilter;
       let restaurants = this.$store.state.restaurants;
@@ -109,6 +111,29 @@ export default {
       TogglePopup
     }
   },
+    selectRestaurant(click) {
+      if(this.event) {
+        if(click.target.classList.includes("selected")) {
+          click.target.classList.remove("selected");
+          this.selected -= 1;
+        } else {
+          if(this.selected == 5) {
+            alert("A max of five restaurants can be selected")
+          }else {
+            click.target.classList.add("selected");
+            this.selected += 1;
+          }
+        }
+      }
+    },
+    openPop(restaurant) {
+      this.show = true;
+      alert("Phone Number: " + restaurant.phoneNumber)
+    },
+    // closePop() {
+    //   this.show = false;
+    // },
+
 };
 </script>
 
@@ -143,4 +168,33 @@ export default {
   border-radius: 20px;
   font-size: 0.7rem;
 }
+.selected {
+  background-color: aqua;
+}
+/* .popup {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+}
+.popup-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888888;
+  width: 30%;
+  font-weight: bolder;
+}
+.popup-content button {
+  display: block;
+  margin: 0 auto;
+}
+.show {
+  display: block;
+} */
 </style>
