@@ -32,11 +32,13 @@ export default {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    
 }
 h1 {
     flex-basis: 40%;
     justify-content: center;
     align-content: center;
+
 }
 
 </style>

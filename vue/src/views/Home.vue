@@ -1,7 +1,7 @@
-<template>
+ <template>
   <div class="home">
     <navigation/>
-    <h1>Home</h1>
+    
     <restaurant-list/>
   </div>
 </template>
@@ -18,4 +18,6 @@ export default {
     RestaurantList
   }
 };
+
 </script>
+ 

@@ -3,10 +3,12 @@
     <h2>Restaurants</h2>
     <div class="restaurants">
         <div class="restaurant" 
+        
             v-for="restaurant in $store.state.restaurants"
             v-bind:key="restaurant.id"
             v-on:click="viewRestaurantDetails(restaurant.id)">
             <div class="header">
+              
                 <h3>{{ restaurant.name }}</h3>
                 <img :src="restaurant.imgUrl" class="avatar" />
             </div>
@@ -47,7 +49,6 @@ export default {
 
 <style scoped>
 .restaurant {
-  background: #fff;
   border-radius: 0.25rem;
   padding: 10px;
   border: 1px;
@@ -75,6 +76,11 @@ export default {
   padding: 8px;
   border-radius: 20px;
   font-size: 0.7rem;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(43,121,9,0.6755077030812324) 8%, rgba(0,212,255,1) 100%);
 }
-
+h2{
+text-decoration: underline;
+text-align: center;
+}
 </style>
