@@ -8,7 +8,7 @@
         v-bind:key="restaurant.id"
         v-on:click="viewRestaurantDetails(restaurant.id)"
       >
-        <div class="header">
+        <div class="header" >
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
@@ -43,6 +43,7 @@ import restaurantService from "../services/RestaurantService";
 
 export default {
   name: "restaurant-list",
+  props: ['event'],
   created() {
     this.retrieveRestaurants();
   },
@@ -51,6 +52,7 @@ export default {
       hours: null,
       isOpen: false,
       show: false,
+      selected: 0
     };
   },
   methods: {
@@ -101,6 +103,21 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
+    selectRestaurant(click) {
+      if(this.event) {
+        if(click.target.classList.includes("selected")) {
+          click.target.classList.remove("selected");
+          this.selected -= 1;
+        } else {
+          if(this.selected == 5) {
+            alert("A max of five restaurants can be selected")
+          }else {
+            click.target.classList.add("selected");
+            this.selected += 1;
+          }
+        }
+      }
+    },
     openPop(restaurant) {
       this.show = true;
       alert("Phone Number: " + restaurant.phoneNumber)
@@ -142,6 +159,9 @@ export default {
   padding: 8px;
   border-radius: 20px;
   font-size: 0.7rem;
+}
+.selected {
+  background-color: aqua;
 }
 /* .popup {
   position: fixed;
