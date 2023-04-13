@@ -146,7 +146,6 @@ export default {
 
 <style scoped>
 .restaurant {
-  background: #fff;
   border-radius: 0.25rem;
   padding: 10px;
   border: 1px;
@@ -157,6 +156,8 @@ export default {
 .restaurant .header {
   display: flex;
   justify-content: space-between;
+  text-align: center;
+  text-decoration: underline;
 }
 .restaurant .header img {
   border-radius: 9999px;
