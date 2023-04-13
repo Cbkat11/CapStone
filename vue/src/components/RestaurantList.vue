@@ -21,8 +21,10 @@
           }}</span>
           <span v-if="restaurant.takeout">takeout</span>
           <span v-if="restaurant.delivery">delivery</span>
-          <span v-if="(restaurant.phoneNumber)">
-            <button id="myButton" v-on:click="openPop(restaurant)">Call to Order</button>
+          <span v-if="restaurant.phoneNumber">
+            <button id="myButton" v-on:click="openPop(restaurant)">
+              Call to Order
+            </button>
             <!-- <div id="myPopup" class="popup" v-if="show">
               <div class="popup-content">
                 <h1>GeekforGeeks !</h1>
@@ -30,7 +32,7 @@
                 <button id="closePopup" :click="closePop">Close</button>
               </div> -->
             <!-- </div> -->
-            </span>
+          </span>
         </div>
       </div>
     </div>
@@ -119,7 +121,7 @@ export default {
     },
     openPop(restaurant) {
       this.show = true;
-      alert("Phone Number: " + restaurant.phoneNumber)
+      alert("Phone Number: " + restaurant.phoneNumber);
     },
     // closePop() {
     //   this.show = false;
@@ -130,7 +132,6 @@ export default {
 
 <style scoped>
 .restaurant {
-  background: #fff;
   border-radius: 0.25rem;
   padding: 10px;
   border: 1px;
@@ -141,6 +142,8 @@ export default {
 .restaurant .header {
   display: flex;
   justify-content: space-between;
+  text-align: center;
+  text-decoration: underline;
 }
 .restaurant .header img {
   border-radius: 9999px;
