@@ -2,24 +2,6 @@
   <div class="container">
     <h2>Restaurants</h2>
     <div class="restaurants">
-<<<<<<< HEAD
-        <div class="restaurant" 
-        
-            v-for="restaurant in $store.state.restaurants"
-            v-bind:key="restaurant.id"
-            v-on:click="viewRestaurantDetails(restaurant.id)">
-            <div class="header">
-              
-                <h3>{{ restaurant.name }}</h3>
-                <img :src="restaurant.imgUrl" class="avatar" />
-            </div>
-            <div class="footer">
-                <span class="address">{{ restaurant.address }}</span>
-                <span class="type">{{ restaurant.type}}</span>
-                <span class="hours">{{ restaurant.hours}}</span>
-            </div>
-
-=======
       <div
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
@@ -30,7 +12,6 @@
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
->>>>>>> 9d0704b7a4f7d12455030e0269433794c90e664b
         </div>
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
@@ -166,8 +147,6 @@ h2{
 text-decoration: underline;
 text-align: center;
 }
-<<<<<<< HEAD
-=======
 /* .popup {
   position: fixed;
   z-index: 1;
@@ -194,5 +173,4 @@ text-align: center;
 .show {
   display: block;
 } */
->>>>>>> 9d0704b7a4f7d12455030e0269433794c90e664b
 </style>
