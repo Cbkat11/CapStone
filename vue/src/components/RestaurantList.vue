@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <h2>Restaurants</h2>
+
+  <h2>Restaurants</h2>
     <div class="restaurants">
         <div class="restaurant" 
             v-for="restaurant in $store.state.restaurants"
@@ -47,7 +48,7 @@ export default {
 
 <style scoped>
 .restaurant {
-  background: #fff;
+  
   border-radius: 0.25rem;
   padding: 10px;
   border: 1px;
@@ -58,6 +59,8 @@ export default {
 .restaurant .header {
   display: flex;
   justify-content: space-between;
+  text-align: center;
+ text-decoration: underline;
 }
 .restaurant .header img {
   border-radius: 9999px;
@@ -76,5 +79,8 @@ export default {
   border-radius: 20px;
   font-size: 0.7rem;
 }
-
+h2{
+  text-decoration: underline;
+  text-align: center;
+}
 </style>

@@ -34,9 +34,20 @@ export default {
     align-items: center;
 }
 h1 {
+   
     flex-basis: 40%;
     justify-content: center;
     align-content: center;
+
+}
+ 
+
+
+input[type="text"]::placeholder {
+    border: 1px solid red;
 }
 
 </style>
+
+
+
