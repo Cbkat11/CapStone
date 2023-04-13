@@ -20,13 +20,9 @@ export default {
 };
 
 </script>
-<<<<<<< HEAD
- 
-=======
 <style scoped>
 h1{
   text-decoration: underline;
   text-align: center;
 }
 </style>
->>>>>>> 9d0704b7a4f7d12455030e0269433794c90e664b
