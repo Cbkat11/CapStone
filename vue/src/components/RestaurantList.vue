@@ -4,7 +4,7 @@
     <div class="restaurants">
       <div
         class="restaurant"
-        v-for="restaurant in filterRestaurants()"
+        v-for="restaurant in filterRestaurants()" 
         v-bind:key="restaurant.id"
         v-on:click="viewRestaurantDetails(restaurant.id)"
       >
@@ -22,7 +22,8 @@
           <span v-if="restaurant.takeout">takeout</span>
           <span v-if="restaurant.delivery">delivery</span>
           <span v-if="(restaurant.phoneNumber)">
-            <button id="myButton" v-on:click="openPop(restaurant)">Call to Order</button>
+          <button id="myButton" v-on:click="openPop(restaurant)">Call to Order</button>
+          <span v-if="$store.state.token"><input type="checkbox"></span>
             <!-- <div id="myPopup" class="popup" v-if="show">
               <div class="popup-content">
                 <h1>GeekforGeeks !</h1>

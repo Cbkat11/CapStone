@@ -45,7 +45,7 @@ export default {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
-      } else if ((this.user.password.search[/a-z/i] < 1) || (this.user.password.search[/A-Z/i] < 1) || (this.user.password.search[/0-9/i] < 1)) {
+      } else if ((this.user.password.search[/a-z/i] < 0) || (this.user.password.search[/A-Z/i] < 0) || (this.user.password.search[/0-9/i] < 0)) {
         this.registrationErrors = true;
         this.registrationErrorMsg = "Password must contain at least one capital letter, one lowercase letter, and one number.";
       } else if (this.user.password.length < 8) {
