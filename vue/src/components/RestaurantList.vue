@@ -18,7 +18,10 @@
             }}</span>
             <span v-if="restaurant.takeout">takeout</span>
             <span v-if="restaurant.delivery">delivery</span>
-            <span v-if="!(restaurant.phone_number == '')"><button>Call to Order</button></span>
+            <span><button @click="() => TogglePopup('buttonTrigger')">☎ Contact</button></span>
+            <Popup v-if="popupTriggers.buttonTrigger" :TogglePopup="() => TogglePopup('buttonTrigger')">
+              <h2> My Button Popup </h2>
+            </Popup>
           </div>
       </div>
     </div>
@@ -26,7 +29,9 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import restaurantService from "../services/RestaurantService";
+import Popup from './Popup.vue'
 
 export default {
   name: "restaurant-list",
@@ -87,6 +92,21 @@ export default {
 
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
+    },
+  },
+  setup () {
+    const popupTriggers = ref({
+      buttonTrigger: false
+    });
+
+    const TogglePopup = (trigger) => {
+      popupTriggers.value[trigger] = !popupTriggers.value[trigger]
+    }
+
+    return {
+      Popup,
+      popupTriggers,
+      TogglePopup
     }
   },
 };
