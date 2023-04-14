@@ -9,13 +9,14 @@
       >
         <div class="header">
           <div class="addToCart">
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant.id)"
-          />
-          <label for="addToCart">Add to Cart</label>
+            <input
+              type="checkbox"
+              id="addToCart"
+              name="addToCart"
+              v-if="$store.state.token"
+              @click="selectRestaurant($event, restaurant.id)"
+            />
+            <label for="addToCart">Add to Cart</label>
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -114,19 +115,23 @@ export default {
     },
     selectRestaurant(event, restaurantID) {
       if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
-        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
+        event.target.parentElement.parentElement.parentElement.classList.remove(
+          "selected"
+        );
         this.selected -= 1;
         this.$store.commit("REMOVE_SELECTED", restaurantID);
       } else {
         if (this.selected == 5) {
           alert("A max of five restaurants can be selected");
         } else {
-          event.target.parentElement.parentElement.parentElement.classList.add("selected");
+          event.target.parentElement.parentElement.parentElement.classList.add(
+            "selected"
+          );
           this.selected += 1;
           this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
-      alert(this.$store.state.selectedRestaurants)
+      alert(this.$store.state.selectedRestaurants);
     },
     openPop(restaurant) {
       this.show = true;
@@ -151,16 +156,21 @@ export default {
 }
 .restaurant .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   text-align: center;
+  align-items: baseline;
   text-decoration: underline;
   background: green;
+  column-gap:50px;
+  row-gap: 50px;
+  align-content: space-around;
+
 }
 .restaurant .header img {
   border-radius: 9999px;
   width: 300px;
   align-self: flex-start;
-
+  height: 300px;
 }
 .restaurant .footer {
   display: flex;
@@ -178,40 +188,18 @@ export default {
 .selected {
   background-color: aqua;
 }
-/* .popup {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
-}
-.popup-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888888;
-  width: 30%;
-  font-weight: bolder;
-}
-.popup-content button {
-  display: block;
-  margin: 0 auto;
-}
-.show {
-  display: block;
-} */
+
 .type {
-  max-width: 50px;
-  margin: 0 auto;
+  max-width: auto;
+  margin: 20;
   text-align: left;
+  align-content:space-around;
+  background: white;
+
 }
-.restaurants{
+.restaurants {
   display: flex;
-  gap:40px;
+  gap: 40px;
   width: 100%;
   flex-wrap: wrap;
 }
@@ -221,5 +209,11 @@ export default {
 
 h3 {
   max-width: 200px;
+}
+.addToCart{
+  display: inline-flexbox;
+  background: orange;
+  align-content: flex-end;
+align-items: baseline;
 }
 </style>
