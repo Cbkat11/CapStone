@@ -138,8 +138,10 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
+ 
 }
 .restaurant .header {
+  
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -147,8 +149,9 @@ export default {
 }
 .restaurant .header img {
   border-radius: 9999px;
-  width: 32px;
+  width: 70px;
   align-self: flex-start;
+
 }
 .restaurant .footer {
   display: flex;
@@ -197,4 +200,24 @@ text-align: center;
 .show {
   display: block;
 } */
+
+.restaurant{
+  width: 300px;
+  height:300px;
+  text-align: center;
+  
+
+}
+.restaurants{
+  display: flex;
+  gap:40px;
+  width: 100%;
+  flex-wrap: wrap;
+ 
+  
+}
+.restaurants > * {
+  flex-basis: 47%;
+}
+
 </style>
