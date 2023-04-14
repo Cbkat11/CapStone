@@ -6,7 +6,6 @@
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
-        v-on:click="viewRestaurantDetails(restaurant.id)"
       >
         <div class="header" >
           <h3>{{ restaurant.name }}</h3>
@@ -25,6 +24,9 @@
             <button id="myButton" v-on:click="openPop(restaurant)">
               Call to Order
             </button>
+          <span v-if="$store.state.user.username">
+            <button v-on: click>ADD</button>
+          </span>
             <!-- <div id="myPopup" class="popup" v-if="show">
               <div class="popup-content">
                 <h1>GeekforGeeks !</h1>
@@ -53,9 +55,12 @@ export default {
       hours: null,
       isOpen: false,
       show: false,
-      selected: 0
+      selected: 0,
+      restaurants: [],
+      viewCart: false
     };
   },
+  
   methods: {
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
@@ -104,6 +109,7 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
+    
     selectRestaurant(click) {
       if(this.event) {
         if(click.target.classList.includes("selected")) {
@@ -119,6 +125,7 @@ export default {
         }
       }
     },
+
     openPop(restaurant) {
       this.show = true;
       alert("Phone Number: " + restaurant.phoneNumber);
@@ -127,6 +134,19 @@ export default {
     //   this.show = false;
     // },
   },
+
+  addRestaurant(restaurant) {
+    if(this.restaurants.includes(restaurant)) {
+      alert("This restaurant was already selected")
+    } else {
+      this.restaurants.push(restaurant);
+    }
+  },
+
+  removeRestaurant(restaurant) {
+    this.restaurants.splice(this.restaurants.indexOf(restaurant), 1);
+  },
+
 };
 </script>
 
