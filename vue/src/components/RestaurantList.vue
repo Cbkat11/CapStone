@@ -3,7 +3,10 @@
     <h2>Restaurants</h2>
     <div class="restaurants">
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55e63e25603c37bd8db5fdddae66b3e003e8c3e6
         <div class="restaurant" 
             v-for="restaurant in filterRestaurants()"
             v-bind:key="restaurant.id"
@@ -20,8 +23,13 @@
             }}</span>
             <span v-if="restaurant.takeout">takeout</span>
             <span v-if="restaurant.delivery">delivery</span>
+<<<<<<< HEAD
             <span><button @click="togglePopup('buttonTrigger', restaurant)">☎ Contact</button></span>
             <div v-if="popupTriggers.buttonTrigger" :togglePopup="() => togglePopup('buttonTrigger', restaurant)">
+=======
+            <span><button @click="TogglePopup('buttonTrigger')">☎ Contact</button></span>
+            <div v-if="restaurant.popupTrigger" :TogglePopup="() => restaurant.popupTrigger = true">
+>>>>>>> 55e63e25603c37bd8db5fdddae66b3e003e8c3e6
               <div class="popup">
                 <!-- img not working -->
                <!-- <img :src="restaurant.imgUrl" style="position: absolute; top: 10px; left: 10px;"/> -->
@@ -32,6 +40,7 @@
                 <a href="restaurant.reviews"> {{ restaurant.reviews }} </a> <br>
                 {{ restaurant.address }}
               </p>
+<<<<<<< HEAD
               <button id="close-popup" @click="() => togglePopup('buttonTrigger', restaurant)">Close</button>
               </div>
             </div>
@@ -78,6 +87,12 @@
           </span>
         </div>
 >>>>>>> 4a561eb4e8e638ee8aef4259bfecc1bad46be581
+=======
+              <button id="close-popup" @click="() => restaurant.popupTrigger = false">Close</button>
+              </div>
+            </div> <!-- this -->
+          </div>
+>>>>>>> 55e63e25603c37bd8db5fdddae66b3e003e8c3e6
       </div>
     </div>
   </div>
