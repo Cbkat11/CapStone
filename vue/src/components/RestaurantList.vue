@@ -6,9 +6,17 @@
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
-        v-on:click="viewRestaurantDetails(restaurant.id)"
       >
-        <div class="header" >
+        <div class="header">
+          <div class="addToCart">
+          <input
+            type="checkbox"
+            id="addToCart" name="addToCart"
+            v-if="$store.state.token"
+            @click="selectRestaurant($event)"
+          />
+          <label for="addToCart">Add to Cart</label>
+          </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
@@ -44,7 +52,7 @@ import restaurantService from "../services/RestaurantService";
 
 export default {
   name: "restaurant-list",
-  props: ['event'],
+  // props: ["event"],
   created() {
     this.retrieveRestaurants();
   },
@@ -53,7 +61,7 @@ export default {
       hours: null,
       isOpen: false,
       show: false,
-      selected: 0
+      selected: 0,
     };
   },
   methods: {
@@ -104,18 +112,16 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-    selectRestaurant(click) {
-      if(this.event) {
-        if(click.target.classList.includes("selected")) {
-          click.target.classList.remove("selected");
-          this.selected -= 1;
+    selectRestaurant(event) {
+      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
+        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
+        this.selected -= 1;
+      } else {
+        if (this.selected == 5) {
+          alert("A max of five restaurants can be selected");
         } else {
-          if(this.selected == 5) {
-            alert("A max of five restaurants can be selected")
-          }else {
-            click.target.classList.add("selected");
-            this.selected += 1;
-          }
+          event.target.parentElement.parentElement.parentElement.classList.add("selected");
+          this.selected += 1;
         }
       }
     },
