@@ -2,6 +2,7 @@
   <div class="container">
     <h2>Restaurants</h2>
     <div class="restaurants">
+<<<<<<< HEAD
 
         <div class="restaurant" 
             v-for="restaurant in filterRestaurants()"
@@ -35,6 +36,48 @@
               </div>
             </div>
           </div>
+=======
+      <div
+        class="restaurant"
+        v-for="restaurant in filterRestaurants()"
+        v-bind:key="restaurant.id"
+      >
+        <div class="header">
+          <div class="addToCart">
+          <input
+            type="checkbox"
+            id="addToCart" name="addToCart"
+            v-if="$store.state.token"
+            @click="selectRestaurant($event, restaurant.id)"
+          />
+          <label for="addToCart">Add to Cart</label>
+          </div>
+          <h3>{{ restaurant.name }}</h3>
+          <span class="type">{{ restaurant.type }}</span>
+          <img :src="restaurant.imgUrl" class="avatar" />
+        </div>
+        <div class="footer">
+          <span class="address">{{ restaurant.address }}</span>
+          <span class="hours">{{ restaurant.hours }}</span>
+          <span class="open?">{{
+            openOrClosed(restaurant) ? "open" : "closed"
+          }}</span>
+          <span v-if="restaurant.takeout">takeout</span>
+          <span v-if="restaurant.delivery">delivery</span>
+          <span v-if="restaurant.phoneNumber">
+            <button id="myButton" v-on:click="openPop(restaurant)">
+              Call to Order
+            </button>
+            <!-- <div id="myPopup" class="popup" v-if="show">
+              <div class="popup-content">
+                <h1>GeekforGeeks !</h1>
+                <p>This is a popup box!</p>
+                <button id="closePopup" :click="closePop">Close</button>
+              </div> -->
+            <!-- </div> -->
+          </span>
+        </div>
+>>>>>>> 4a561eb4e8e638ee8aef4259bfecc1bad46be581
       </div>
     </div>
   </div>
@@ -47,7 +90,7 @@ import Popup from './Popup.vue'
 
 export default {
   name: "restaurant-list",
-  props: ['event'],
+  // props: ["event"],
   created() {
     this.retrieveRestaurants();
   },
@@ -56,7 +99,7 @@ export default {
       hours: null,
       isOpen: false,
       show: false,
-      selected: 0
+      selected: 0,
     };
   },
   methods: {
@@ -108,6 +151,7 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
+<<<<<<< HEAD
     returnName(restaurant) {
       return restaurant.name;
     },
@@ -146,15 +190,23 @@ export default {
         if(click.target.classList.includes("selected")) {
           click.target.classList.remove("selected");
           this.selected -= 1;
+=======
+    selectRestaurant(event, restaurantID) {
+      if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
+        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
+        this.selected -= 1;
+        this.$store.commit("REMOVE_SELECTED", restaurantID);
+      } else {
+        if (this.selected == 5) {
+          alert("A max of five restaurants can be selected");
+>>>>>>> 4a561eb4e8e638ee8aef4259bfecc1bad46be581
         } else {
-          if(this.selected == 5) {
-            alert("A max of five restaurants can be selected")
-          }else {
-            click.target.classList.add("selected");
-            this.selected += 1;
-          }
+          event.target.parentElement.parentElement.parentElement.classList.add("selected");
+          this.selected += 1;
+          this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
+      alert(this.$store.state.selectedRestaurants)
     },
 
 };

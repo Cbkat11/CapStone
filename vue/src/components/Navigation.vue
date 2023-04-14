@@ -10,9 +10,10 @@
         <div v-else>
             <h3>Hi, {{$store.state.user.username}}!</h3>
             <router-link v-if="!(event)" to="/event">Create Event</router-link>
-            <br/>
+            <br v-if="!(event)"/>
             <router-link v-if="(event)" to="/">Back to Home</router-link>
             <br/>
+            <br  v-if="(event)"/>
             <router-link to="/logout">Logout</router-link>
         </div>
     </div>
