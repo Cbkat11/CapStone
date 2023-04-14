@@ -2,7 +2,7 @@
   <div class="container">
     <h2>Restaurants</h2>
     <div class="restaurants">
-<<<<<<< HEAD
+
         <div class="restaurant" 
             v-for="restaurant in filterRestaurants()"
             v-bind:key="restaurant.id"
@@ -19,8 +19,8 @@
             }}</span>
             <span v-if="restaurant.takeout">takeout</span>
             <span v-if="restaurant.delivery">delivery</span>
-            <span><button @click="TogglePopup('buttonTrigger')">☎ Contact</button></span>
-            <div v-if="restaurant.popupTrigger" :TogglePopup="() => restaurant.popupTrigger = true">
+            <span><button @click="togglePopup('buttonTrigger', restaurant)">☎ Contact</button></span>
+            <div v-if="popupTriggers.buttonTrigger" :togglePopup="() => togglePopup('buttonTrigger', restaurant)">
               <div class="popup">
                 <!-- img not working -->
                <!-- <img :src="restaurant.imgUrl" style="position: absolute; top: 10px; left: 10px;"/> -->
@@ -31,44 +31,10 @@
                 <a href="restaurant.reviews"> {{ restaurant.reviews }} </a> <br>
                 {{ restaurant.address }}
               </p>
-              <button id="close-popup" @click="() => restaurant.popupTrigger = false">Close</button>
+              <button id="close-popup" @click="() => togglePopup('buttonTrigger', restaurant)">Close</button>
               </div>
-            </div> <!-- this -->
+            </div>
           </div>
-=======
-      <div
-        class="restaurant"
-        v-for="restaurant in filterRestaurants()"
-        v-bind:key="restaurant.id"
-        v-on:click="viewRestaurantDetails(restaurant.id)"
-      >
-        <div class="header" >
-          <h3>{{ restaurant.name }}</h3>
-          <span class="type">{{ restaurant.type }}</span>
-          <img :src="restaurant.imgUrl" class="avatar" />
-        </div>
-        <div class="footer">
-          <span class="address">{{ restaurant.address }}</span>
-          <span class="hours">{{ restaurant.hours }}</span>
-          <span class="open?">{{
-            openOrClosed(restaurant) ? "open" : "closed"
-          }}</span>
-          <span v-if="restaurant.takeout">takeout</span>
-          <span v-if="restaurant.delivery">delivery</span>
-          <span v-if="restaurant.phoneNumber">
-            <button id="myButton" v-on:click="openPop(restaurant)">
-              Call to Order
-            </button>
-            <!-- <div id="myPopup" class="popup" v-if="show">
-              <div class="popup-content">
-                <h1>GeekforGeeks !</h1>
-                <p>This is a popup box!</p>
-                <button id="closePopup" :click="closePop">Close</button>
-              </div> -->
-            <!-- </div> -->
-          </span>
-        </div>
->>>>>>> 16962a1233a9258054796335bb8c38dd2895805d
       </div>
     </div>
   </div>
@@ -119,9 +85,10 @@ export default {
       });
       return restaurants;
     },
-    // viewRestaurantDetails(restaurantID) {
+    viewRestaurantDetails(restaurantID) {
     //     this.$router.push(`/restaurant/${restaurantID}`);
-    // }
+      return restaurantID;
+    },
     openOrClosed(restaurant) {
       const now = new Date();
       const currentHours = now.getHours();
@@ -143,23 +110,37 @@ export default {
     },
     returnName(restaurant) {
       return restaurant.name;
-    }
-  },
-  setup () {
-    const popupTriggers = ref({
+    },
+    togglePopup(trigger, restaurant) {
+      const popupTriggers = ref({
       buttonTrigger: false
     });
-
-    const TogglePopup = (trigger) => {
       popupTriggers.value[trigger] = !popupTriggers.value[trigger]
-    }
 
-    return {
-      Popup,
-      popupTriggers,
-      TogglePopup
+      alert(restaurant.name)
+
+      return {
+        popupTriggers,
+        Popup
+      }
     }
   },
+  // setup () {
+  //   const popupTriggers = ref({
+  //     buttonTrigger: false
+  //   });
+
+  //   const TogglePopup = (trigger) => {
+  //     popupTriggers.value[trigger] = !popupTriggers.value[trigger]
+  //     console.log(trigger)
+  //   }
+
+  //   return {
+  //     Popup,
+  //     popupTriggers,
+  //     TogglePopup
+  //   }
+  // },
     selectRestaurant(click) {
       if(this.event) {
         if(click.target.classList.includes("selected")) {
@@ -175,23 +156,13 @@ export default {
         }
       }
     },
-<<<<<<< HEAD
 
-=======
-    openPop(restaurant) {
-      this.show = true;
-      alert("Phone Number: " + restaurant.phoneNumber);
-    },
-    // closePop() {
-    //   this.show = false;
-    // },
-  },
->>>>>>> 16962a1233a9258054796335bb8c38dd2895805d
 };
 </script>
 
 <style scoped>
 .restaurant {
+  background: #fff;
   border-radius: 0.25rem;
   padding: 10px;
   border: 1px;
@@ -202,8 +173,6 @@ export default {
 .restaurant .header {
   display: flex;
   justify-content: space-between;
-  text-align: center;
-  text-decoration: underline;
 }
 .restaurant .header img {
   border-radius: 9999px;
