@@ -13,7 +13,7 @@
             type="checkbox"
             id="addToCart" name="addToCart"
             v-if="$store.state.token"
-            @click="selectRestaurant($event)"
+            @click="selectRestaurant($event, restaurant.id)"
           />
           <label for="addToCart">Add to Cart</label>
           </div>
@@ -118,18 +118,21 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-    selectRestaurant(event) {
-      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
+    selectRestaurant(event, restaurantID) {
+      if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
         event.target.parentElement.parentElement.parentElement.classList.remove("selected");
         this.selected -= 1;
+        this.$store.commit("REMOVE_SELECTED", restaurantID);
       } else {
         if (this.selected == 5) {
           alert("A max of five restaurants can be selected");
         } else {
           event.target.parentElement.parentElement.parentElement.classList.add("selected");
           this.selected += 1;
+          this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
+      alert(this.$store.state.selectedRestaurants)
     },
 
     openPop(restaurant) {
