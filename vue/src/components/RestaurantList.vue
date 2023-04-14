@@ -8,7 +8,7 @@
         v-bind:key="restaurant.id"
         v-on:click="viewRestaurantDetails(restaurant.id)"
       >
-        <div class="header" >
+        <div class="header">
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
@@ -44,7 +44,7 @@ import restaurantService from "../services/RestaurantService";
 
 export default {
   name: "restaurant-list",
-  props: ['event'],
+  props: ["event"],
   created() {
     this.retrieveRestaurants();
   },
@@ -53,7 +53,7 @@ export default {
       hours: null,
       isOpen: false,
       show: false,
-      selected: 0
+      selected: 0,
     };
   },
   methods: {
@@ -105,14 +105,14 @@ export default {
       return this.isOpen;
     },
     selectRestaurant(click) {
-      if(this.event) {
-        if(click.target.classList.includes("selected")) {
+      if (this.event) {
+        if (click.target.classList.includes("selected")) {
           click.target.classList.remove("selected");
           this.selected -= 1;
         } else {
-          if(this.selected == 5) {
-            alert("A max of five restaurants can be selected")
-          }else {
+          if (this.selected == 5) {
+            alert("A max of five restaurants can be selected");
+          } else {
             click.target.classList.add("selected");
             this.selected += 1;
           }
@@ -138,17 +138,20 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
+  background: blue;
 }
 .restaurant .header {
   display: flex;
   justify-content: space-between;
   text-align: center;
   text-decoration: underline;
+  background: green;
 }
 .restaurant .header img {
   border-radius: 9999px;
-  width: 32px;
+  width: 300px;
   align-self: flex-start;
+
 }
 .restaurant .footer {
   display: flex;
@@ -156,6 +159,7 @@ export default {
   justify-content: space-between;
   margin: 20px 0 10px 0;
   font-size: 0.75rem;
+  background: purple;
 }
 .hours {
   padding: 8px;
@@ -191,4 +195,22 @@ export default {
 .show {
   display: block;
 } */
+.type {
+  max-width: 50px;
+  margin: 0 auto;
+  text-align: left;
+}
+.restaurants{
+  display: flex;
+  gap:40px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.restaurants > * {
+  flex-basis: 47%;
+}
+
+h3 {
+  max-width: 200px;
+}
 </style>
