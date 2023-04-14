@@ -22,7 +22,8 @@ export default new Vuex.Store({
     user: currentUser || {},
     restaurants: [],
     locationFilter: '',
-    typeFilter: ''
+    typeFilter: '',
+    selectedRestaurants: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     },
     UPDATE_TYPE(state, filter) {
       state.typeFilter = filter;
+    },
+    SET_SELECTED(state, selected) {
+      state.selectedRestaurants = selected;
     }
 
   }
