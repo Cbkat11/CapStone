@@ -53,13 +53,13 @@
       >
         <div class="header">
           <div class="addToCart">
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant.id)"
-          />
-          <label for="addToCart">Add to Cart</label>
+            <input
+              type="checkbox"
+              id="addToCart" name="addToCart"
+              v-if="$store.state.token"
+              @click="selectRestaurant($event, restaurant.id)"
+            />
+            <label for="addToCart">Add to Cart</label>
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -115,8 +115,11 @@ export default {
       isOpen: false,
       show: false,
       selected: 0,
+      restaurants: [],
+      viewCart: false
     };
   },
+  
   methods: {
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
@@ -221,9 +224,21 @@ export default {
           this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
-      alert(this.$store.state.selectedRestaurants)
+      
     },
 
+<<<<<<< HEAD
+=======
+    openPop(restaurant) {
+      this.show = true;
+      alert("Phone Number: " + restaurant.phoneNumber);
+    },
+    // closePop() {
+    //   this.show = false;
+    // },
+  },
+
+>>>>>>> 270a6c747f1d7b13ac2a12f71dfc41770e65f524
 };
 </script>
 

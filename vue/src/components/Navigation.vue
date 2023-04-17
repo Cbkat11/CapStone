@@ -4,6 +4,7 @@
         <h1>Restaurant Tinder</h1>
             <input type="text" v-on:keyup="updateLocationFilter()" v-model="location" placeholder="City or Zip">
             <input type="text" v-on:keyup="updateTypeFilter()" v-model="type" placeholder="Cuisine">
+            
         <div v-if="!($store.state.token)">
             <router-link to="/login">Login</router-link>
         </div>
