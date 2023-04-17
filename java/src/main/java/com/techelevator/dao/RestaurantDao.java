@@ -7,4 +7,8 @@ import java.util.List;
 public interface RestaurantDao {
 
     List<Restaurant> findAllRestaurants();
+
+    Restaurant getRestaurantByID(int eventID);
+
+    List<Restaurant> getRestaurantsByEventID(int eventID);
 }

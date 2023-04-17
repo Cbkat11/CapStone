@@ -58,5 +58,6 @@ export default new Vuex.Store({
       let i = state.selectedRestaurants.indexOf(selected)
       state.selectedRestaurants.splice(i, 1);
     }
-  }
+  },
+  
   })

@@ -9,13 +9,13 @@
       >
         <div class="header">
           <div class="addToCart">
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant.id)"
-          />
-          <label for="addToCart">Add to Cart</label>
+            <input
+              type="checkbox"
+              id="addToCart" name="addToCart"
+              v-if="$store.state.token"
+              @click="selectRestaurant($event, restaurant.id)"
+            />
+            <label for="addToCart">Add to Cart</label>
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -33,9 +33,6 @@
             <button id="myButton" v-on:click="openPop(restaurant)">
               Call to Order
             </button>
-          <span v-if="$store.state.user.username">
-            <button v-on: click>ADD</button>
-          </span>
             <!-- <div id="myPopup" class="popup" v-if="show">
               <div class="popup-content">
                 <h1>GeekforGeeks !</h1>
@@ -132,7 +129,7 @@ export default {
           this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
-      alert(this.$store.state.selectedRestaurants)
+      
     },
 
     openPop(restaurant) {
@@ -142,18 +139,6 @@ export default {
     // closePop() {
     //   this.show = false;
     // },
-  },
-
-  addRestaurant(restaurant) {
-    if(this.restaurants.includes(restaurant)) {
-      alert("This restaurant was already selected")
-    } else {
-      this.restaurants.push(restaurant);
-    }
-  },
-
-  removeRestaurant(restaurant) {
-    this.restaurants.splice(this.restaurants.indexOf(restaurant), 1);
   },
 
 };
