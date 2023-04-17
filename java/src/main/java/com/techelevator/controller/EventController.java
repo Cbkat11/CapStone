@@ -1,8 +1,8 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.JdbcRestaurantDao;
 import com.techelevator.model.*;
 import com.techelevator.dao.EventDao;
-import com.techelevator.dao.RestaurantDao;
 import com.techelevator.model.Event;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +22,13 @@ public class EventController {
     }
 
     @RequestMapping(path = "/event", method = RequestMethod.POST)
-    public boolean get(@Valid @RequestBody Event event) {
-        return eventDao.createEvent(event.getEventName(), event.getLink(), event.getExpDate(), event.getUserID());
+    public boolean addEvent(@Valid @RequestBody Event event) {
+        return eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), event.getUserID());
 
     }
 
     @RequestMapping(path = "/event/{eventID}", method = RequestMethod.GET)
-    public Event get(@PathVariable int eventID) {
+    public Event getEventByEventID(@PathVariable int eventID) {
         Event event = eventDao.getEventByID(eventID);
         if (event == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found.");
@@ -42,4 +42,10 @@ public class EventController {
         return eventDao.findEventsByUserID(userID);
     }
 
+    @PostMapping("/event/{eventID}")
+    public void addRestaurantsToEvent(@PathVariable int eventID, @RequestBody List<Integer> restaurantIDs) {
+        for(int i = 0; i < restaurantIDs.size(); i++) {
+            eventDao.addRestaurantToEvent(eventID, restaurantIDs.get(i));
+        }
+    }
 }
