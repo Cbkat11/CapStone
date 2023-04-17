@@ -16,7 +16,9 @@
               v-if="$store.state.token"
               @click="selectRestaurant($event, restaurant.id)"
             />
-            <label for="addToCart">Add to Cart</label>
+            <div class="cart">
+              <label for="addToCart">Add to Cart</label>
+            </div>
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -148,19 +150,24 @@ export default {
 .restaurant {
   border-radius: 0.25rem;
   padding: 10px;
-  border: 1px;
+  border: 5px solid black;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
-  background: blue;
+ 
+ 
 }
+
+
+
 .restaurant .header {
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   text-align: center;
   align-items: baseline;
   text-decoration: underline;
-  background: green;
+  background: green; 
   column-gap:50px;
   row-gap: 50px;
   align-content: space-around;
@@ -178,8 +185,9 @@ export default {
   justify-content: space-between;
   margin: 20px 0 10px 0;
   font-size: 0.75rem;
-  background: purple;
+  background: purple; 
 }
+
 .hours {
   padding: 8px;
   border-radius: 20px;
@@ -194,7 +202,7 @@ export default {
   margin: 20;
   text-align: left;
   align-content:space-around;
-  background: white;
+  background: white; 
 
 }
 .restaurants {
@@ -210,10 +218,20 @@ export default {
 h3 {
   max-width: 200px;
 }
-.addToCart{
+.addToCart {
   display: inline-flexbox;
   background: orange;
   align-content: flex-end;
-align-items: baseline;
+  align-items: baseline;
+  }
+
+
+.header.addToCart{
+   display: inline-flexbox;
+  background: orange;
+  align-content: flex-end;
+  align-items: baseline;
+
+
 }
 </style>
