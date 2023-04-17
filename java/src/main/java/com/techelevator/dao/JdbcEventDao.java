@@ -71,9 +71,10 @@ public class JdbcEventDao implements EventDao{
     }
 
     @Override
-    public boolean createEvent(String eventName, long createDate, long expDate, int userID) {
-        String insertEventSql = "insert into event (event_name, create_time, expire_time, user_id) values (?,?,?,?);";
-        return jdbcTemplate.update(insertEventSql, eventName, expDate, userID) == 1;
+    public int createEvent(String eventName, long createDate, long expDate, int userID) {
+        String insertEventSql = "insert into event (event_name, create_time, expire_time, user_id) values (?,?,?,?) returning event_id;";
+        int id = jdbcTemplate.queryForObject(insertEventSql, Integer.class, eventName, createDate, expDate, userID);
+        return id;
     }
 
 
