@@ -10,6 +10,7 @@
       >
         <div class="header">
           <div class="addToCart">
+<<<<<<< HEAD
           <input
             type="checkbox"
             id="addToCart" name="addToCart"
@@ -17,6 +18,15 @@
             @click="selectRestaurant($event, restaurant)"
           />
           <label for="addToCart">Add to Cart</label>
+=======
+            <input
+              type="checkbox"
+              id="addToCart" name="addToCart"
+              v-if="$store.state.token"
+              @click="selectRestaurant($event, restaurant.id)"
+            />
+            <label for="addToCart">Add to Cart</label>
+>>>>>>> 270a6c747f1d7b13ac2a12f71dfc41770e65f524
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -67,6 +77,7 @@ export default {
       show: false,
     };
   },
+  
   methods: {
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
@@ -129,6 +140,7 @@ export default {
         }
       }
     },
+
     openPop(restaurant) {
       this.show = true;
       alert("Phone Number: " + restaurant.phoneNumber);
@@ -151,6 +163,7 @@ export default {
     //   this.show = false;
     // },
   },
+
 };
 </script>
 

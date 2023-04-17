@@ -64,5 +64,6 @@ export default new Vuex.Store({
       delete state.selectedRestaurants[i];
       state.selected -= 1;
     }
-  }
+  },
+  
   })
