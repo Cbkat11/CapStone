@@ -1,21 +1,18 @@
 <template>
   <div class="createEvent">
-    <navigation v-bind:event="true" />
-    <h2>Please Select up to Five Establishments for Ranking</h2>
-    <restaurant-list v-bind:event="true" />
+    <create-invitation/>
   </div>
 </template>
 
 <script>
 
-import Navigation from "../components/Navigation.vue"
-import RestaurantList from "../components/RestaurantList.vue"
+
+import CreateInvitation from "../components/CreateInvitation.vue"
 
 export default {
-  name: "home",
+  name: "create",
   components: {
-    Navigation,
-    RestaurantList
+    CreateInvitation
   }
 };
 </script>
