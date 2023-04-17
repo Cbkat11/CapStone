@@ -45,11 +45,16 @@ public class JdbcRestaurantDao implements RestaurantDao {
         return restaurants;
     }
 
+
+
     @Override
     public List<Restaurant> getRestaurantsByEventID(int eventID) {
         List<Restaurant> restaurants = new ArrayList<>();
 
-        String sql = "SELECT restaurant_id FROM restaurant WHERE event_id = ?";
+        String sql = "SELECT restaurant_id, restaurant.name, total_rank " +
+                "FROM rank " +
+                "JOIN restaurant ON restaurant.restaurant_id = rank.restaurant_id" +
+                "WHERE event_id = ?";
 
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, eventID);
 
@@ -58,6 +63,7 @@ public class JdbcRestaurantDao implements RestaurantDao {
             restaurants.add(restaurant);
         }
         return restaurants;
+
     }
 
     private Restaurant mapRowToRestaurant(SqlRowSet row) {
