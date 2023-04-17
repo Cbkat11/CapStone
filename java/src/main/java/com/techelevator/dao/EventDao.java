@@ -13,7 +13,7 @@ public interface EventDao {
 
     List<Event> findEventsByUserID(int userID);
 
-    boolean createEvent(String eventName, long createDate, long expDate, int userID);
+    int createEvent(String eventName, long createDate, long expDate, int userID);
 
     boolean addRestaurantToEvent(int eventID, int restaurantID);
 }
