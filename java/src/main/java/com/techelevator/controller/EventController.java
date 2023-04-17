@@ -22,13 +22,13 @@ public class EventController {
     }
 
     @RequestMapping(path = "/event", method = RequestMethod.POST)
-    public boolean get(@Valid @RequestBody Event event) {
+    public boolean addEvent(@Valid @RequestBody Event event) {
         return eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), event.getUserID());
 
     }
 
     @RequestMapping(path = "/event/{eventID}", method = RequestMethod.GET)
-    public Event get(@PathVariable int eventID) {
+    public Event getEventByEventID(@PathVariable int eventID) {
         Event event = eventDao.getEventByID(eventID);
         if (event == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found.");
