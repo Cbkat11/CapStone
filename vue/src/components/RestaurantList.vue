@@ -6,6 +6,7 @@
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
+        v-bind:id="restaurant.id"
       >
         <div class="header">
           <div class="addToCart">
@@ -13,7 +14,7 @@
             type="checkbox"
             id="addToCart" name="addToCart"
             v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant.id)"
+            @click="selectRestaurant($event, restaurant)"
           />
           <label for="addToCart">Add to Cart</label>
           </div>
@@ -56,12 +57,14 @@ export default {
   created() {
     this.retrieveRestaurants();
   },
+  mounted() {
+    this.checkSelected();
+  },
   data() {
     return {
       hours: null,
       isOpen: false,
       show: false,
-      selected: 0,
     };
   },
   methods: {
@@ -112,26 +115,38 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-    selectRestaurant(event, restaurantID) {
-      if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
+    selectRestaurant(event, restaurant) {
+      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
         event.target.parentElement.parentElement.parentElement.classList.remove("selected");
-        this.selected -= 1;
-        this.$store.commit("REMOVE_SELECTED", restaurantID);
+        this.$store.commit("REMOVE_SELECTED", restaurant);
       } else {
-        if (this.selected == 5) {
+        if (this.$store.state.selected == 5) {
           alert("A max of five restaurants can be selected");
+          event.target.checked = false;
         } else {
           event.target.parentElement.parentElement.parentElement.classList.add("selected");
-          this.selected += 1;
-          this.$store.commit("ADD_SELECTED", restaurantID);
+          this.$store.commit("ADD_SELECTED", restaurant);
         }
       }
-      alert(this.$store.state.selectedRestaurants)
     },
     openPop(restaurant) {
       this.show = true;
       alert("Phone Number: " + restaurant.phoneNumber);
     },
+    checkSelected() {
+      if(this.$store.state.selectedRestaurants != {}) {
+        this.$store.state.selectedRestaurants.forEach(restaurant => {
+          let selected = document.getElementById(restaurant.id);
+          selected.classList.add('selected');
+          let checkBox = selected.childNodes[0].childNodes[0].childNodes[0];
+          checkBox.checked = true;
+          // let checkBox = selected.getElementById("addToCart");
+          // checkBox.setAttribute("checked", 'checked');
+        });
+      }
+
+    }
+    
     // closePop() {
     //   this.show = false;
     // },
