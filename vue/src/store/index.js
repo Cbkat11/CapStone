@@ -23,7 +23,11 @@ export default new Vuex.Store({
     restaurants: [],
     locationFilter: '',
     typeFilter: '',
-    selectedRestaurants: []
+    selectedRestaurants: [],
+    selected: 0,
+    userEvents: [],
+    currentEvent: {},
+    eventRestaurants: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -53,10 +57,13 @@ export default new Vuex.Store({
     },
     ADD_SELECTED(state, selected) {
         state.selectedRestaurants.push(selected);
+        state.selected += 1;
       },
     REMOVE_SELECTED(state, selected) {
       let i = state.selectedRestaurants.indexOf(selected)
-      state.selectedRestaurants.splice(i, 1);
+      delete state.selectedRestaurants[i];
+      state.selected -= 1;
     }
-  }
+  },
+  
   })
