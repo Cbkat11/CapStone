@@ -5,15 +5,17 @@ public class Event {
     private int eventID;
     private String eventName;
     private String link;
-    private String expDate;
+    private long createDate;
+    private long expDate;
     private int userID;
 
     public Event() { }
 
-    public Event(int eventID, String eventName, String link, String expDate, int userID) {
+    public Event(int eventID, String eventName, String link, long createDate, long expDate, int userID) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.link = link;
+        this.createDate = createDate;
         this.expDate = expDate;
         this.userID = userID;
     }
@@ -42,11 +44,19 @@ public class Event {
         this.link = link;
     }
 
-    public String getExpDate() {
+    public long getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(long createDate) {
+        this.createDate = createDate;
+    }
+
+    public long getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(String expDate) {
+    public void setExpDate(long expDate) {
         this.expDate = expDate;
     }
 

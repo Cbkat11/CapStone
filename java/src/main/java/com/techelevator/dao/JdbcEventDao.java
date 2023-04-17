@@ -7,10 +7,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcEventDao implements EventDao{
 
     private List<Event> events = new ArrayList<>();
@@ -47,6 +49,13 @@ public class JdbcEventDao implements EventDao{
     }
 
     @Override
+    public boolean addRestaurantToEvent(int eventID, int restaurantID) {
+        String insertRestaurantIDsSql = "INSERT INTO rank (restaurant_id, event_id) " +
+                "VALUES (?,?);";
+        return jdbcTemplate.update(insertRestaurantIDsSql, eventID, restaurantID) == 1;
+    }
+
+    @Override
     public List<Event> findEventsByUserID(int userID) {
         List<Event> events = new ArrayList<>();
 
@@ -62,9 +71,9 @@ public class JdbcEventDao implements EventDao{
     }
 
     @Override
-    public boolean createEvent(String eventName, String link, String expDate, int userID) {
-        String insertEventSql = "insert into event (username, password_hash,role) values (?,?,?,?)";
-        return jdbcTemplate.update(insertEventSql, eventName, link, expDate, userID) == 1;
+    public boolean createEvent(String eventName, long createDate, long expDate, int userID) {
+        String insertEventSql = "insert into event (event_name, create_time, expire_time, user_id) values (?,?,?,?);";
+        return jdbcTemplate.update(insertEventSql, eventName, expDate, userID) == 1;
     }
 
 
@@ -73,7 +82,8 @@ public class JdbcEventDao implements EventDao{
         event.setEventID(row.getInt("event_id"));
         event.setEventName(row.getString("event_name"));
         event.setLink(row.getString("link"));
-        event.setExpDate(row.getString("expiration_date"));
+        event.setCreateDate(row.getLong("create_time"));
+        event.setExpDate(row.getLong("expiration_date"));
         event.setUserID(row.getInt("user_id"));
         return event;
     }
