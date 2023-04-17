@@ -27,8 +27,9 @@ CREATE TABLE restaurant (
 );
 CREATE TABLE event(
 event_id SERIAL,
+event_name varchar(50),
 link varchar(100),
-experation_date date NOT Null,
+expiration_date date NOT Null,
 user_id int,
 CONSTRAINT PK_event PRIMARY KEY (event_id),
 CONSTRAINT FK_user_event FOREIGN KEY(user_id) REFERENCES users(user_id),

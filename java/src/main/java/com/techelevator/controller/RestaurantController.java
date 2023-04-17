@@ -2,10 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.RestaurantDao;
 import com.techelevator.model.Restaurant;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,11 @@ public class RestaurantController {
     public List<Restaurant> listRestaurants() {
         return restaurantDao.findAllRestaurants();
     }
+
+    @RequestMapping(path = "/restaurants/{eventID}", method = RequestMethod.GET)
+    public List<Restaurant> getRestaurantsByEventID(@PathVariable int eventID) {
+        return restaurantDao.getRestaurantsByEventID(eventID);
+    }
+
 
 }
