@@ -61,6 +61,18 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/event/:id",
+      name: 'Ranking',
+      component: Event,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/events/:userID",
+      name: 'UserEvents',
     }
   ]
 })

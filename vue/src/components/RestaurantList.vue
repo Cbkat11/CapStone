@@ -28,20 +28,6 @@
             <div v-if="popupTriggers.buttonTrigger" :togglePopup="() => togglePopup('buttonTrigger', restaurant)">
 =======
             <span><button @click="TogglePopup('buttonTrigger')">☎ Contact</button></span>
-            <div v-if="restaurant.popupTrigger" :TogglePopup="() => restaurant.popupTrigger = true">
->>>>>>> 55e63e25603c37bd8db5fdddae66b3e003e8c3e6
-              <div class="popup">
-                <!-- img not working -->
-               <!-- <img :src="restaurant.imgUrl" style="position: absolute; top: 10px; left: 10px;"/> -->
-                <h2 id="contact-header"> Contact {{ restaurant.name }}</h2> <br>
-              <p id="contact-info">
-                {{ restaurant.phoneNumber }} <br>
-                <a href="restaurant.website"> {{ restaurant.website }}</a> <br>
-                <a href="restaurant.reviews"> {{ restaurant.reviews }} </a> <br>
-                {{ restaurant.address }}
-              </p>
-<<<<<<< HEAD
-              <button id="close-popup" @click="() => togglePopup('buttonTrigger', restaurant)">Close</button>
               </div>
             </div>
           </div>
@@ -50,9 +36,19 @@
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
+        v-bind:id="restaurant.id"
       >
         <div class="header">
           <div class="addToCart">
+<<<<<<< HEAD
+          <input
+            type="checkbox"
+            id="addToCart" name="addToCart"
+            v-if="$store.state.token"
+            @click="selectRestaurant($event, restaurant)"
+          />
+          <label for="addToCart">Add to Cart</label>
+=======
             <input
               type="checkbox"
               id="addToCart" name="addToCart"
@@ -60,6 +56,7 @@
               @click="selectRestaurant($event, restaurant.id)"
             />
             <label for="addToCart">Add to Cart</label>
+>>>>>>> 270a6c747f1d7b13ac2a12f71dfc41770e65f524
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -109,14 +106,14 @@ export default {
   created() {
     this.retrieveRestaurants();
   },
+  mounted() {
+    this.checkSelected();
+  },
   data() {
     return {
       hours: null,
       isOpen: false,
       show: false,
-      selected: 0,
-      restaurants: [],
-      viewCart: false
     };
   },
   
@@ -170,6 +167,7 @@ export default {
       return this.isOpen;
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     returnName(restaurant) {
       return restaurant.name;
     },
@@ -211,20 +209,25 @@ export default {
 =======
     selectRestaurant(event, restaurantID) {
       if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
+=======
+    selectRestaurant(event, restaurant) {
+      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
+>>>>>>> 2dbe22c671860255842de0634bb724a9c6669e5d
         event.target.parentElement.parentElement.parentElement.classList.remove("selected");
-        this.selected -= 1;
-        this.$store.commit("REMOVE_SELECTED", restaurantID);
+        this.$store.commit("REMOVE_SELECTED", restaurant);
       } else {
-        if (this.selected == 5) {
+        if (this.$store.state.selected == 5) {
           alert("A max of five restaurants can be selected");
+<<<<<<< HEAD
 >>>>>>> 4a561eb4e8e638ee8aef4259bfecc1bad46be581
+=======
+          event.target.checked = false;
+>>>>>>> 2dbe22c671860255842de0634bb724a9c6669e5d
         } else {
           event.target.parentElement.parentElement.parentElement.classList.add("selected");
-          this.selected += 1;
-          this.$store.commit("ADD_SELECTED", restaurantID);
+          this.$store.commit("ADD_SELECTED", restaurant);
         }
       }
-      
     },
 
 <<<<<<< HEAD
@@ -233,6 +236,20 @@ export default {
       this.show = true;
       alert("Phone Number: " + restaurant.phoneNumber);
     },
+    checkSelected() {
+      if(this.$store.state.selectedRestaurants != {}) {
+        this.$store.state.selectedRestaurants.forEach(restaurant => {
+          let selected = document.getElementById(restaurant.id);
+          selected.classList.add('selected');
+          let checkBox = selected.childNodes[0].childNodes[0].childNodes[0];
+          checkBox.checked = true;
+          // let checkBox = selected.getElementById("addToCart");
+          // checkBox.setAttribute("checked", 'checked');
+        });
+      }
+
+    }
+    
     // closePop() {
     //   this.show = false;
     // },
