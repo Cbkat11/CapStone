@@ -57,7 +57,7 @@ public class JdbcRestaurantDao implements RestaurantDao {
     public List<Restaurant> getRestaurantsByEventId(int eventId) {
         List<Restaurant> restaurants = new ArrayList<>();
 
-        String sql = "SELECT restaurant.restaurant_id, restaurant.name, total_rank " +
+        String sql = "SELECT restaurant.restaurant_id, restaurant.name, type " +
                 "FROM rank " +
                 "JOIN restaurant ON restaurant.restaurant_id = rank.restaurant_id " +
                 "WHERE event_id = ?";
@@ -68,7 +68,7 @@ public class JdbcRestaurantDao implements RestaurantDao {
             Restaurant restaurant = new Restaurant();
             restaurant.setId(rowSet.getInt("restaurant_id"));
             restaurant.setName(rowSet.getString("name"));
-            restaurant.setTotalRank(rowSet.getInt("total_rank"));
+            restaurant.setType(rowSet.getString("type"));
             restaurants.add(restaurant);
         }
         return restaurants;
