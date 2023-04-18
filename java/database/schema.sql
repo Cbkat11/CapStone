@@ -23,6 +23,9 @@ CREATE TABLE restaurant (
     delivery boolean,
     website varchar(600),
     reviews varchar(600),
+    popupTrigger boolean,
+    menu varchar(800),
+    price_range varchar(10),
     CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id)
 );
 
