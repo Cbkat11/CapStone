@@ -8,6 +8,9 @@
         v-bind:key="restaurant.id"
       >
         <div class="header">
+          <h3>{{ restaurant.name }}</h3>
+
+          <span class="type">{{ restaurant.type }}</span>
           <div class="addToCart">
             <input
               type="checkbox"
@@ -20,10 +23,8 @@
               <label for="addToCart">Add to Cart</label>
             </div>
           </div>
-          <h3>{{ restaurant.name }}</h3>
-
-          <span class="type">{{ restaurant.type }}</span>
-          <img :src="restaurant.imgUrl" class="avatar" />
+        </div>
+        <div class="menu-container">
           <div id="menu">
             Featured Menu Items: <br /><br />
             <div
@@ -35,7 +36,9 @@
             </div>
             <!--   {{ returnMenu(restaurant.menu) }} -->
           </div>
+          <img :src="restaurant.imgUrl" class="avatar" />
         </div>
+
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
           <span class="hours">{{ restaurant.hours }}</span>
@@ -168,19 +171,10 @@ export default {
 }
 .restaurant .header {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  text-align: center;
-  align-items: baseline;
-  /*text-decoration: underline;*/
-  column-gap: 75px;
-  row-gap: 50px;
-  align-content: space-around;
-  font-family: monospace;
-  font-size: 1.15rem;
-  color: black;
+  justify-content: space-between;
+  align-items: center;
 }
-.restaurant .header img {
+.menu-container img {
   border-radius: 9999px;
   width: 300px;
   align-self: flex-start;
@@ -214,15 +208,11 @@ export default {
   align-content: space-around;
 }
 .restaurants {
-  display: flex;
-  gap: 40px;
-  width: 100%;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 10px;
 }
-.restaurants > * {
-  flex-basis: 47%;
-  background: linear-gradient(white, red);
-}
+
 h2 {
   font-style: italic;
   color: white;
@@ -230,29 +220,18 @@ h2 {
 }
 h3 {
   max-width: 200px;
-  /*  background: blueviolet; */
 }
-.addToCart {
-  display: inline-flexbox;
-  align-content: flex-end;
-  align-items: baseline;
+.header .addToCart {
+  display: flex;
+  align-items: center;
+}
 
+.menu-container {
   display: flex;
-  flex-basis: 100%;
-  justify-content: flex-start;
-  align-content: left;
-  width: 100%;
+  justify-content: space-between;
+  gap: 10px;
 }
-.header.addToCart {
-  display: inline-flexbox;
-  align-content: flex-end;
-  align-items: baseline;
-}
-.type {
-  /*background: blue;*/
-  display: flex;
-  flex-basis: 100%;
-}
+
 #contact-header {
   color: rgb(233, 0, 0);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -287,79 +266,20 @@ h3 {
   left: 0;
   top: 0;
 }
-.header {
-  display: grid;
-  grid-template-columns: 10% 30% 10% 50%;
-  grid-template-rows: 25% 75%;
-  gap: 10px;
-  align-items: stretch;
-}
 
 .restaurant.name {
   display: flex;
 }
-.restaurants {
-  display: flex;
-  gap: 40px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.restaurants > * {
-  flex-basis: 47%;
-  background: linear-gradient(white, red);
-}
-h2 {
-  font-style: italic;
-  color: white;
-  text-shadow: 2px 2px 4px #0c0000;
-}
-h3 {
-  max-width: 200px;
-  /*  background: blueviolet; */
-}
-.addToCart {
-  display: inline-flexbox;
-  align-content: flex-end;
-  align-items: baseline;
 
-  display: flex;
-  flex-basis: 100%;
-  justify-content: flex-end;
-  align-content: left;
-  width: 100%;
-}
-
-.type {
-  display: flex;
-  flex-basis: 100%;
-}
 #menu {
   display: flex;
+  flex-direction: column;
+  flex: 1;
 
   justify-content: center;
   align-items: center;
   border: 2px solid red;
-  background-color: #ccc;
-  height: 15rem;
-  position: relative;
-}
-#menu {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-  border: 2px solid red;
-  background-color: #ccc;
-  height: 15rem;
-  position: relative;
-}
-#menu {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-  border: 2px solid red;
-  background-color: #ccc;
+  /* background-color: #ccc; */
   height: 15rem;
   position: relative;
 }
