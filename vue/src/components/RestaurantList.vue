@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Restaurants</h2>
+    <h2>Restaurants:</h2>
     <div class="restaurants">
       <div
         class="restaurant"
@@ -10,13 +10,16 @@
       >
         <div class="header">
           <div class="addToCart">
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant)"
-          />
-          <label for="addToCart">Add to Cart</label>
+            <input
+              type="checkbox"
+              id="addToCart"
+              name="addToCart"
+              v-if="$store.state.token"
+              @click="selectRestaurant($event, restaurant.id)"
+            />
+            <div class="cart">
+              <label for="addToCart">Add to Cart</label>
+            </div>
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -39,11 +42,8 @@
     </div>
   </div>
 </template>
-
 <script>
 import restaurantService from "../services/RestaurantService";
-import Modal from "./Modal.vue"
-
 export default {
   name: "restaurant-list",
   // props: ["event"],
@@ -101,25 +101,24 @@ export default {
       const currentHours = now.getHours();
       const currentMinutes = now.getMinutes();
       const currentTime = `${currentHours}:${currentMinutes}`;
-
       const [startTime, endTime] = restaurant.hours.split("-").map((time) => {
         const [hours, minutes] = time.split(":");
         const [timeOfDay] = minutes.slice(-2);
         const hour = parseInt(hours) % 12;
         const minute = minutes.slice(0, 2).padStart(2, "0"); // minutes always two digits
         const hour24 = timeOfDay === "P" ? hour + 12 : hour;
-
         return `${hour24}:${minute}`;
       });
-
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-
-    selectRestaurant(event, restaurant) {
-      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
-        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
-        this.$store.commit("REMOVE_SELECTED", event.target.parentElement.parentElement.parentElement.id);
+    selectRestaurant(event, restaurantID) {
+      if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
+        event.target.parentElement.parentElement.parentElement.classList.remove(
+          "selected"
+        );
+        this.selected -= 1;
+        this.$store.commit("REMOVE_SELECTED", restaurantID);
       } else {
         if (this.$store.state.selected == 5) {
           alert("A max of five restaurants can be selected");
@@ -128,9 +127,11 @@ export default {
           event.target.parentElement.parentElement.parentElement.classList.add(
             "selected"
           );
-          this.$store.commit("ADD_SELECTED", restaurant);
+          this.selected += 1;
+          this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
+      alert(this.$store.state.selectedRestaurants);
     },
     checkSelected() {
       if (this.$store.state.selectedRestaurants != {}) {
@@ -147,7 +148,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .overflow-hidden {
   overflow: hidden;
@@ -200,10 +200,11 @@ export default {
   background: #fff;
   border-radius: 0.25rem;
   padding: 10px;
-  border: 1px;
+  border: 5px solid black;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
+  
 }
 .restaurant .header {
   display: flex;
@@ -211,20 +212,34 @@ export default {
 }
 .restaurant .header img {
   border-radius: 9999px;
-  width: 32px;
+  width: 300px;
   align-self: flex-start;
+  height: 300px;
+  border: 2px solid black;
+  filter: drop-shadow(0 0 2.75rem crimson);
 }
 .restaurant .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 10px 0;
-  font-size: 0.75rem;
+  font-size: 1.15rem;
+    font-family: monospace;
+      font-style: italic;
+
+
+ 
+
 }
 .hours {
   padding: 8px;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: 1.15rem;
+    font-family: monospace;
+      font-style: italic;
+
+
+
 }
 .selected {
   background-color: aqua;
@@ -276,24 +291,18 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
+  
 }
-.popup-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888888;
-  width: 30%;
-  font-weight: bolder;
+.header.addToCart {
+  display: inline-flexbox;
+  align-content: flex-end;
+  align-items: baseline;
 }
-.popup-content button {
-  display: block;
-  margin: 0 auto;
+.type {
+  /*background: blue;*/
+  display: flex;
+  flex-basis: 100%;
 }
-.show {
-  display: block;
-} */
+.restaurant.name {
+}
 </style>
