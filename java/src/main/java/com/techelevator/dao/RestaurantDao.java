@@ -8,7 +8,9 @@ public interface RestaurantDao {
 
     List<Restaurant> findAllRestaurants();
 
-    Restaurant getRestaurantByID(int eventID);
+    Restaurant getRestaurantById(int eventId);
 
-    List<Restaurant> getRestaurantsByEventID(int eventID);
+    List<Restaurant> getRestaurantsByEventId(int eventId);
+
+    public boolean addRestaurantToEvent(int eventID, int restaurantID);
 }

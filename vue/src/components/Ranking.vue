@@ -2,7 +2,7 @@
   <div class="ranking">
     <h1>{{ currentEvent.name }}</h1>
     <p>
-      Please rank each restaurant from 1 to {{ restaurants.length }}, whith 1
+      Please rank each restaurant from 1 to {{ restaurants.length }}, with 1
       being your favorite
     </p>
     <form>

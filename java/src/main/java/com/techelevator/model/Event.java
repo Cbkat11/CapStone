@@ -2,7 +2,7 @@ package com.techelevator.model;
 
 public class Event {
 
-    private int eventID;
+    private int eventId;
     private String eventName;
     private String link;
     private long createDate;
@@ -11,8 +11,8 @@ public class Event {
 
     public Event() { }
 
-    public Event(int eventID, String eventName, String link, long createDate, long expDate, int userId) {
-        this.eventID = eventID;
+    public Event(int eventId, String eventName, String link, long createDate, long expDate, int userId) {
+        this.eventId = eventId;
         this.eventName = eventName;
         this.link = link;
         this.createDate = createDate;
@@ -21,11 +21,11 @@ public class Event {
     }
 
     public int getEventID(){
-        return eventID;
+        return eventId;
     }
 
     public void setEventID(int eventID) {
-        this.eventID = eventID;
+        this.eventId = eventID;
     }
 
     public String getEventName() {
@@ -65,6 +65,6 @@ public class Event {
     }
 
     public void setUserID(int userID) {
-        this.userId = userId;
+        this.userId = userID;
     }
 }

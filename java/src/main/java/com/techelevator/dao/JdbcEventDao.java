@@ -1,19 +1,16 @@
 package com.techelevator.dao;
 
+import com.techelevator.dao.EventDao;
 import com.techelevator.model.Event;
-import com.techelevator.model.Restaurant;
-import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcEventDao implements EventDao{
+public class JdbcEventDao implements EventDao {
 
     private List<Event> events = new ArrayList<>();
 
@@ -38,9 +35,9 @@ public class JdbcEventDao implements EventDao{
     }
 
     @Override
-    public Event getEventByID(int eventID) {
+    public Event getEventById(int eventId) {
         String sql = "SELECT * FROM event WHERE event_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventID);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
         if (results.next()) {
             return mapRowToEvent(results);
         } else {
@@ -49,22 +46,15 @@ public class JdbcEventDao implements EventDao{
     }
 
     @Override
-    public boolean addRestaurantToEvent(int eventID, int restaurantID) {
-        String insertRestaurantIDsSql = "INSERT INTO rank (restaurant_id, event_id) " +
-                "VALUES (?,?);";
-        return jdbcTemplate.update(insertRestaurantIDsSql, eventID, restaurantID) == 1;
-    }
-
-    @Override
-    public List<Event> findEventsByUserID(int userID) {
+    public List<Event> findEventsByUserId(int userId) {
         List<Event> events = new ArrayList<>();
 
         String sql = "SELECT event_id FROM event WHERE user_id = ?";
 
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userID);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
 
         while (rowSet.next()) {
-            Event event = getEventByID(rowSet.getInt("event_id"));
+            Event event = getEventById(rowSet.getInt("event_id"));
             events.add(event);
         }
         return events;
@@ -73,6 +63,7 @@ public class JdbcEventDao implements EventDao{
     @Override
     public int createEvent(String eventName, long createDate, long expDate, int userID) {
         String insertEventSql = "insert into event (event_name, create_time, expire_time, user_id) values (?,?,?,?) returning event_id;";
+//        int id = jdbcTemplate.update(insertEventSql, eventName, createDate, expDate, userID);
         int id = jdbcTemplate.queryForObject(insertEventSql, Integer.class, eventName, createDate, expDate, userID);
         return id;
     }
