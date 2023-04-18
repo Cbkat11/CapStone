@@ -29,7 +29,7 @@ public class RestaurantController {
         }
     }
 
-    @RequestMapping("/restaurants/{eventId}")
+    @RequestMapping(path = "/restaurants/{eventId}", method = RequestMethod.GET)
     public List<Restaurant> getRestaurantsByEvent(@PathVariable int eventId) {
         return restaurantDao.getRestaurantsByEventId(eventId);
     }
