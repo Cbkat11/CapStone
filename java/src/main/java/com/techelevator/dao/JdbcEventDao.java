@@ -20,6 +20,13 @@ public class JdbcEventDao implements EventDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    public void updateRank(int eventId, int restaurantId, int rank) {
+        String sql = "UPDATE rank " +
+                "SET total_rank = total_rank + ? " +
+                "WHERE event_id = ? AND restaurant_id = ?;";
+        jdbcTemplate.update(sql, rank, eventId, restaurantId);
+    }
 
     @Override
     public List<Event> findAll() {
@@ -36,7 +43,7 @@ public class JdbcEventDao implements EventDao {
 
     @Override
     public Event getEventById(int eventId) {
-        String sql = "SELECT * FROM event WHERE event_id = ?";
+        String sql = "SELECT event_id, event_name, link, create_time, expire_time, user_id FROM event WHERE event_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
         if (results.next()) {
             return mapRowToEvent(results);
@@ -70,13 +77,16 @@ public class JdbcEventDao implements EventDao {
 
 
     private Event mapRowToEvent(SqlRowSet row) {
-        Event event = new Event();
-        event.setEventID(row.getInt("event_id"));
-        event.setEventName(row.getString("event_name"));
-        event.setLink(row.getString("link"));
-        event.setCreateDate(row.getLong("create_time"));
-        event.setExpDate(row.getLong("expiration_date"));
-        event.setUserID(row.getInt("user_id"));
+        Event event = new Event(row.getInt("event_id"),
+                row.getString("event_name"),row.getString("link"),
+                row.getLong("create_time"),row.getLong("expire_time"),
+                row.getInt("user_id") );
+//        event.setEventID(row.getInt("event_id"));
+//        event.setEventName(row.getString("event_name"));
+//        event.setLink(row.getString("link"));
+//        event.setCreateDate(row.getLong("create_time"));
+//        event.setExpDate(row.getLong("expire_time"));
+//        event.setUserID(row.getInt("user_id"));
         return event;
     }
 }

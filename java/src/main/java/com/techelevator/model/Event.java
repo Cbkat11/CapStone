@@ -9,7 +9,6 @@ public class Event {
     private long expDate;
     private int userId;
 
-    public Event() { }
 
     public Event(int eventId, String eventName, String link, long createDate, long expDate, int userId) {
         this.eventId = eventId;
