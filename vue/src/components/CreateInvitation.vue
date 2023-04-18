@@ -13,14 +13,15 @@
       </p>
       <form id="eventInfo" v-on:submit.prevent="submitForm">
         <label for="eventName">Name of Event:</label>
-        <input type="textbox" id="eventName" v-model="newEvent.name" required />
+        <input type="textbox" id="eventName" v-model="newEvent.eventName" required />
         <label for="expireDate">Event Epiration Date:</label>
         <input type="date" id="expireDate" name="expireDate" placeholder="mm/dd/yy" v-model="expireDate" required />
         <!-- <label for="expireTime">Event Epiration Time:</label>
         <input type="time" id="expireTime" name="expireTime" placeholder="hh:mm" v-model="expireTime" required /> -->
         <input v-if="!(isCreated)" type="submit" value="Create Event Link"/>
-        <router-link v-if="isCreated" :to="{ name: 'Ranking', params: { id: eventID } }">{{ eventLink }}</router-link>
+        <router-link v-if="isCreated" to="{ name: 'Ranking', params: { id: eventID } }">{{ eventLink }}</router-link>
       </form>
+      <p>{{ newEvent }}</p>
     </body>
   </div>
 </template>
@@ -38,36 +39,34 @@ export default {
       expireDate: '',
       // expireTime: '',
       newEvent: {
-        create_time: '',
-        expiration_time: '',
-        user_id: '',
-        name: ''
+        createDate: '',
+        expDate: '',
+        userId: '',
+        eventName: ''
       },
       errorMsg: ""
     };
   },
   methods: {
     submitForm() {
-      this.newEvent.create_time = Date.now();
-      this.newEvent.expiration_time = Date.parse(this.expireDate);
-      this.newEvent.user_id = this.$store.state.user.id;
+      this.newEvent.createDate = Date.now();
+      this.newEvent.expDate = Date.parse(this.expireDate);
+      this.newEvent.userId = this.$store.state.user.id;
       let restaurantIDs = [];
       this.$store.state.selectedRestaurants.forEach(restaurant => {
         restaurantIDs.push(restaurant.id);
       })
       eventService.addEvent(this.newEvent)
-      .then(response => {
-        if(response.status === 201) {
-          this.eventID = response.text();
+      .then((response) => {
+          this.eventID = response.data;
           this.eventLink = 'http://localhost:8080/event/' + this.eventID;
+          this.isCreated = true;
           eventService.addEventRestaurants(this.eventID, restaurantIDs)
-          .then(response => {
-            if (response.status == 201) {
-              this.isCreated = true;
-            }
-          })
-
-        }
+          // .then(response => {
+          //   if (response.status == 201) {
+              // this.isCreated = true;
+          //   }
+          // })
       })
     }
   }
