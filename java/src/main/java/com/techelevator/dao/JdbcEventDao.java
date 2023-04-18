@@ -4,16 +4,15 @@ import com.techelevator.dao.EventDao;
 import com.techelevator.model.Event;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-<<<<<<< HEAD
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-=======
->>>>>>> fb5984ed5b1b41a081b7288d645fcc2c0d549578
+
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-@Component
+
 
 @Component
 public class JdbcEventDao implements EventDao {

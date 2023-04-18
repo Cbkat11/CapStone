@@ -45,10 +45,7 @@
 import restaurantService from "../services/RestaurantService";
 export default {
   name: "restaurant-list",
-  // props: ["event"],
-  components: {
-    Modal,
-  },
+  
   created() {
     this.retrieveRestaurants();
   },
@@ -192,7 +189,7 @@ export default {
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 .restaurant {
-  background: #fff;
+  background:linear-gradient(white,red);
   border-radius: 0.25rem;
   padding: 10px;
   border: 5px solid black;
@@ -203,7 +200,17 @@ export default {
 }
 .restaurant .header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  align-items: baseline;
+  /*text-decoration: underline;*/
+  column-gap: 75px;
+  row-gap: 50px;
+  align-content: space-around;
+  font-family: monospace;
+    font-size: 1.15rem;
+    color: black;
 }
 .restaurant .header img {
   border-radius: 9999px;
@@ -232,26 +239,56 @@ export default {
   font-size: 1.15rem;
     font-family: monospace;
       font-style: italic;
-
-
-
 }
 .selected {
   background-color: aqua;
 }
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
-  height: 40%;
-  background-color: rgb(255, 251, 252);
-  border: 3px solid rgb(48, 48, 48);
-  padding: 10px;
-  border-radius: 2%;
+.type {
+  max-width: auto;
+  margin: 20;
+  text-align: left;
+  align-content: space-around;
 }
-
+.restaurants {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.restaurants > * {
+  flex-basis: 47%;
+  background: linear-gradient(white, red);
+}
+h2 {
+   font-style: italic;
+     color:  white;
+  text-shadow: 2px 2px 4px #0C0000;
+}
+h3 {
+  max-width: 200px;
+  /*  background: blueviolet; */
+}
+.addToCart {
+  display: inline-flexbox;
+  align-content: flex-end;
+  align-items: baseline;
+ 
+  display: flex;
+  flex-basis: 100%;
+  justify-content: flex-start;
+  align-content: left;
+  width: 100%;
+}
+.header.addToCart {
+  display: inline-flexbox;
+  align-content: flex-end;
+  align-items: baseline;
+}
+.type {
+  /*background: blue;*/
+  display: flex;
+  flex-basis: 100%;
+}
 #contact-header {
   color: rgb(233, 0, 0);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -280,7 +317,7 @@ export default {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
-/* .popup {
+.popup {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -294,8 +331,8 @@ export default {
   align-items: baseline;
 }
 .type {
-  /*background: blue;
+  
   display: flex;
   flex-basis: 100%;
-*/
+}
 </style>
