@@ -22,8 +22,16 @@
             </div>
           </div>
           <h3>{{ restaurant.name }}</h3>
+          
           <span class="type">{{ restaurant.type }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
+          <div id="menu">Featured Menu Items: <br/><br/>
+            <div id="menu-item" v-for="item in returnMenu(restaurant.menu)" v-bind:key="item.id">
+              {{ item }}
+              
+            </div>
+         <!--   {{ returnMenu(restaurant.menu) }} -->
+          </div>
         </div>
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
@@ -47,9 +55,7 @@ import restaurantService from "../services/RestaurantService";
 export default {
   name: "restaurant-list",
   // props: ["event"],
-  components: {
-    Modal,
-  },
+  components: {},
   created() {
     this.retrieveRestaurants();
   },
@@ -62,11 +68,15 @@ export default {
       isOpen: false,
       show: false,
       showModal: false,
-
     };
   },
 
   methods: {
+    returnMenu(menuString) {
+      const menuArray = menuString.split(",");
+      const formattedArray = menuArray.map(item => `${item}`);
+      return formattedArray;
+    },
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
         this.$store.commit("SET_RESTAURANTS", response.data);
@@ -149,53 +159,6 @@ export default {
 };
 </script>
 <style scoped>
-.overflow-hidden {
-  overflow: hidden;
-}
-.modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(1.1);
-    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
-}
-
-.modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 1rem 1.5rem;
-    width: 24rem;
-    border-radius: 0.5rem;
-}
-
-.close-button {
-    float: right;
-    width: 1.5rem;
-    line-height: 1.5rem;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 0.25rem;
-    background-color: lightgray;
-}
-
-.close-button:hover {
-    background-color: darkgray;
-}
-
-.show-modal {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1.0);
-    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-}
 .restaurant {
   background: #fff;
   border-radius: 0.25rem;
@@ -204,11 +167,6 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
-  
-}
-.restaurant .header {
-  display: flex;
-  justify-content: space-between;
 }
 .restaurant .header img {
   border-radius: 9999px;
@@ -224,12 +182,8 @@ export default {
   justify-content: space-between;
   margin: 20px 0 10px 0;
   font-size: 1.15rem;
-    font-family: monospace;
-      font-style: italic;
-
-
- 
-
+  font-family: monospace;
+  font-style: italic;
 }
 .hours {
   padding: 8px;
@@ -237,9 +191,6 @@ export default {
   font-size: 1.15rem;
     font-family: monospace;
       font-style: italic;
-
-
-
 }
 .selected {
   background-color: aqua;
@@ -256,7 +207,6 @@ export default {
   padding: 10px;
   border-radius: 2%;
 }
-
 #contact-header {
   color: rgb(233, 0, 0);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -285,24 +235,64 @@ export default {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
-/* .popup {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  
+
+.header {
+display: grid;
+grid-template-columns: 10% 30% 10% 50%;
+grid-template-rows: 25% 75%;
+gap: 10px;
+align-items: stretch;
 }
-.header.addToCart {
+
+.restaurant.name {
+  display: flex;
+}
+.restaurants {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.restaurants > * {
+  flex-basis: 47%;
+  background: linear-gradient(white, red);
+}
+h2 {
+   font-style: italic;
+     color:  white;
+  text-shadow: 2px 2px 4px #0C0000;
+}
+h3 {
+  max-width: 200px;
+  /*  background: blueviolet; */
+}
+.addToCart {
   display: inline-flexbox;
   align-content: flex-end;
   align-items: baseline;
+ 
+  display: flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+  align-content: left;
+  width: 100%;
 }
+
 .type {
   /*background: blue;*/
   display: flex;
   flex-basis: 100%;
 }
-.restaurant.name {
-}
+#menu {
+  display: flex;
+
+  justify-content: center;
+  align-items:center;
+  border: 2px solid red;
+  background-color: #ccc;
+  height: 15rem;
+  position: relative;
+  
+} 
+ 
 </style>
