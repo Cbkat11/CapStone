@@ -14,6 +14,7 @@ public class Restaurant {
     private String imgUrl;
     private boolean takeout;
     private boolean delivery;
+    private int totalRank;
 
     public Restaurant() { }
 
@@ -108,5 +109,8 @@ public class Restaurant {
 
     public void setDelivery(boolean delivery) {
         this.delivery=delivery;
+    }
+
+    public void setTotalRank(int total_rank) {
     }
 }

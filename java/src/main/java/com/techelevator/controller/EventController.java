@@ -22,14 +22,14 @@ public class EventController {
     }
 
     @RequestMapping(path = "/event", method = RequestMethod.POST)
-    public int addEvent(@Valid @RequestBody Event event) {
-        return eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), event.getUserID());
+    public void addEvent(@Valid @RequestBody Event event) {
+        eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), event.getUserID());
 
     }
 
-    @RequestMapping(path = "/event/{eventID}", method = RequestMethod.GET)
-    public Event getEventByEventID(@PathVariable int eventID) {
-        Event event = eventDao.getEventByID(eventID);
+    @RequestMapping(path = "/event/{eventId}", method = RequestMethod.GET)
+    public Event getEventByEventId(@PathVariable int eventId) {
+        Event event = eventDao.getEventById(eventId);
         if (event == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found.");
         } else {
@@ -37,15 +37,9 @@ public class EventController {
         }
     }
 
-    @RequestMapping(path = "/{userID}/events", method = RequestMethod.GET)
-    public List<Event> getEventsByUserID(@PathVariable int userID) {
-        return eventDao.findEventsByUserID(userID);
+    @RequestMapping(path = "/{userId}/events", method = RequestMethod.GET)
+    public List<Event> getEventsByUserId(@PathVariable int userId) {
+        return eventDao.findEventsByUserId(userId);
     }
 
-    @PostMapping("/event/{eventID}")
-    public void addRestaurantsToEvent(@PathVariable int eventID, @RequestBody List<Integer> restaurantIDs) {
-        for(int i = 0; i < restaurantIDs.size(); i++) {
-            eventDao.addRestaurantToEvent(eventID, restaurantIDs.get(i));
-        }
-    }
 }
