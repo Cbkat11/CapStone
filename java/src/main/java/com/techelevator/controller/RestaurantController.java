@@ -22,4 +22,16 @@ public class RestaurantController {
         return restaurantDao.findAllRestaurants();
     }
 
+    @PostMapping("/restaurants/{eventId}")
+    public void setRestaurantsToEvent(@PathVariable int eventId, @RequestBody List<Integer> restaurantIds) {
+        for(int i = 0; i < restaurantIds.size(); i++) {
+            restaurantDao.addRestaurantToEvent(eventId, restaurantIds.get(i));
+        }
+    }
+
+    @RequestMapping("/restaurants/{eventId}")
+    public List<Restaurant> getRestaurantsByEvent(@PathVariable int eventId) {
+        return restaurantDao.getRestaurantsByEventId(eventId);
+    }
+
 }
