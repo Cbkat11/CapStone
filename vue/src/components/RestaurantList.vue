@@ -6,11 +6,9 @@
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
-        v-bind:id="restaurant.id"
       >
         <div class="header">
           <div class="addToCart">
-
             <input
               type="checkbox"
               id="addToCart"
@@ -21,23 +19,6 @@
             <div class="cart">
               <label for="addToCart">Add to Cart</label>
             </div>
-
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant)"
-          />
-          <label for="addToCart">Add to Cart</label>
-
-            <input
-              type="checkbox"
-              id="addToCart" name="addToCart"
-              v-if="$store.state.token"
-              @click="selectRestaurant($event, restaurant.id)"
-            />
-            <label for="addToCart">Add to Cart</label>
-
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -68,27 +49,22 @@
     </div>
   </div>
 </template>
-
 <script>
 import restaurantService from "../services/RestaurantService";
-
 export default {
   name: "restaurant-list",
   // props: ["event"],
   created() {
     this.retrieveRestaurants();
   },
-  mounted() {
-    this.checkSelected();
-  },
   data() {
     return {
       hours: null,
       isOpen: false,
       show: false,
+      selected: 0,
     };
   },
-  
   methods: {
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
@@ -123,21 +99,17 @@ export default {
       const currentHours = now.getHours();
       const currentMinutes = now.getMinutes();
       const currentTime = `${currentHours}:${currentMinutes}`;
-
       const [startTime, endTime] = restaurant.hours.split("-").map((time) => {
         const [hours, minutes] = time.split(":");
         const [timeOfDay] = minutes.slice(-2);
         const hour = parseInt(hours) % 12;
         const minute = minutes.slice(0, 2).padStart(2, "0"); // minutes always two digits
         const hour24 = timeOfDay === "P" ? hour + 12 : hour;
-
         return `${hour24}:${minute}`;
       });
-
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-
     selectRestaurant(event, restaurantID) {
       if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
         event.target.parentElement.parentElement.parentElement.classList.remove(
@@ -145,18 +117,10 @@ export default {
         );
         this.selected -= 1;
         this.$store.commit("REMOVE_SELECTED", restaurantID);
-
-    selectRestaurant(event, restaurant) {
-      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
-        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
-        this.$store.commit("REMOVE_SELECTED", restaurant);
-
       } else {
-        if (this.$store.state.selected == 5) {
+        if (this.selected == 5) {
           alert("A max of five restaurants can be selected");
-          event.target.checked = false;
         } else {
-
           event.target.parentElement.parentElement.parentElement.classList.add(
             "selected"
           );
@@ -165,40 +129,17 @@ export default {
         }
       }
       alert(this.$store.state.selectedRestaurants);
-
-          event.target.parentElement.parentElement.parentElement.classList.add("selected");
-          this.$store.commit("ADD_SELECTED", restaurant);
-        }
-      }
- 
     },
-
     openPop(restaurant) {
       this.show = true;
       alert("Phone Number: " + restaurant.phoneNumber);
     },
-    checkSelected() {
-      if(this.$store.state.selectedRestaurants != {}) {
-        this.$store.state.selectedRestaurants.forEach(restaurant => {
-          let selected = document.getElementById(restaurant.id);
-          selected.classList.add('selected');
-          let checkBox = selected.childNodes[0].childNodes[0].childNodes[0];
-          checkBox.checked = true;
-          // let checkBox = selected.getElementById("addToCart");
-          // checkBox.setAttribute("checked", 'checked');
-        });
-      }
-
-    }
-    
     // closePop() {
     //   this.show = false;
     // },
   },
-
 };
 </script>
-
 <style scoped>
 .restaurant {
   border-radius: 0.25rem;
@@ -207,12 +148,7 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
- 
- 
 }
-
-
-
 .restaurant .header {
   display: flex;
   flex-direction: row;
@@ -220,43 +156,37 @@ export default {
   text-align: center;
   align-items: baseline;
   text-decoration: underline;
-  background: green; 
-  column-gap:50px;
+  column-gap: 50px;
   row-gap: 50px;
   align-content: space-around;
-
 }
 .restaurant .header img {
   border-radius: 9999px;
   width: 300px;
   align-self: flex-start;
   height: 300px;
+  border: 2px solid black;
 }
 .restaurant .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 10px 0;
-  font-size: 0.75rem;
-  background: purple; 
+  font-size: 1.15rem;
 }
-
 .hours {
   padding: 8px;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: 1.15rem;
 }
 .selected {
   background-color: aqua;
 }
-
 .type {
   max-width: auto;
   margin: 20;
   text-align: left;
-  align-content:space-around;
-  background: white; 
-
+  align-content: space-around;
 }
 .restaurants {
   display: flex;
@@ -266,25 +196,34 @@ export default {
 }
 .restaurants > * {
   flex-basis: 47%;
+  background: linear-gradient(white, red);
 }
-
 h3 {
   max-width: 200px;
+  /*  background: blueviolet; */
 }
 .addToCart {
   display: inline-flexbox;
-  background: orange;
   align-content: flex-end;
   align-items: baseline;
-  }
-
-
-.header.addToCart{
-   display: inline-flexbox;
-  background: orange;
+  /* background:yellow; */
+  display: flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+  align-content: left;
+  width: 100%;
+}
+.header.addToCart {
+  display: inline-flexbox;
   align-content: flex-end;
   align-items: baseline;
-
-
+}
+.type {
+  /*background: blue;*/
+  display: flex;
+  flex-basis: 100%;
+}
+.restaurant.name {
+  background: blueviolet;
 }
 </style>
