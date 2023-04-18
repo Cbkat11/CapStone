@@ -41,14 +41,14 @@ export default {
   methods: {
     retrieveEvent() {
       eventService.getEvent(this.$route.params.id).then((response) => {
-        this.currentEvent = response.json();
+        this.currentEvent = response.data;
       });
     },
     eventRestaurants() {
       eventService
         .getRestaurantsByEvent(this.$route.params.id)
         .then((response) => {
-          this.restaurants = response.json();
+          this.restaurants = response.data;
         });
     },
     saveRanks() {

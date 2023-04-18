@@ -7,17 +7,17 @@ public class Event {
     private String link;
     private long createDate;
     private long expDate;
-    private int userID;
+    private int userId;
 
     public Event() { }
 
-    public Event(int eventID, String eventName, String link, long createDate, long expDate, int userID) {
+    public Event(int eventID, String eventName, String link, long createDate, long expDate, int userId) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.link = link;
         this.createDate = createDate;
         this.expDate = expDate;
-        this.userID = userID;
+        this.userId = userId;
     }
 
     public int getEventID(){
@@ -61,10 +61,10 @@ public class Event {
     }
 
     public int getUserID() {
-        return userID;
+        return userId;
     }
 
     public void setUserID(int userID) {
-        this.userID = userID;
+        this.userId = userId;
     }
 }

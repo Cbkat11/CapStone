@@ -10,7 +10,6 @@
       >
         <div class="header">
           <div class="addToCart">
-<<<<<<< HEAD
           <input
             type="checkbox"
             id="addToCart" name="addToCart"
@@ -18,15 +17,6 @@
             @click="selectRestaurant($event, restaurant)"
           />
           <label for="addToCart">Add to Cart</label>
-=======
-            <input
-              type="checkbox"
-              id="addToCart" name="addToCart"
-              v-if="$store.state.token"
-              @click="selectRestaurant($event, restaurant.id)"
-            />
-            <label for="addToCart">Add to Cart</label>
->>>>>>> 270a6c747f1d7b13ac2a12f71dfc41770e65f524
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -129,7 +119,7 @@ export default {
     selectRestaurant(event, restaurant) {
       if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
         event.target.parentElement.parentElement.parentElement.classList.remove("selected");
-        this.$store.commit("REMOVE_SELECTED", restaurant);
+        this.$store.commit("REMOVE_SELECTED", event.target.parentElement.parentElement.parentElement.id);
       } else {
         if (this.$store.state.selected == 5) {
           alert("A max of five restaurants can be selected");
