@@ -22,6 +22,9 @@
             </div>
           </div>
           <h3>{{ restaurant.name }}</h3>
+          
+          <span class="type">{{ restaurant.type }}</span>
+          <img :src="restaurant.imgUrl" class="avatar" />
           <div id="menu">Featured Menu Items: <br/><br/>
             <div id="menu-item" v-for="item in returnMenu(restaurant.menu)" v-bind:key="item.id">
               {{ item }}
@@ -29,8 +32,6 @@
             </div>
          <!--   {{ returnMenu(restaurant.menu) }} -->
           </div>
-          <span class="type">{{ restaurant.type }}</span>
-          <img :src="restaurant.imgUrl" class="avatar" />
         </div>
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
@@ -158,53 +159,6 @@ export default {
 };
 </script>
 <style scoped>
-.overflow-hidden {
-  overflow: hidden;
-}
-.modal {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(1.1);
-  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
-}
-
-.modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 1rem 1.5rem;
-  width: 24rem;
-  border-radius: 0.5rem;
-}
-
-.close-button {
-  float: right;
-  width: 1.5rem;
-  line-height: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  background-color: lightgray;
-}
-
-.close-button:hover {
-  background-color: darkgray;
-}
-
-.show-modal {
-  opacity: 1;
-  visibility: visible;
-  transform: scale(1);
-  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-}
 .restaurant {
   background: #fff;
   border-radius: 0.25rem;
@@ -213,10 +167,6 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
-}
-.restaurant .header {
-  display: flex;
-  justify-content: space-between;
 }
 .restaurant .header img {
   border-radius: 9999px;
@@ -257,7 +207,6 @@ export default {
   padding: 10px;
   border-radius: 2%;
 }
-
 #contact-header {
   color: rgb(233, 0, 0);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -287,10 +236,12 @@ export default {
     "Lucida Sans", Arial, sans-serif;
 }
 
-.header.addToCart {
-  display: inline-flexbox;
-  align-content: flex-end;
-  align-items: baseline;
+.header {
+display: grid;
+grid-template-columns: 10% 30% 10% 50%;
+grid-template-rows: 25% 75%;
+gap: 10px;
+align-items: stretch;
 }
 
 .restaurant.name {
@@ -326,18 +277,15 @@ h3 {
   align-content: left;
   width: 100%;
 }
-.header.addToCart {
-  display: inline-flexbox;
-  align-content: flex-end;
-  align-items: baseline;
-}
+
 .type {
   /*background: blue;*/
   display: flex;
   flex-basis: 100%;
 }
- #menu {
-  display: block;
+#menu {
+  display: flex;
+
   justify-content: center;
   align-items:center;
   border: 2px solid red;
@@ -346,4 +294,5 @@ h3 {
   position: relative;
   
 } 
+ 
 </style>
