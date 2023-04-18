@@ -1,11 +1,9 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.RestaurantDao;
+import com.techelevator.model.EventRestaurant;
 import com.techelevator.model.Restaurant;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,18 @@ public class RestaurantController {
     @RequestMapping(path = "/restaurants", method = RequestMethod.GET)
     public List<Restaurant> listRestaurants() {
         return restaurantDao.findAllRestaurants();
+    }
+
+    @PostMapping("/restaurants/{eventId}")
+    public void setRestaurantsToEvent(@PathVariable int eventId, @RequestBody List<Integer> restaurantIds) {
+        for(int i = 0; i < restaurantIds.size(); i++) {
+            restaurantDao.addRestaurantToEvent(eventId, restaurantIds.get(i));
+        }
+    }
+
+    @RequestMapping("/restaurants/{eventId}")
+    public List<Restaurant> getRestaurantsByEvent(@PathVariable int eventId) {
+        return restaurantDao.getRestaurantsByEventId(eventId);
     }
 
 }
