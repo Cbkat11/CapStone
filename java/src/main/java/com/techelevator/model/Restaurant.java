@@ -14,11 +14,16 @@ public class Restaurant {
     private String imgUrl;
     private boolean takeout;
     private boolean delivery;
+    private String website;
+    private String reviews;
+    private boolean popupTrigger;
     private int totalRank;
+    private String menu;
+    private String priceRange;
 
     public Restaurant() { }
 
-    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery){
+    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, String website, String reviews, boolean popupTrigger, String menu, String priceRange){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -29,6 +34,11 @@ public class Restaurant {
         this.imgUrl = imgUrl;
         this.takeout = takeout;
         this.delivery = delivery;
+        this.website = website;
+        this.reviews = reviews;
+        this.popupTrigger = popupTrigger;
+        this.menu = menu;
+        this.priceRange = priceRange;
 
     }
     public int getId(){
@@ -111,6 +121,25 @@ public class Restaurant {
         this.delivery=delivery;
     }
 
-    public void setTotalRank(int total_rank) {
-    }
+    public String getWebsite() { return website; }
+
+    public void setWebsite(String website) { this.website=website; }
+
+    public String getReviews() { return reviews; }
+
+    public void setReviews(String reviews) { this.reviews=reviews; }
+
+    public boolean getPopupTrigger() { return popupTrigger; }
+
+    public void setPopupTrigger(boolean popupTrigger) { this.popupTrigger=popupTrigger; }
+
+    public void setTotalRank(int totalRank) { this.totalRank=totalRank; }
+
+    public String getMenu() { return menu; }
+
+    public void setMenu(String menu) { this.menu=menu; }
+
+    public String getPriceRange() { return priceRange; }
+
+    public void setPriceRange(String priceRange) { this.priceRange=priceRange; }
 }

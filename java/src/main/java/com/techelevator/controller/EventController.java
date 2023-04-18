@@ -23,6 +23,9 @@ public class EventController {
     }
 
     @RequestMapping(path = "/event", method = RequestMethod.POST)
+//    public int addEvent(@Valid @RequestBody Event event) {
+//        return eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), 1); }
+
     public void addEvent(@Valid @RequestBody Event event) {
         eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), event.getUserID());
 
