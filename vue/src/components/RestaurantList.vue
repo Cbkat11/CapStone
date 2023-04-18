@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Restaurants</h2>
+    <h2>Restaurants:</h2>
     <div class="restaurants">
       <div
         class="restaurant"
@@ -9,13 +9,16 @@
       >
         <div class="header">
           <div class="addToCart">
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant.id)"
-          />
-          <label for="addToCart">Add to Cart</label>
+            <input
+              type="checkbox"
+              id="addToCart"
+              name="addToCart"
+              v-if="$store.state.token"
+              @click="selectRestaurant($event, restaurant.id)"
+            />
+            <div class="cart">
+              <label for="addToCart">Add to Cart</label>
+            </div>
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -46,10 +49,8 @@
     </div>
   </div>
 </template>
-
 <script>
 import restaurantService from "../services/RestaurantService";
-
 export default {
   name: "restaurant-list",
   // props: ["event"],
@@ -98,35 +99,36 @@ export default {
       const currentHours = now.getHours();
       const currentMinutes = now.getMinutes();
       const currentTime = `${currentHours}:${currentMinutes}`;
-
       const [startTime, endTime] = restaurant.hours.split("-").map((time) => {
         const [hours, minutes] = time.split(":");
         const [timeOfDay] = minutes.slice(-2);
         const hour = parseInt(hours) % 12;
         const minute = minutes.slice(0, 2).padStart(2, "0"); // minutes always two digits
         const hour24 = timeOfDay === "P" ? hour + 12 : hour;
-
         return `${hour24}:${minute}`;
       });
-
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
     selectRestaurant(event, restaurantID) {
       if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
-        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
+        event.target.parentElement.parentElement.parentElement.classList.remove(
+          "selected"
+        );
         this.selected -= 1;
         this.$store.commit("REMOVE_SELECTED", restaurantID);
       } else {
         if (this.selected == 5) {
           alert("A max of five restaurants can be selected");
         } else {
-          event.target.parentElement.parentElement.parentElement.classList.add("selected");
+          event.target.parentElement.parentElement.parentElement.classList.add(
+            "selected"
+          );
           this.selected += 1;
           this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
-      alert(this.$store.state.selectedRestaurants)
+      alert(this.$store.state.selectedRestaurants);
     },
     openPop(restaurant) {
       this.show = true;
@@ -138,95 +140,117 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .restaurant {
   border-radius: 0.25rem;
   padding: 10px;
-  border: 1px;
+  border: 5px solid black;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
- 
+  
 }
 .restaurant .header {
-  
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-around;
   text-align: center;
-  text-decoration: underline;
+  align-items: baseline;
+  /*text-decoration: underline;*/
+  column-gap: 75px;
+  row-gap: 50px;
+  align-content: space-around;
+  font-family: monospace;
+    font-size: 1.15rem;
+    color: black;
+
+
+  
 }
 .restaurant .header img {
   border-radius: 9999px;
-  width: 70px;
+  width: 300px;
   align-self: flex-start;
-
+  height: 300px;
+  border: 2px solid black;
+  filter: drop-shadow(0 0 2.75rem crimson);
 }
 .restaurant .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 10px 0;
-  font-size: 0.75rem;
+  font-size: 1.15rem;
+    font-family: monospace;
+      font-style: italic;
+
+
+ 
+
 }
 .hours {
   padding: 8px;
   border-radius: 20px;
-  font-size: 0.7rem;
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(43,121,9,0.6755077030812324) 8%, rgba(0,212,255,1) 100%);
-}
-h2{
-text-decoration: underline;
-text-align: center;
+  font-size: 1.15rem;
+    font-family: monospace;
+      font-style: italic;
+
+
+
 }
 .selected {
   background-color: aqua;
 }
-/* .popup {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
+.type {
+  max-width: auto;
+  margin: 20;
+  text-align: left;
+  align-content: space-around;
 }
-.popup-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888888;
-  width: 30%;
-  font-weight: bolder;
-}
-.popup-content button {
-  display: block;
-  margin: 0 auto;
-}
-.show {
-  display: block;
-} */
-
-.restaurant{
-  width: 300px;
-  height:300px;
-  text-align: center;
-  
-
-}
-.restaurants{
+.restaurants {
   display: flex;
-  gap:40px;
+  gap: 40px;
   width: 100%;
   flex-wrap: wrap;
- 
   
 }
 .restaurants > * {
   flex-basis: 47%;
+  background: linear-gradient(white, red);
 }
-
+h2 {
+   font-style: italic;
+     color:  white;
+  text-shadow: 2px 2px 4px #0c0000;
+  
+}
+h3 {
+  max-width: 200px;
+  
+  /*  background: blueviolet; */
+}
+.addToCart {
+  display: inline-flexbox;
+  align-content: flex-end;
+  align-items: baseline;
+  ackground:yellow; 
+  display: flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+  align-content: left;
+  width: 100%;
+  
+}
+.header.addToCart {
+  display: inline-flexbox;
+  align-content: flex-end;
+  align-items: baseline;
+}
+.type {
+  /*background: blue;*/
+  display: flex;
+  flex-basis: 100%;
+}
+.restaurant.name {
+}
 </style>
