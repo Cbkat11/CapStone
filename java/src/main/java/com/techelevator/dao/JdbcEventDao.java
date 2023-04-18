@@ -75,7 +75,7 @@ public class JdbcEventDao implements EventDao {
         event.setEventName(row.getString("event_name"));
         event.setLink(row.getString("link"));
         event.setCreateDate(row.getLong("create_time"));
-        event.setExpDate(row.getLong("expiration_date"));
+        event.setExpDate(row.getLong("expire_time"));
         event.setUserID(row.getInt("user_id"));
         return event;
     }

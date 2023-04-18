@@ -1,6 +1,6 @@
 <template>
   <div class="ranking">
-    <h1>{{ currentEvent.name }}</h1>
+    <h1>{{ currentEvent.eventName }}</h1>
     <p>
       Please rank each restaurant from 1 to {{ restaurants.length }}, with 1
       being your favorite
@@ -34,7 +34,7 @@ export default {
       restaurants: [],
     };
   },
-  beforeCreate() {
+  created() {
     this.retrieveEvent();
     this.eventRestaurants();
   },
