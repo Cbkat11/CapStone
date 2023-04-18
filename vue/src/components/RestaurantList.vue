@@ -305,5 +305,16 @@ h3 {
   position: relative;
   
 }  
+#menu {
+  display: flex;
+
+  justify-content: center;
+  align-items:center;
+  border: 2px solid red;
+  background-color: #ccc;
+  height: 15rem;
+  position: relative;
+  
+}  
  
 </style>
