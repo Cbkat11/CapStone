@@ -1,6 +1,6 @@
 package com.techelevator.model;
 
-public class Rank {
+public class RestaurantRank {
 
 
 }

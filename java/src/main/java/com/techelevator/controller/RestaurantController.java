@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.RestaurantDao;
+import com.techelevator.model.EventRestaurant;
 import com.techelevator.model.Restaurant;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,16 @@ public class RestaurantController {
         return restaurantDao.findAllRestaurants();
     }
 
-    @RequestMapping(path = "/restaurants/{eventID}", method = RequestMethod.GET)
-    public List<Restaurant> getRestaurantsByEventID(@PathVariable int eventID) {
-        return restaurantDao.getRestaurantsByEventID(eventID);
+    @PostMapping("/restaurants/{eventId}")
+    public void setRestaurantsToEvent(@PathVariable int eventId, @RequestBody List<Integer> restaurantIds) {
+        for(int i = 0; i < restaurantIds.size(); i++) {
+            restaurantDao.addRestaurantToEvent(eventId, restaurantIds.get(i));
+        }
     }
 
+    @RequestMapping("/restaurants/{eventId}")
+    public List<Restaurant> getRestaurantsByEvent(@PathVariable int eventId) {
+        return restaurantDao.getRestaurantsByEventId(eventId);
+    }
 
 }

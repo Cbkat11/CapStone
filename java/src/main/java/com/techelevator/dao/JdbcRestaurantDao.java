@@ -21,15 +21,16 @@ public class JdbcRestaurantDao implements RestaurantDao {
     }
 
     @Override
-    public Restaurant getRestaurantByID(int eventID) {
+    public Restaurant getRestaurantById(int eventId) {
         String sql = "SELECT * FROM event WHERE event_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventID);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, eventId);
         if (results.next()) {
             return mapRowToRestaurant(results);
         } else {
             return null;
         }
     }
+
 
     @Override
     public List<Restaurant> findAllRestaurants() {
@@ -46,18 +47,32 @@ public class JdbcRestaurantDao implements RestaurantDao {
     }
 
     @Override
-    public List<Restaurant> getRestaurantsByEventID(int eventID) {
+    public boolean addRestaurantToEvent(int eventID, int restaurantID) {
+        String insertRestaurantIDsSql = "INSERT INTO rank (restaurant_id, event_id) " +
+                "VALUES (?,?);";
+        return jdbcTemplate.update(insertRestaurantIDsSql, restaurantID, eventID) == 1;
+    }
+
+    @Override
+    public List<Restaurant> getRestaurantsByEventId(int eventId) {
         List<Restaurant> restaurants = new ArrayList<>();
 
-        String sql = "SELECT restaurant_id FROM restaurant WHERE event_id = ?";
+        String sql = "SELECT restaurant.restaurant_id, restaurant.name, type " +
+                "FROM rank " +
+                "JOIN restaurant ON restaurant.restaurant_id = rank.restaurant_id " +
+                "WHERE event_id = ?";
 
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, eventID);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, eventId);
 
         while (rowSet.next()) {
-            Restaurant restaurant = getRestaurantByID(rowSet.getInt("event_id"));
+            Restaurant restaurant = new Restaurant();
+            restaurant.setId(rowSet.getInt("restaurant_id"));
+            restaurant.setName(rowSet.getString("name"));
+            restaurant.setType(rowSet.getString("type"));
             restaurants.add(restaurant);
         }
         return restaurants;
+
     }
 
     private Restaurant mapRowToRestaurant(SqlRowSet row) {

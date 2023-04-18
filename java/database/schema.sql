@@ -23,13 +23,18 @@ CREATE TABLE restaurant (
     delivery boolean,
     website varchar(600),
     reviews varchar(600),
+    popupTrigger boolean,
+    menu varchar(800),
+    price_range varchar(10),
     CONSTRAINT PK_restaurant PRIMARY KEY (restaurant_id)
 );
+
 CREATE TABLE event(
 event_id SERIAL,
 event_name varchar(50),
-link varchar(100),
-expiration_date date NOT Null,
+link varchar(50),
+create_time BIGINT NOT NULL,
+expire_time BIGINT NOT Null,
 user_id int,
 CONSTRAINT PK_event PRIMARY KEY (event_id),
 CONSTRAINT FK_user_event FOREIGN KEY(user_id) REFERENCES users(user_id),
@@ -37,7 +42,7 @@ CONSTRAINT UQ_link UNIQUE (link)
 );
 
 CREATE TABLE rank(
-total_rank int,
+total_rank int DEFAULT 0,
 event_id int,
 restaurant_id int,
 CONSTRAINT FK_event_rank FOREIGN KEY(event_id) REFERENCES event (event_id),

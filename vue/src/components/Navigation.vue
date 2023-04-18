@@ -1,33 +1,24 @@
 <template>
-  <div class="navigation">
-    <!-- <img src="./assets/Amurrica.jpg"> -->
-    <h1>Restaucracy</h1>
-    <input
-      type="text"
-      v-on:keyup="updateLocationFilter()"
-      v-model="location"
-      placeholder="City or Zip"
-    />
-    <input
-      type="text"
-      v-on:keyup="updateTypeFilter()"
-      v-model="type"
-      placeholder="Cuisine"
-    />
+    <div class="navigation">
+        <!-- <img src="./assets/Amurrica.jpg"> -->
+        <h1>Restaucracy!</h1>
+            <input type="text" v-on:keyup="updateLocationFilter()" v-model="location" placeholder="City or Zip">
+            <input type="text" v-on:keyup="updateTypeFilter()" v-model="type" placeholder="Cuisine">
+            
+        <div v-if="!($store.state.token)">
+            <router-link to="/login">Login</router-link>
+        </div>
+        <div v-else>
+            <h3>Hi, {{$store.state.user.username}}!</h3>
+            <router-link v-if="!(event)" to="/event">Create Event</router-link>
+            <br v-if="!(event)"/>
+            <router-link v-if="(event)" to="/">Back to Home</router-link>
+            <br/>
+            <br  v-if="(event)"/>
+            <router-link to="/logout">Logout</router-link>
+        </div>
+    </div>
 
-    <div v-if="!$store.state.token">
-      <router-link to="/login">Login</router-link>
-    </div>
-    <div v-else>
-      <h3>Hi, {{ $store.state.user.username }}!</h3>
-      <router-link v-if="!event" to="/event">Create Event</router-link>
-      <br v-if="!event" />
-      <router-link v-if="event" to="/">Back to Home</router-link>
-      <br />
-      <br v-if="event" />
-      <router-link to="/logout">Logout</router-link>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -53,9 +44,10 @@ export default {
 
 <style scoped>
 .navigation {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
 }
 h1 {
   display: flex;
@@ -63,11 +55,16 @@ h1 {
   justify-content: flex-end;
   align-content: left;
   width: 20%;
+  font-style: italic;
+   color:  white;
+  text-shadow: 2px 2px 4px #0c0000;
+
 }
 
-input[type="text"]::placeholder {
-  border: 1px solid red;
-}
+/*input[type="text"]::placeholder {
+
+    
+} */
 </style>
 
 

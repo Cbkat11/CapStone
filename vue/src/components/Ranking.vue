@@ -2,7 +2,7 @@
   <div class="ranking">
     <h1>{{ currentEvent.name }}</h1>
     <p>
-      Please rank each restaurant from 1 to {{ restaurants.length }}, whith 1
+      Please rank each restaurant from 1 to {{ restaurants.length }}, with 1
       being your favorite
     </p>
     <form>
@@ -41,14 +41,14 @@ export default {
   methods: {
     retrieveEvent() {
       eventService.getEvent(this.$route.params.id).then((response) => {
-        this.currentEvent = response.json();
+        this.currentEvent = response.data;
       });
     },
     eventRestaurants() {
       eventService
         .getRestaurantsByEvent(this.$route.params.id)
         .then((response) => {
-          this.restaurants = response.json();
+          this.restaurants = response.data;
         });
     },
     saveRanks() {

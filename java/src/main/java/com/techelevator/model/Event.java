@@ -2,28 +2,30 @@ package com.techelevator.model;
 
 public class Event {
 
-    private int eventID;
+    private int eventId;
     private String eventName;
     private String link;
-    private String expDate;
-    private int userID;
+    private long createDate;
+    private long expDate;
+    private int userId;
 
     public Event() { }
 
-    public Event(int eventID, String eventName, String link, String expDate, int userID) {
-        this.eventID = eventID;
+    public Event(int eventId, String eventName, String link, long createDate, long expDate, int userId) {
+        this.eventId = eventId;
         this.eventName = eventName;
         this.link = link;
+        this.createDate = createDate;
         this.expDate = expDate;
-        this.userID = userID;
+        this.userId = userId;
     }
 
     public int getEventID(){
-        return eventID;
+        return eventId;
     }
 
     public void setEventID(int eventID) {
-        this.eventID = eventID;
+        this.eventId = eventID;
     }
 
     public String getEventName() {
@@ -42,19 +44,27 @@ public class Event {
         this.link = link;
     }
 
-    public String getExpDate() {
+    public long getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(long createDate) {
+        this.createDate = createDate;
+    }
+
+    public long getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(String expDate) {
+    public void setExpDate(long expDate) {
         this.expDate = expDate;
     }
 
     public int getUserID() {
-        return userID;
+        return userId;
     }
 
     public void setUserID(int userID) {
-        this.userID = userID;
+        this.userId = userID;
     }
 }

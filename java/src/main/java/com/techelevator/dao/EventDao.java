@@ -9,9 +9,10 @@ public interface EventDao {
 
     List<Event> findAll();
 
-    Event getEventByID(int eventID);
+    Event getEventById(int eventId);
 
-    List<Event> findEventsByUserID(int userID);
+    List<Event> findEventsByUserId(int userId);
 
-    public boolean createEvent(String eventName, String link, String expDate, int userID);
+    int createEvent(String eventName, long createDate, long expDate, int userId);
+
 }
