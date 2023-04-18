@@ -2,36 +2,6 @@
   <div class="container">
     <h2>Restaurants</h2>
     <div class="restaurants">
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 55e63e25603c37bd8db5fdddae66b3e003e8c3e6
-        <div class="restaurant" 
-            v-for="restaurant in filterRestaurants()"
-            v-bind:key="restaurant.id"
-            v-on:click="viewRestaurantDetails(restaurant.id)">
-            <div class="header">
-                <h3>{{ restaurant.name }}</h3>
-                <img :src="restaurant.imgUrl" class="avatar" />
-            </div>
-          <div class="footer">
-            <span class="address">{{ restaurant.address }}</span>
-            <span class="type">{{ restaurant.type }}</span>
-            <span class="hours">{{
-              openOrClosed(restaurant) ? "open" : "closed"
-            }}</span>
-            <span v-if="restaurant.takeout">takeout</span>
-            <span v-if="restaurant.delivery">delivery</span>
-<<<<<<< HEAD
-            <span><button @click="togglePopup('buttonTrigger', restaurant)">☎ Contact</button></span>
-            <div v-if="popupTriggers.buttonTrigger" :togglePopup="() => togglePopup('buttonTrigger', restaurant)">
-=======
-            <span><button @click="TogglePopup('buttonTrigger')">☎ Contact</button></span>
-              </div>
-            </div>
-          </div>
-=======
       <div
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
@@ -40,23 +10,14 @@
       >
         <div class="header">
           <div class="addToCart">
-<<<<<<< HEAD
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant)"
-          />
-          <label for="addToCart">Add to Cart</label>
-=======
             <input
               type="checkbox"
-              id="addToCart" name="addToCart"
+              id="addToCart"
+              name="addToCart"
               v-if="$store.state.token"
-              @click="selectRestaurant($event, restaurant.id)"
+              @click="selectRestaurant($event, restaurant)"
             />
             <label for="addToCart">Add to Cart</label>
->>>>>>> 270a6c747f1d7b13ac2a12f71dfc41770e65f524
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -70,39 +31,26 @@
           }}</span>
           <span v-if="restaurant.takeout">takeout</span>
           <span v-if="restaurant.delivery">delivery</span>
-          <span v-if="restaurant.phoneNumber">
-            <button id="myButton" v-on:click="openPop(restaurant)">
-              Call to Order
-            </button>
-            <!-- <div id="myPopup" class="popup" v-if="show">
-              <div class="popup-content">
-                <h1>GeekforGeeks !</h1>
-                <p>This is a popup box!</p>
-                <button id="closePopup" :click="closePop">Close</button>
-              </div> -->
-            <!-- </div> -->
-          </span>
+          <button id="show-modal" @click="showModal = true">Contact</button>
+          <modal v-if="showModal" @close="showModal = false">
+            <h3>hello there</h3>
+          </modal>
         </div>
->>>>>>> 4a561eb4e8e638ee8aef4259bfecc1bad46be581
-=======
-              <button id="close-popup" @click="() => restaurant.popupTrigger = false">Close</button>
-              </div>
-            </div> <!-- this -->
-          </div>
->>>>>>> 55e63e25603c37bd8db5fdddae66b3e003e8c3e6
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
 import restaurantService from "../services/RestaurantService";
-import Popup from './Popup.vue'
+import Modal from "./Modal.vue"
 
 export default {
   name: "restaurant-list",
   // props: ["event"],
+  components: {
+    Modal,
+  },
   created() {
     this.retrieveRestaurants();
   },
@@ -114,9 +62,11 @@ export default {
       hours: null,
       isOpen: false,
       show: false,
+      showModal: false,
+
     };
   },
-  
+
   methods: {
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
@@ -144,7 +94,7 @@ export default {
       return restaurants;
     },
     viewRestaurantDetails(restaurantID) {
-    //     this.$router.push(`/restaurant/${restaurantID}`);
+      //     this.$router.push(`/restaurant/${restaurantID}`);
       return restaurantID;
     },
     openOrClosed(restaurant) {
@@ -166,100 +116,93 @@ export default {
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-    returnName(restaurant) {
-      return restaurant.name;
-    },
-    togglePopup(trigger, restaurant) {
-      const popupTriggers = ref({
-      buttonTrigger: false
-    });
-      popupTriggers.value[trigger] = !popupTriggers.value[trigger]
 
-      alert(restaurant.name)
-
-      return {
-        popupTriggers,
-        Popup
-      }
-    }
-  },
-  // setup () {
-  //   const popupTriggers = ref({
-  //     buttonTrigger: false
-  //   });
-
-  //   const TogglePopup = (trigger) => {
-  //     popupTriggers.value[trigger] = !popupTriggers.value[trigger]
-  //     console.log(trigger)
-  //   }
-
-  //   return {
-  //     Popup,
-  //     popupTriggers,
-  //     TogglePopup
-  //   }
-  // },
-    selectRestaurant(click) {
-      if(this.event) {
-        if(click.target.classList.includes("selected")) {
-          click.target.classList.remove("selected");
-          this.selected -= 1;
-=======
-    selectRestaurant(event, restaurantID) {
-      if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
-=======
     selectRestaurant(event, restaurant) {
-      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
->>>>>>> 2dbe22c671860255842de0634bb724a9c6669e5d
-        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
+      if (
+        event.target.parentElement.parentElement.parentElement.classList.contains(
+          "selected"
+        )
+      ) {
+        event.target.parentElement.parentElement.parentElement.classList.remove(
+          "selected"
+        );
         this.$store.commit("REMOVE_SELECTED", restaurant);
       } else {
         if (this.$store.state.selected == 5) {
           alert("A max of five restaurants can be selected");
-<<<<<<< HEAD
->>>>>>> 4a561eb4e8e638ee8aef4259bfecc1bad46be581
-=======
           event.target.checked = false;
->>>>>>> 2dbe22c671860255842de0634bb724a9c6669e5d
         } else {
-          event.target.parentElement.parentElement.parentElement.classList.add("selected");
+          event.target.parentElement.parentElement.parentElement.classList.add(
+            "selected"
+          );
           this.$store.commit("ADD_SELECTED", restaurant);
         }
       }
     },
-
-<<<<<<< HEAD
-=======
-    openPop(restaurant) {
-      this.show = true;
-      alert("Phone Number: " + restaurant.phoneNumber);
-    },
     checkSelected() {
-      if(this.$store.state.selectedRestaurants != {}) {
-        this.$store.state.selectedRestaurants.forEach(restaurant => {
+      if (this.$store.state.selectedRestaurants != {}) {
+        this.$store.state.selectedRestaurants.forEach((restaurant) => {
           let selected = document.getElementById(restaurant.id);
-          selected.classList.add('selected');
+          selected.classList.add("selected");
           let checkBox = selected.childNodes[0].childNodes[0].childNodes[0];
           checkBox.checked = true;
           // let checkBox = selected.getElementById("addToCart");
           // checkBox.setAttribute("checked", 'checked');
         });
       }
-
-    }
-    
-    // closePop() {
-    //   this.show = false;
-    // },
+    },
   },
-
->>>>>>> 270a6c747f1d7b13ac2a12f71dfc41770e65f524
 };
 </script>
 
 <style scoped>
+.overflow-hidden {
+  overflow: hidden;
+}
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+}
+
+.close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+
+.close-button:hover {
+    background-color: darkgray;
+}
+
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
 .restaurant {
   background: #fff;
   border-radius: 0.25rem;
@@ -307,20 +250,22 @@ export default {
 }
 
 #contact-header {
-color: rgb(233, 0, 0);
-font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-font-size: 333%;
-font-weight: 900;
-text-align: center;
-text-decoration: underline;
+  color: rgb(233, 0, 0);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 333%;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: underline;
 }
 
 #contact-info {
-color:rgb(0, 0, 0);
-font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-font-size: 150%;
-font-weight: 100;
-text-align: center;
+  color: rgb(0, 0, 0);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 150%;
+  font-weight: 100;
+  text-align: center;
 }
 
 #close-popup {
@@ -329,7 +274,8 @@ text-align: center;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 /* .popup {
   position: fixed;

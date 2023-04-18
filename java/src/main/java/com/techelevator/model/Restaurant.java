@@ -17,10 +17,13 @@ public class Restaurant {
     private String website;
     private String reviews;
     private boolean popupTrigger;
+    private int totalRank;
+    private String menu;
+    private String priceRange;
 
     public Restaurant() { }
 
-    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, String website, String reviews, boolean popupTrigger){
+    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, String website, String reviews, boolean popupTrigger, String menu, String priceRange){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -34,6 +37,8 @@ public class Restaurant {
         this.website = website;
         this.reviews = reviews;
         this.popupTrigger = popupTrigger;
+        this.menu = menu;
+        this.priceRange = priceRange;
 
     }
     public int getId(){
@@ -127,4 +132,14 @@ public class Restaurant {
     public boolean getPopupTrigger() { return popupTrigger; }
 
     public void setPopupTrigger(boolean popupTrigger) { this.popupTrigger=popupTrigger; }
+
+    public void setTotalRank(int totalRank) { this.totalRank=totalRank; }
+
+    public String getMenu() { return menu; }
+
+    public void setMenu(String menu) { this.menu=menu; }
+
+    public String getPriceRange() { return priceRange; }
+
+    public void setPriceRange(String priceRange) { this.priceRange=priceRange; }
 }
