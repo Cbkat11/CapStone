@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="home">
     <navigation v-bind:event="false" />
     <restaurant-list v-bind:event="false" />
@@ -17,6 +17,7 @@ export default {
     RestaurantList
   }
 };
+
 </script>
 <style scoped>
 h1{

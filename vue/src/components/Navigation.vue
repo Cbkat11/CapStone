@@ -1,7 +1,7 @@
 <template>
     <div class="navigation">
         <!-- <img src="./assets/Amurrica.jpg"> -->
-        <h1>Restaurant Tinder</h1>
+        <h1>Restaucracy!</h1>
             <input type="text" v-on:keyup="updateLocationFilter()" v-model="location" placeholder="City or Zip">
             <input type="text" v-on:keyup="updateTypeFilter()" v-model="type" placeholder="Cuisine">
             
@@ -18,27 +18,27 @@
             <router-link to="/logout">Logout</router-link>
         </div>
     </div>
+
 </template>
 
 <script>
-
 export default {
   name: "navigation",
-  props: ['event'],
+  props: ["event"],
   data() {
-      return {
-          location: '',
-          type: ''
-      }
+    return {
+      location: "",
+      type: "",
+    };
   },
   methods: {
-      updateLocationFilter() {
-          this.$store.commit("UPDATE_LOCATION", this.location);
-      },
-      updateTypeFilter() {
-          this.$store.commit("UPDATE_TYPE", this.type);
-      }
-  }
+    updateLocationFilter() {
+      this.$store.commit("UPDATE_LOCATION", this.location);
+    },
+    updateTypeFilter() {
+      this.$store.commit("UPDATE_TYPE", this.type);
+    },
+  },
 };
 </script>
 
@@ -47,21 +47,24 @@ export default {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    
 }
 h1 {
-   
-    flex-basis: 40%;
-    justify-content: center;
-    align-content: center;
+  display: flex;
+  flex-basis: 48%;
+  justify-content: flex-end;
+  align-content: left;
+  width: 20%;
+  font-style: italic;
+   color:  white;
+  text-shadow: 2px 2px 4px #0c0000;
 
 }
- 
 
+/*input[type="text"]::placeholder {
 
-input[type="text"]::placeholder {
-    border: 1px solid red;
-}
-
+    
+} */
 </style>
 
 

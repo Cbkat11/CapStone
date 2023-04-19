@@ -5,6 +5,18 @@
 </template>
 <style scoped>
 div{
-  background:linear-gradient(red,yellow);
+  background:linear-gradient(red,rgb(148, 7, 7));
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+

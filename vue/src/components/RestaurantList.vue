@@ -1,27 +1,44 @@
 <template>
   <div class="container">
-    <h2>Restaurants</h2>
+    <h2>Restaurants:</h2>
     <div class="restaurants">
       <div
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
-        v-bind:id="restaurant.id"
       >
         <div class="header">
-          <div class="addToCart">
-          <input
-            type="checkbox"
-            id="addToCart" name="addToCart"
-            v-if="$store.state.token"
-            @click="selectRestaurant($event, restaurant)"
-          />
-          <label for="addToCart">Add to Cart</label>
-          </div>
           <h3>{{ restaurant.name }}</h3>
+
           <span class="type">{{ restaurant.type }}</span>
+          <div class="addToCart">
+            <input
+              type="checkbox"
+              id="addToCart"
+              name="addToCart"
+              v-if="$store.state.token"
+              @click="selectRestaurant($event, restaurant.id)"
+            />
+            <div class="cart">
+              <label for="addToCart">Add to Cart</label>
+            </div>
+          </div>
+        </div>
+        <div class="menu-container">
+          <div id="menu">
+            Featured Menu Items: <br /><br />
+            <div
+              id="menu-item"
+              v-for="item in returnMenu(restaurant.menu)"
+              v-bind:key="item.id"
+            >
+              {{ item }}
+            </div>
+            <!--   {{ returnMenu(restaurant.menu) }} -->
+          </div>
           <img :src="restaurant.imgUrl" class="avatar" />
         </div>
+
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
           <span class="hours">{{ restaurant.hours }}</span>
@@ -30,45 +47,38 @@
           }}</span>
           <span v-if="restaurant.takeout">takeout</span>
           <span v-if="restaurant.delivery">delivery</span>
-          <span v-if="restaurant.phoneNumber">
-            <button id="myButton" v-on:click="openPop(restaurant)">
-              Call to Order
-            </button>
-            <!-- <div id="myPopup" class="popup" v-if="show">
-              <div class="popup-content">
-                <h1>GeekforGeeks !</h1>
-                <p>This is a popup box!</p>
-                <button id="closePopup" :click="closePop">Close</button>
-              </div> -->
-            <!-- </div> -->
-          </span>
+          <button id="show-modal" @click="showModal = true">Contact</button>
+          <modal v-if="showModal" @close="showModal = false">
+            <h3>hello there</h3>
+          </modal>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import restaurantService from "../services/RestaurantService";
-
 export default {
   name: "restaurant-list",
-  // props: ["event"],
+
   created() {
     this.retrieveRestaurants();
-  },
-  mounted() {
-    this.checkSelected();
   },
   data() {
     return {
       hours: null,
       isOpen: false,
       show: false,
+      showModal: false,
     };
   },
-  
+
   methods: {
+    returnMenu(menuString) {
+      const menuArray = menuString.split(",");
+      const formattedArray = menuArray.map((item) => `${item}`);
+      return formattedArray;
+    },
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
         this.$store.commit("SET_RESTAURANTS", response.data);
@@ -94,74 +104,67 @@ export default {
       });
       return restaurants;
     },
-    // viewRestaurantDetails(restaurantID) {
-    //     this.$router.push(`/restaurant/${restaurantID}`);
-    // }
+    viewRestaurantDetails(restaurantID) {
+      //     this.$router.push(`/restaurant/${restaurantID}`);
+      return restaurantID;
+    },
     openOrClosed(restaurant) {
       const now = new Date();
       const currentHours = now.getHours();
       const currentMinutes = now.getMinutes();
       const currentTime = `${currentHours}:${currentMinutes}`;
-
       const [startTime, endTime] = restaurant.hours.split("-").map((time) => {
         const [hours, minutes] = time.split(":");
         const [timeOfDay] = minutes.slice(-2);
         const hour = parseInt(hours) % 12;
         const minute = minutes.slice(0, 2).padStart(2, "0"); // minutes always two digits
         const hour24 = timeOfDay === "P" ? hour + 12 : hour;
-
         return `${hour24}:${minute}`;
       });
-
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-    selectRestaurant(event, restaurant) {
-      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
-        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
-        this.$store.commit("REMOVE_SELECTED", event.target.parentElement.parentElement.parentElement.id);
+    selectRestaurant(event, restaurantID) {
+      if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
+        event.target.parentElement.parentElement.parentElement.classList.remove(
+          "selected"
+        );
+        this.selected -= 1;
+        this.$store.commit("REMOVE_SELECTED", restaurantID);
       } else {
-        if (this.$store.state.selected == 5) {
+        if (this.selected == 5) {
           alert("A max of five restaurants can be selected");
-          event.target.checked = false;
         } else {
-          event.target.parentElement.parentElement.parentElement.classList.add("selected");
-          this.$store.commit("ADD_SELECTED", restaurant);
+          event.target.parentElement.parentElement.parentElement.classList.add(
+            "selected"
+          );
+          this.selected += 1;
+          this.$store.commit("ADD_SELECTED", restaurantID);
         }
       }
-    },
-
-    openPop(restaurant) {
-      this.show = true;
-      alert("Phone Number: " + restaurant.phoneNumber);
+      alert(this.$store.state.selectedRestaurants);
     },
     checkSelected() {
-      if(this.$store.state.selectedRestaurants != {}) {
-        this.$store.state.selectedRestaurants.forEach(restaurant => {
+      if (this.$store.state.selectedRestaurants != {}) {
+        this.$store.state.selectedRestaurants.forEach((restaurant) => {
           let selected = document.getElementById(restaurant.id);
-          selected.classList.add('selected');
+          selected.classList.add("selected");
           let checkBox = selected.childNodes[0].childNodes[0].childNodes[0];
           checkBox.checked = true;
           // let checkBox = selected.getElementById("addToCart");
           // checkBox.setAttribute("checked", 'checked');
         });
       }
-
-    }
-    
-    // closePop() {
-    //   this.show = false;
-    // },
+    },
   },
-
 };
 </script>
-
 <style scoped>
 .restaurant {
+  background: linear-gradient(white, red);
   border-radius: 0.25rem;
   padding: 10px;
-  border: 1px;
+  border: 5px solid black;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
@@ -169,53 +172,115 @@ export default {
 .restaurant .header {
   display: flex;
   justify-content: space-between;
-  text-align: center;
-  text-decoration: underline;
+  align-items: center;
 }
-.restaurant .header img {
+.menu-container img {
   border-radius: 9999px;
-  width: 32px;
+  width: 300px;
   align-self: flex-start;
+  height: 300px;
+  border: 2px solid black;
+  filter: drop-shadow(0 0 2.75rem crimson);
 }
 .restaurant .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 20px 0 10px 0;
-  font-size: 0.75rem;
+  font-size: 1.15rem;
+  font-family: monospace;
+  font-style: italic;
 }
 .hours {
   padding: 8px;
   border-radius: 20px;
-  font-size: 0.7rem;
+  font-size: 1.15rem;
+  font-family: monospace;
+  font-style: italic;
 }
 .selected {
   background-color: aqua;
 }
-/* .popup {
+.type {
+  max-width: auto;
+  margin: 20;
+  text-align: left;
+  align-content: space-around;
+}
+.restaurants {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+h2 {
+  font-style: italic;
+  color: white;
+  text-shadow: 2px 2px 4px #0c0000;
+}
+h3 {
+  max-width: 200px;
+}
+.header .addToCart {
+  display: flex;
+  align-items: center;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#contact-header {
+  color: rgb(233, 0, 0);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 333%;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: underline;
+}
+
+#contact-info {
+  color: rgb(0, 0, 0);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 150%;
+  font-weight: 100;
+  text-align: center;
+}
+
+#close-popup {
+  border-radius: 0.25rem;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.popup {
   position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
 }
-.popup-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888888;
-  width: 30%;
-  font-weight: bolder;
+
+.restaurant.name {
+  display: flex;
 }
-.popup-content button {
-  display: block;
-  margin: 0 auto;
+
+#menu {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  justify-content: center;
+  align-items: center;
+  border: 2px solid red;
+  /* background-color: #ccc; */
+  height: 15rem;
+  position: relative;
 }
-.show {
-  display: block;
-} */
 </style>

@@ -6,12 +6,14 @@ public class EventRestaurant {
 
     private int eventID;
     private List<Integer> restaurantIDs;
+    private int totalRank = 0;
 
     public EventRestaurant() { }
 
     public EventRestaurant(int eventID, List<Integer> restaurantIDs) {
         this.eventID = eventID;
         this.restaurantIDs = restaurantIDs;
+
     }
 
     public int getEventID() {
@@ -28,5 +30,13 @@ public class EventRestaurant {
 
     public void setRestaurantIDs(List<Integer> restaurantIDs) {
         this.restaurantIDs = restaurantIDs;
+    }
+
+    public int getTotalRank() {
+        return totalRank;
+    }
+
+    public void setTotalRank(int totalRank) {
+        this.totalRank += totalRank;
     }
 }
