@@ -14,11 +14,11 @@ public class Restaurant {
     private String imgUrl;
     private boolean takeout;
     private boolean delivery;
-    private int totalRank;
+    private int totalRank = 0;
 
     public Restaurant() { }
 
-    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery){
+    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, int totalRank){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -29,6 +29,7 @@ public class Restaurant {
         this.imgUrl = imgUrl;
         this.takeout = takeout;
         this.delivery = delivery;
+        this.totalRank = totalRank;
 
     }
     public int getId(){
@@ -111,6 +112,10 @@ public class Restaurant {
         this.delivery=delivery;
     }
 
-    public void setTotalRank(int total_rank) {
+    public void setTotalRank(int totalRank) {
+        this.totalRank = totalRank;
+    }
+    public int getTotalRank() {
+        return this.totalRank;
     }
 }

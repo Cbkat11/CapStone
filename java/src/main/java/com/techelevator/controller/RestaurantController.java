@@ -34,4 +34,9 @@ public class RestaurantController {
         return restaurantDao.getRestaurantsByEventId(eventId);
     }
 
+    @RequestMapping(path = "/rank/{eventId}/{restaurantId}/{rank}", method = RequestMethod.PUT)
+    public void updateRank(@PathVariable int eventId, @PathVariable int restaurantId, @PathVariable int rank) {
+        restaurantDao.updateRank(eventId, restaurantId, rank);
+    }
+
 }

@@ -18,6 +18,6 @@ export default {
       return axios.post(`/restaurants/${eventID}`, restaurantIds)
   },
   updateRanking(eventID, restaurantID, rank) {
-      return axios.put(`/rank/${eventID}/${restaurantID}`, rank)
+      return axios.put(`/rank/${eventID}/${restaurantID}/${rank}`)
   }
 }
