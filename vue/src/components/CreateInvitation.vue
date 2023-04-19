@@ -21,7 +21,6 @@
         <input v-if="!(isCreated)" type="submit" value="Create Event Link"/>
         <router-link v-if="isCreated" :to="`/event/${eventID}`" >{{ eventLink }}</router-link>
       </form>
-      <router-view :key='$route.fullPath' />
       <p>{{ newEvent }}</p>
     </body>
   </div>
