@@ -15,4 +15,5 @@ public interface EventDao {
 
     int createEvent(String eventName, long createDate, long expDate, int userId);
 
+    void updateRank(int eventId, int restaurantId, int rank);
 }

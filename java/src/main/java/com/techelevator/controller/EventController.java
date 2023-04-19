@@ -16,6 +16,7 @@ import java.util.List;
 public class EventController {
 
     private EventDao eventDao;
+    private EventRestaurant eventRestaurant;
 
     public EventController(EventDao eventDao) {
         this.eventDao = eventDao;
@@ -47,4 +48,13 @@ public class EventController {
         return eventDao.findEventsByUserId(userId);
     }
 
+
+
+    @RequestMapping(path = "/rank/{restaurantId}/{eventId}", method = RequestMethod.PUT)
+    public void addRank(@RequestBody int rank, @PathVariable int restaurantId, @PathVariable int eventId) {
+        eventDao.updateRank(eventId, restaurantId, rank);
+    }
+
+
 }
+
