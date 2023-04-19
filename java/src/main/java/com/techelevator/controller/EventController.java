@@ -23,8 +23,10 @@ public class EventController {
     }
 
     @RequestMapping(path = "/event", method = RequestMethod.POST)
+
 //    public int addEvent(@Valid @RequestBody Event event) {
 //        return eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), 1); }
+
 
     public void addEvent(@Valid @RequestBody Event event) {
         eventDao.createEvent(event.getEventName(), event.getCreateDate(), event.getExpDate(), event.getUserID());
@@ -46,6 +48,8 @@ public class EventController {
         return eventDao.findEventsByUserId(userId);
     }
 
+
+
     @RequestMapping(path = "/rank/{restaurantId}/{eventId}", method = RequestMethod.PUT)
     public void addRank(@RequestBody int rank, @PathVariable int restaurantId, @PathVariable int eventId) {
         eventDao.updateRank(eventId, restaurantId, rank);
@@ -53,3 +57,4 @@ public class EventController {
 
 
 }
+

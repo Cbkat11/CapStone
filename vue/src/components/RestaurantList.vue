@@ -6,9 +6,11 @@
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
-        v-bind:id="restaurant.id"
       >
         <div class="header">
+          <h3>{{ restaurant.name }}</h3>
+
+          <span class="type">{{ restaurant.type }}</span>
           <div class="addToCart">
             <input
               type="checkbox"
@@ -21,18 +23,22 @@
               <label for="addToCart">Add to Cart</label>
             </div>
           </div>
-          <h3>{{ restaurant.name }}</h3>
-          
-          <span class="type">{{ restaurant.type }}</span>
-          <img :src="restaurant.imgUrl" class="avatar" />
-          <div id="menu">Featured Menu Items: <br/><br/>
-            <div id="menu-item" v-for="item in returnMenu(restaurant.menu)" v-bind:key="item.id">
-              {{ item }}
-              
-            </div>
-         <!--   {{ returnMenu(restaurant.menu) }} -->
-          </div>
         </div>
+        <div class="menu-container">
+          <div id="menu">
+            Featured Menu Items: <br /><br />
+            <div
+              id="menu-item"
+              v-for="item in returnMenu(restaurant.menu)"
+              v-bind:key="item.id"
+            >
+              {{ item }}
+            </div>
+            <!--   {{ returnMenu(restaurant.menu) }} -->
+          </div>
+          <img :src="restaurant.imgUrl" class="avatar" />
+        </div>
+
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
           <span class="hours">{{ restaurant.hours }}</span>
@@ -54,13 +60,9 @@
 import restaurantService from "../services/RestaurantService";
 export default {
   name: "restaurant-list",
-  // props: ["event"],
-  components: {},
+
   created() {
     this.retrieveRestaurants();
-  },
-  mounted() {
-    this.checkSelected();
   },
   data() {
     return {
@@ -74,7 +76,7 @@ export default {
   methods: {
     returnMenu(menuString) {
       const menuArray = menuString.split(",");
-      const formattedArray = menuArray.map(item => `${item}`);
+      const formattedArray = menuArray.map((item) => `${item}`);
       return formattedArray;
     },
     retrieveRestaurants() {
@@ -130,9 +132,8 @@ export default {
         this.selected -= 1;
         this.$store.commit("REMOVE_SELECTED", restaurantID);
       } else {
-        if (this.$store.state.selected == 5) {
+        if (this.selected == 5) {
           alert("A max of five restaurants can be selected");
-          event.target.checked = false;
         } else {
           event.target.parentElement.parentElement.parentElement.classList.add(
             "selected"
@@ -160,7 +161,7 @@ export default {
 </script>
 <style scoped>
 .restaurant {
-  background: #fff;
+  background: linear-gradient(white, red);
   border-radius: 0.25rem;
   padding: 10px;
   border: 5px solid black;
@@ -168,7 +169,12 @@ export default {
   margin-bottom: 10px;
   cursor: pointer;
 }
-.restaurant .header img {
+.restaurant .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menu-container img {
   border-radius: 9999px;
   width: 300px;
   align-self: flex-start;
@@ -189,24 +195,43 @@ export default {
   padding: 8px;
   border-radius: 20px;
   font-size: 1.15rem;
-    font-family: monospace;
-      font-style: italic;
+  font-family: monospace;
+  font-style: italic;
 }
 .selected {
   background-color: aqua;
 }
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
-  height: 40%;
-  background-color: rgb(255, 251, 252);
-  border: 3px solid rgb(48, 48, 48);
-  padding: 10px;
-  border-radius: 2%;
+.type {
+  max-width: auto;
+  margin: 20;
+  text-align: left;
+  align-content: space-around;
 }
+.restaurants {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+h2 {
+  font-style: italic;
+  color: white;
+  text-shadow: 2px 2px 4px #0c0000;
+}
+h3 {
+  max-width: 200px;
+}
+.header .addToCart {
+  display: flex;
+  align-items: center;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 #contact-header {
   color: rgb(233, 0, 0);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -235,86 +260,27 @@ export default {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
-
-.header {
-display: grid;
-grid-template-columns: 10% 30% 10% 50%;
-grid-template-rows: 25% 75%;
-gap: 10px;
-align-items: stretch;
+.popup {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
 }
 
 .restaurant.name {
   display: flex;
 }
-.restaurants {
-  display: flex;
-  gap: 40px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.restaurants > * {
-  flex-basis: 47%;
-  background: linear-gradient(white, red);
-}
-h2 {
-   font-style: italic;
-     color:  white;
-  text-shadow: 2px 2px 4px #0C0000;
-}
-h3 {
-  max-width: 200px;
-  /*  background: blueviolet; */
-}
-.addToCart {
-  display: inline-flexbox;
-  align-content: flex-end;
-  align-items: baseline;
- 
-  display: flex;
-  flex-basis: 100%;
-  justify-content: flex-end;
-  align-content: left;
-  width: 100%;
-}
 
-.type {
-  /*background: blue;*/
-  display: flex;
-  flex-basis: 100%;
-}
 #menu {
   display: flex;
+  flex-direction: column;
+  flex: 1;
 
   justify-content: center;
-  align-items:center;
+  align-items: center;
   border: 2px solid red;
-  background-color: #ccc;
+  /* background-color: #ccc; */
   height: 15rem;
   position: relative;
-  
 }
-#menu {
-  display: flex;
-
-  justify-content: center;
-  align-items:center;
-  border: 2px solid red;
-  background-color: #ccc;
-  height: 15rem;
-  position: relative;
-  
-}  
-#menu {
-  display: flex;
-
-  justify-content: center;
-  align-items:center;
-  border: 2px solid red;
-  background-color: #ccc;
-  height: 15rem;
-  position: relative;
-  
-}  
- 
 </style>

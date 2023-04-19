@@ -18,27 +18,27 @@
             <router-link to="/logout">Logout</router-link>
         </div>
     </div>
+
 </template>
 
 <script>
-
 export default {
   name: "navigation",
-  props: ['event'],
+  props: ["event"],
   data() {
-      return {
-          location: '',
-          type: ''
-      }
+    return {
+      location: "",
+      type: "",
+    };
   },
   methods: {
-      updateLocationFilter() {
-          this.$store.commit("UPDATE_LOCATION", this.location);
-      },
-      updateTypeFilter() {
-          this.$store.commit("UPDATE_TYPE", this.type);
-      }
-  }
+    updateLocationFilter() {
+      this.$store.commit("UPDATE_LOCATION", this.location);
+    },
+    updateTypeFilter() {
+      this.$store.commit("UPDATE_TYPE", this.type);
+    },
+  },
 };
 </script>
 
@@ -60,13 +60,11 @@ h1 {
   text-shadow: 2px 2px 4px #0c0000;
 
 }
- 
 
+/*input[type="text"]::placeholder {
 
-input[type="text"]::placeholder {
     
-}
-
+} */
 </style>
 
 
