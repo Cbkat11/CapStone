@@ -6,15 +6,15 @@
         {{ registrationErrorMsg }}
       </div>
       <div class="form-input-group">
-        <label for="username">Email</label>
+        <label for="username">Email<br /></label>
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
       <div class="form-input-group">
-        <label for="password">Password</label>
+        <label for="password">Password<br /></label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
       <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
+        <label for="confirmPassword">Confirm Password<br /></label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
       <button type="submit">Create Account</button>
@@ -83,10 +83,29 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
+#register {
+  background-color: white;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 4;
+    border-style: solid;
 }
-label {
-  margin-right: 0.5rem;
+/* please sign in */
+h1 {
+  text-decoration-line: overline underline;
+  font-size: 3em;
+}
+.form-input-group {
+  margin-bottom: 0rem;
+  font-size: 1.5em;
+  line-height: 2;
+}
+button {
+  background-color: white;
+  
 }
 </style>

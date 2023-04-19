@@ -8,9 +8,14 @@
         v-bind:key="restaurant.id"
       >
         <div class="header">
-          <h3>{{ restaurant.name }}</h3>
-
-          <span class="type">{{ restaurant.type }}</span>
+          <h3 class="name">{{ restaurant.name }}</h3>
+           <span class="open?" v-if="openOrClosed(restaurant)">
+            <img class="open-or-closed" src="https://www.svgrepo.com/show/179208/open-sign.svg" alt="Open" />
+          </span>
+          <span v-else>
+            <img class="open-or-closed" src="https://cdn-icons-png.flaticon.com/512/174/174443.png" alt="Closed" />
+          </span>
+          
           <div class="addToCart">
             <input
               type="checkbox"
@@ -42,11 +47,9 @@
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
           <span class="hours">{{ restaurant.hours }}</span>
-          <span class="open?">{{
-            openOrClosed(restaurant) ? "open" : "closed"
-          }}</span>
-          <span v-if="restaurant.takeout">takeout</span>
-          <span v-if="restaurant.delivery">delivery</span>
+         <span class="type">{{ restaurant.type }}</span>
+          <span v-if="restaurant.takeout" title="Takeout">🥡</span>
+          <span v-if="restaurant.delivery" title="Delivery">🚚</span>
           <button id="show-modal" @click="showModal = true">Contact</button>
           <modal v-if="showModal" @close="showModal = false">
             <h3>hello there</h3>
@@ -160,20 +163,27 @@ export default {
 };
 </script>
 <style scoped>
+.container {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
 .restaurant {
-  background: linear-gradient(white, red);
+  background: linear-gradient(white, rgb(247, 28, 28));
   border-radius: 0.25rem;
   padding: 10px;
   border: 5px solid black;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
+  
 }
 .restaurant .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
+
 .menu-container img {
   border-radius: 9999px;
   width: 300px;
@@ -211,8 +221,16 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, minmax(300px, 1fr));
   gap: 10px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
-
+.open-or-closed {
+  width: 4em;
+  height: auto;
+  display: flex;
+  justify-content: left;
+  align-content: left;
+}
 h2 {
   font-style: italic;
   color: white;
@@ -225,6 +243,10 @@ h3 {
   display: flex;
   align-items: center;
 }
+.name {
+  font-size: 2em;
+  text-decoration-line: underline;
+}
 
 .menu-container {
   display: flex;
@@ -233,7 +255,7 @@ h3 {
 }
 
 #contact-header {
-  color: rgb(233, 0, 0);
+  color: rgb(245, 47, 47);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   font-size: 333%;
@@ -278,7 +300,7 @@ h3 {
 
   justify-content: center;
   align-items: center;
-  border: 2px solid red;
+  border: 2px solid rgb(247, 67, 67);
   /* background-color: #ccc; */
   height: 15rem;
   position: relative;
