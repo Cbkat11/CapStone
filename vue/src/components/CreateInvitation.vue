@@ -19,7 +19,7 @@
         <!-- <label for="expireTime">Event Epiration Time:</label>
         <input type="time" id="expireTime" name="expireTime" placeholder="hh:mm" v-model="expireTime" required /> -->
         <input v-if="!(isCreated)" type="submit" value="Create Event Link"/>
-        <router-link v-if="isCreated" to="{ name: 'Ranking', params: { id: eventID } }">{{ eventLink }}</router-link>
+        <router-link v-if="isCreated" :to="`/event/${eventID}`" >{{ eventLink }}</router-link>
       </form>
       <p>{{ newEvent }}</p>
     </body>

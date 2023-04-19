@@ -5,6 +5,8 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import CreateEvent from '../views/CreateEvent.vue'
+import Event from '../views/Event.vue'
+import FinalResults from '../views/FinalResults.vue'
 import store from '../store/index'
 
 Vue.use(Router)
@@ -71,6 +73,14 @@ const router = new Router({
       }
     },
     {
+      path: "/results/:id",
+      name: 'results',
+      component: FinalResults,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
       path: "/events/:userID",
       name: 'UserEvents',
     }
@@ -91,3 +101,4 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
+

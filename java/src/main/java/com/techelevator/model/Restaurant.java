@@ -2,7 +2,7 @@ package com.techelevator.model;
 
 public class Restaurant {
 
-//    INSERT INTO restaurant (name, type, address, hours, phone_number, stars, img_url, takeout, delivery)
+    //    INSERT INTO restaurant (name, type, address, hours, phone_number, stars, img_url, takeout, delivery)
 //    VALUES ('Il Rione', 'pizza', '1303 W 65th St, Cleveland, OH 44102', '4:00PM-10:00PM', '(216) 282-1451', 4.8, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZWNLWv5D1yRmFIqCmZVuLrcT2CgKH7_5pMQ&usqp=CAU', true, false),
     private int id;
     private String name;
@@ -14,16 +14,11 @@ public class Restaurant {
     private String imgUrl;
     private boolean takeout;
     private boolean delivery;
-    private String website;
-    private String reviews;
-    private boolean popupTrigger;
-    private int totalRank;
-    private String menu;
-    private String priceRange;
+    private int totalRank = 0;
 
     public Restaurant() { }
 
-    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, String website, String reviews, boolean popupTrigger, String menu, String priceRange){
+    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, int totalRank){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -34,11 +29,7 @@ public class Restaurant {
         this.imgUrl = imgUrl;
         this.takeout = takeout;
         this.delivery = delivery;
-        this.website = website;
-        this.reviews = reviews;
-        this.popupTrigger = popupTrigger;
-        this.menu = menu;
-        this.priceRange = priceRange;
+        this.totalRank = totalRank;
 
     }
     public int getId(){
@@ -121,25 +112,10 @@ public class Restaurant {
         this.delivery=delivery;
     }
 
-    public String getWebsite() { return website; }
-
-    public void setWebsite(String website) { this.website=website; }
-
-    public String getReviews() { return reviews; }
-
-    public void setReviews(String reviews) { this.reviews=reviews; }
-
-    public boolean getPopupTrigger() { return popupTrigger; }
-
-    public void setPopupTrigger(boolean popupTrigger) { this.popupTrigger=popupTrigger; }
-
-    public void setTotalRank(int totalRank) { this.totalRank=totalRank; }
-
-    public String getMenu() { return menu; }
-
-    public void setMenu(String menu) { this.menu=menu; }
-
-    public String getPriceRange() { return priceRange; }
-
-    public void setPriceRange(String priceRange) { this.priceRange=priceRange; }
+    public void setTotalRank(int totalRank) {
+        this.totalRank = totalRank;
+    }
+    public int getTotalRank() {
+        return this.totalRank;
+    }
 }

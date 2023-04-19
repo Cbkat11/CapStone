@@ -57,7 +57,7 @@ public class JdbcRestaurantDao implements RestaurantDao {
     public List<Restaurant> getRestaurantsByEventId(int eventId) {
         List<Restaurant> restaurants = new ArrayList<>();
 
-        String sql = "SELECT restaurant.restaurant_id, restaurant.name, type " +
+        String sql = "SELECT restaurant.restaurant_id, restaurant.name, hours, address, type, img_url, total_rank " +
                 "FROM rank " +
                 "JOIN restaurant ON restaurant.restaurant_id = rank.restaurant_id " +
                 "WHERE event_id = ?";
@@ -69,10 +69,20 @@ public class JdbcRestaurantDao implements RestaurantDao {
             restaurant.setId(rowSet.getInt("restaurant_id"));
             restaurant.setName(rowSet.getString("name"));
             restaurant.setType(rowSet.getString("type"));
+            restaurant.setAddress(rowSet.getString("address"));
+            restaurant.setImgUrl(rowSet.getString("img_url"));
+            restaurant.setHours((rowSet.getString("hours")));
+            restaurant.setTotalRank(rowSet.getInt("total_rank"));
             restaurants.add(restaurant);
         }
         return restaurants;
 
+    }
+
+    @Override
+    public void updateRank(int eventId, int restaurantId, int rank) {
+        String sql = "UPDATE rank SET total_rank = total_rank + ? WHERE event_id = ? AND restaurant_id = ?";
+        jdbcTemplate.update(sql, rank, eventId, restaurantId);
     }
 
     private Restaurant mapRowToRestaurant(SqlRowSet row) {
@@ -87,11 +97,7 @@ public class JdbcRestaurantDao implements RestaurantDao {
         restaurant.setImgUrl(row.getString("img_url"));
         restaurant.setTakeout(row.getBoolean("takeout"));
         restaurant.setDelivery(row.getBoolean("delivery"));
-        restaurant.setWebsite(row.getString("website"));
-        restaurant.setReviews(row.getString("reviews"));
-        restaurant.setPopupTrigger(row.getBoolean("popup_trigger"));
-        restaurant.setMenu(row.getString("menu"));
-        restaurant.setPriceRange(row.getString("price_range"));
         return restaurant;
     }
 }
+
