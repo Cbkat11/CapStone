@@ -54,6 +54,7 @@ export default {
   // props: ["event"],
   created() {
     this.retrieveRestaurants();
+    this.checkSelected();
   },
   mounted() {
     this.checkSelected();
@@ -133,12 +134,12 @@ export default {
       this.show = true;
       alert("Phone Number: " + restaurant.phoneNumber);
     },
-    checkSelected() {
+  checkSelected() {
       if(this.$store.state.selectedRestaurants != {}) {
         this.$store.state.selectedRestaurants.forEach(restaurant => {
           let selected = document.getElementById(restaurant.id);
           selected.classList.add('selected');
-          let checkBox = selected.childNodes[0].childNodes[0].childNodes[0];
+          let checkBox = selected.childNodes[0].childNodes[2].childNodes[0];
           checkBox.checked = true;
           // let checkBox = selected.getElementById("addToCart");
           // checkBox.setAttribute("checked", 'checked');
