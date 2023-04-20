@@ -26,8 +26,8 @@
           />
           <label for="addToCart">Add to Event</label>
           </div>
-          <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
+          <span class="priceRange">{{ restaurant.priceRange }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
         </div>
         <div class="footer">
@@ -36,10 +36,7 @@
          <span class="type">{{ restaurant.type }}</span>
           <span v-if="restaurant.takeout" title="Takeout">🥡</span>
           <span v-if="restaurant.delivery" title="Delivery">🚚</span>
-          <button id="show-modal" @click="showModal = true">Contact</button>
-          <modal v-if="showModal" @close="showModal = false">
-            <h3>hello there</h3>
-          </modal>
+          <span class="phoneNumber">{{ restaurant.phoneNumber }}</span>
         </div>
       </div>
     </div>
@@ -164,7 +161,7 @@ export default {
   background: linear-gradient(white, rgb(247, 28, 28));
   border-radius: 0.25rem;
   padding: 10px;
-  border: 5px solid black;
+  border: 3px solid black;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
@@ -223,6 +220,7 @@ export default {
   display: flex;
   justify-content: left;
   align-content: left;
+  border-radius: 0;
 }
 h2 {
   font-style: italic;
@@ -246,7 +244,10 @@ h3 {
   justify-content: space-between;
   gap: 10px;
 }
-
+.priceRange {
+  font-size: 1.2em;
+  font-weight: bold;
+}
 #contact-header {
   color: rgb(245, 47, 47);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
