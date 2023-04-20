@@ -7,6 +7,8 @@
       <span class="type">{{ restaurant.type }}</span>
       <span class="address">{{ restaurant.address }}</span>
       <span class="hours">{{ restaurant.hours }}</span>
+      <span v-if="restaurant.takeout">takeout</span>
+      <span v-if="restaurant.delivery">delivery</span>
     </div>
   </div>
 </template>

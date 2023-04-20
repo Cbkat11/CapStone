@@ -1,6 +1,8 @@
 <template>
   <div class="ranking">
-    <p>This event expires on {{ dateToDate() }}</p>
+    <h1>{{ranks}}</h1>
+    <h1>{{ filterRank() }}</h1>
+    <p>This event expires on {{ dateToDate() }} at {{ expireTime }}</p>
     <h1>{{ currentEvent.eventName }}</h1>
     <p>
       Please rank each restaurant from 1 to {{ eventRestaurants.length }}, with 1
@@ -12,15 +14,13 @@
       <span class="type">{{ restaurant.type }}</span>
       <span class="address">{{ restaurant.address }}</span>
       <span class="hours">{{ restaurant.hours }}</span>
-      <!-- <span v-if="restaurant.takeout">takeout</span>
-      <span v-if="restaurant.delivery">delivery</span> -->
+      <span v-if="restaurant.takeout">takeout</span>
+      <span v-if="restaurant.delivery">delivery</span>
       <form>
-        <select v-model="restaurant.rank" name="rank" id="rank">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option v-if="eventRestaurants.length > 2" value="3">3</option>
-          <option v-if="eventRestaurants.length > 3" value="4">4</option>
-          <option v-if="eventRestaurants.length > 4" value="5">5</option>
+        <select @change='filterRank()' v-model="restaurant.rank" name="rank" id="rank">
+          <option v-for="rank in filterRank()" 
+        v-bind:key=rank
+        v-bind:value=rank>{{ rank }}</option>
         </select>
         <!-- <button class="btn btn-submit" v-on:click.prevent="saveRanks">
           Save Ranks
@@ -30,7 +30,6 @@
     <button class="btn btn-submit" v-on:click.prevent="saveRanks">
       Save Ranks
     </button>
-    <div>{{ eventRestaurants }}</div>
   </div>
 </template>
 
@@ -41,10 +40,10 @@ export default {
   name: "ranking",
   data() {
     return {
-      expireDate: '',
+      expireTime: '',
       currentEvent: {},
       eventRestaurants: [],
-      rank: []
+      ranks: []
     };
   },
   created() {
@@ -55,19 +54,25 @@ export default {
     retrieveEvent() {
       eventService.getEvent(this.$route.params.id).then((response) => {
         this.currentEvent = response.data;
+        if(this.currentEvent.expDate < Date.now()) {
+      this.$router.push({ name: 'results', params: {id: this.$route.params.id }})
+        }
       })
       .catch(response => {
           console.log(response)
         });
-      if(this.currentEvent.expDate < Date.now()) {
-      this.$router.push({ name: 'results', params: {id: 'this.$route.params.id' }})
-    }
+    //   if(this.currentEvent.expDate < Date.now()) {
+    //   this.$router.push({ name: 'results', params: {id: 'this.$route.params.id' }})
+    // }
     },
     retrieveRestaurants() {
       eventService
         .getRestaurantsByEvent(this.$route.params.id)
         .then((response) => {
           this.eventRestaurants = response.data;
+          for(let i = 0; i < this.eventRestaurants.length; i++) {
+            this.ranks.push(i+1);
+          }
           return this.eventRestaurants;
         })
         .catch(response => {
@@ -78,7 +83,11 @@ export default {
       var date = new Date(this.currentEvent.expDate)
       date = date.toString();
       let strings = date.split('G')
-      return strings[0];
+      date = strings[0];
+      // let index = date.indexOf(':');
+      // date = date.split(index - 2)
+      // this.expireTime = date.substring(index -2);
+      return date
     },
     saveRanks() {
       this.eventRestaurants.forEach((restaurant) => {
@@ -88,7 +97,20 @@ export default {
           Number.parseInt(restaurant.rank)
         );
       });
+      this.$router.push(`/thanks/${this.$route.params.id}`)
     },
+    filterRank() {
+      let holder = [];
+      holder = this.ranks.filter((rank) => {
+        this.eventRestaurants.forEach(element => {
+          if (element.rank == rank) {
+            return false;
+          }
+        })
+        return true;
+      })
+      return holder
+    }
   },
 };
 </script>

@@ -24,7 +24,7 @@
             v-if="$store.state.token"
             @click="selectRestaurant($event, restaurant)"
           />
-          <label for="addToCart">Add to Cart</label>
+          <label for="addToCart">Add to Event</label>
           </div>
           <h3>{{ restaurant.name }}</h3>
           <span class="type">{{ restaurant.type }}</span>
@@ -79,7 +79,7 @@ export default {
       restaurants = restaurants.filter((restaurant) => {
         if (locationFilter == "") {
           return true;
-        } else if (restaurant.address.includes(locationFilter)) {
+        } else if (restaurant.address.toLowerCase().includes(locationFilter.toLowerCase())) {
           return restaurant;
         }
       });
