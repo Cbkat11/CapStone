@@ -65,19 +65,28 @@ export default {
 
 <style scoped>
 .navigation {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 h1 {
+    font-size: 4em;
   display: flex;
   flex-basis: 48%;
-  justify-content: flex-end;
+  justify-content: center;
   align-content: left;
   width: 20%;
   font-style: italic;
   color: white;
   text-shadow: 2px 2px 4px #0c0000;
+font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    border-style: double;
+    border-width: 5px;
+    border-radius: 15px;
+    padding: .2em;
 }
 
 /*input[type="text"]::placeholder {
