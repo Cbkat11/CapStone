@@ -16,10 +16,12 @@ public class Restaurant {
     private boolean delivery;
     private int totalRank = 0;
     private String priceRange;
+    private String website;
+    private String reviews;
 
     public Restaurant() { }
 
-    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, int totalRank, String priceRange){
+    public Restaurant(int id, String name, String type, String address,String hours, String phoneNumber, double stars,String imgUrl,boolean takeout,boolean delivery, int totalRank, String priceRange, String website, String reviews){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -32,6 +34,8 @@ public class Restaurant {
         this.delivery = delivery;
         this.totalRank = totalRank;
         this.priceRange = priceRange;
+        this.website = website;
+        this.reviews = reviews;
     }
     public int getId(){
         return id;
@@ -126,5 +130,21 @@ public class Restaurant {
 
     public void setPriceRange(String priceRange) {
         this.priceRange=priceRange;
+    }
+
+    public String getWebsite() {
+        return website ;
+    }
+
+    public void setWebsite(String website) {
+        this.website=website;
+    }
+
+    public String getReviews() {
+        return reviews ;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews=reviews;
     }
 }
