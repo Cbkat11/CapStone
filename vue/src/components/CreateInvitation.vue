@@ -74,4 +74,13 @@ export default {
 </script>
 
 <style>
+.createEvent {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 4;
+}
 </style>

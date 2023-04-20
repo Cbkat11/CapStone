@@ -13,13 +13,19 @@
             <option value="thai">Thai</option>
             <option value="jamaican">Jamaican</option>
             <option value="mexican">Mexican</option>
+            <option value="bar">Bar</option>
+            <option value="french">French</option>
+            <option value="american">American</option>
+            <option value="seafood">Seafood</option>
+            <option value="barbeque">Barbeque</option>
+            <option value="tapas">Tapas</option>
             </select>
         <div v-if="!($store.state.token)">
             <router-link to="/login">Login</router-link>
         </div>
         <div v-else>
             <h3>Hi, {{$store.state.user.username}}!</h3>
-            <router-link v-if="!(event)" to="/event">Create Event</router-link>
+            <router-link id="create-event" v-if="!(event)" to="/event">Create Event</router-link>
             <br v-if="!(event)"/>
             <router-link v-if="(event)" to="/">Back to Home</router-link>
             <br/>
@@ -76,11 +82,9 @@ font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     border-radius: 15px;
     padding: .2em;
 }
-
-/*input[type="text"]::placeholder {
-
+#create-event {
     
-} */
+}
 </style>
 
 
