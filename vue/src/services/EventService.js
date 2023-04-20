@@ -14,10 +14,10 @@ export default {
   addEvent(event) {
       return axios.post('/event', event)
   },
-  addEventRestaurants(eventID, restaurantIDs) {
-      return axios.post(`event/${eventID}`, restaurantIDs)
+  addEventRestaurants(eventID, restaurantIds) {
+      return axios.post(`/restaurants/${eventID}`, restaurantIds)
   },
   updateRanking(eventID, restaurantID, rank) {
-      return axios.put(`/rank/${eventID}/${restaurantID}`, rank)
+      return axios.put(`/rank/${eventID}/${restaurantID}/${rank}`)
   }
 }

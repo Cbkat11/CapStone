@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-    <h2>Restaurants:</h2>
+    <h2>Restaurants</h2>
     <div class="restaurants">
       <div
         class="restaurant"
         v-for="restaurant in filterRestaurants()"
         v-bind:key="restaurant.id"
+        v-bind:id="restaurant.id"
       >
         <div class="header">
           <h3 class="name">{{ restaurant.name }}</h3>
@@ -17,33 +18,18 @@
           </span>
           
           <div class="addToCart">
-            <input
-              type="checkbox"
-              id="addToCart"
-              name="addToCart"
-              v-if="$store.state.token"
-              @click="selectRestaurant($event, restaurant.id)"
-            />
-            <div class="cart">
-              <label for="addToCart">Add to Cart</label>
-            </div>
+          <input
+            type="checkbox"
+            id="addToCart" name="addToCart"
+            v-if="$store.state.token"
+            @click="selectRestaurant($event, restaurant)"
+          />
+          <label for="addToCart">Add to Event</label>
           </div>
-        </div>
-        <div class="menu-container">
-          <div id="menu">
-            Featured Menu Items: <br /><br />
-            <div
-              id="menu-item"
-              v-for="item in returnMenu(restaurant.menu)"
-              v-bind:key="item.id"
-            >
-              {{ item }}
-            </div>
-            <!--   {{ returnMenu(restaurant.menu) }} -->
-          </div>
+          <h3>{{ restaurant.name }}</h3>
+          <span class="type">{{ restaurant.type }}</span>
           <img :src="restaurant.imgUrl" class="avatar" />
         </div>
-
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
           <span class="hours">{{ restaurant.hours }}</span>
@@ -59,29 +45,28 @@
     </div>
   </div>
 </template>
+
 <script>
 import restaurantService from "../services/RestaurantService";
+
 export default {
   name: "restaurant-list",
-
+  // props: ["event"],
   created() {
     this.retrieveRestaurants();
+  },
+  mounted() {
+    this.checkSelected();
   },
   data() {
     return {
       hours: null,
       isOpen: false,
       show: false,
-      showModal: false,
     };
   },
-
+  
   methods: {
-    returnMenu(menuString) {
-      const menuArray = menuString.split(",");
-      const formattedArray = menuArray.map((item) => `${item}`);
-      return formattedArray;
-    },
     retrieveRestaurants() {
       restaurantService.getRestaurants().then((response) => {
         this.$store.commit("SET_RESTAURANTS", response.data);
@@ -94,7 +79,7 @@ export default {
       restaurants = restaurants.filter((restaurant) => {
         if (locationFilter == "") {
           return true;
-        } else if (restaurant.address.includes(locationFilter)) {
+        } else if (restaurant.address.toLowerCase().includes(locationFilter.toLowerCase())) {
           return restaurant;
         }
       });
@@ -107,61 +92,69 @@ export default {
       });
       return restaurants;
     },
-    viewRestaurantDetails(restaurantID) {
-      //     this.$router.push(`/restaurant/${restaurantID}`);
-      return restaurantID;
-    },
+    // viewRestaurantDetails(restaurantID) {
+    //     this.$router.push(`/restaurant/${restaurantID}`);
+    // }
     openOrClosed(restaurant) {
       const now = new Date();
       const currentHours = now.getHours();
       const currentMinutes = now.getMinutes();
       const currentTime = `${currentHours}:${currentMinutes}`;
+
       const [startTime, endTime] = restaurant.hours.split("-").map((time) => {
         const [hours, minutes] = time.split(":");
         const [timeOfDay] = minutes.slice(-2);
         const hour = parseInt(hours) % 12;
         const minute = minutes.slice(0, 2).padStart(2, "0"); // minutes always two digits
         const hour24 = timeOfDay === "P" ? hour + 12 : hour;
+
         return `${hour24}:${minute}`;
       });
+
       this.isOpen = currentTime >= startTime && currentTime <= endTime;
       return this.isOpen;
     },
-    selectRestaurant(event, restaurantID) {
-      if (this.$store.state.selectedRestaurants.includes(restaurantID)) {
-        event.target.parentElement.parentElement.parentElement.classList.remove(
-          "selected"
-        );
-        this.selected -= 1;
-        this.$store.commit("REMOVE_SELECTED", restaurantID);
+    selectRestaurant(event, restaurant) {
+      if (event.target.parentElement.parentElement.parentElement.classList.contains("selected")) {
+        event.target.parentElement.parentElement.parentElement.classList.remove("selected");
+        this.$store.commit("REMOVE_SELECTED", event.target.parentElement.parentElement.parentElement.id);
       } else {
-        if (this.selected == 5) {
+        if (this.$store.state.selected == 5) {
           alert("A max of five restaurants can be selected");
+          event.target.checked = false;
         } else {
-          event.target.parentElement.parentElement.parentElement.classList.add(
-            "selected"
-          );
-          this.selected += 1;
-          this.$store.commit("ADD_SELECTED", restaurantID);
+          event.target.parentElement.parentElement.parentElement.classList.add("selected");
+          this.$store.commit("ADD_SELECTED", restaurant);
         }
       }
-      alert(this.$store.state.selectedRestaurants);
+    },
+
+    openPop(restaurant) {
+      this.show = true;
+      alert("Phone Number: " + restaurant.phoneNumber);
     },
     checkSelected() {
-      if (this.$store.state.selectedRestaurants != {}) {
-        this.$store.state.selectedRestaurants.forEach((restaurant) => {
+      if(this.$store.state.selectedRestaurants != {}) {
+        this.$store.state.selectedRestaurants.forEach(restaurant => {
           let selected = document.getElementById(restaurant.id);
-          selected.classList.add("selected");
+          selected.classList.add('selected');
           let checkBox = selected.childNodes[0].childNodes[0].childNodes[0];
           checkBox.checked = true;
           // let checkBox = selected.getElementById("addToCart");
           // checkBox.setAttribute("checked", 'checked');
         });
       }
-    },
+
+    }
+    
+    // closePop() {
+    //   this.show = false;
+    // },
   },
+
 };
 </script>
+
 <style scoped>
 .container {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",

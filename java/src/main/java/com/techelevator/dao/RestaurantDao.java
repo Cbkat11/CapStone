@@ -13,4 +13,10 @@ public interface RestaurantDao {
     List<Restaurant> getRestaurantsByEventId(int eventId);
 
     public boolean addRestaurantToEvent(int eventID, int restaurantID);
+
+    public void updateRank(int eventId, int restaurantId, int rank);
+
+
 }
+
+
