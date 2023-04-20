@@ -8,8 +8,8 @@
       v-on:keyup="updateLocationFilter()"
       v-model="location"
       placeholder="City or Zip"
-    />   
-     <select
+    />
+    <select
       v-if="!event"
       v-model="typeFilter"
       @change="updateTypeFilter($event)"
@@ -37,7 +37,7 @@
       <router-link to="/logout">Logout</router-link>
     </div>
 
-
+    
   </div>
 </template>
 
