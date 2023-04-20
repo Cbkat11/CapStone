@@ -6,10 +6,11 @@
     <body>
       <h1>Selected Restaurants</h1>
       <p
+      class="selectedRestaurants"
         v-for="(restaurant, i) in $store.state.selectedRestaurants"
         v-bind:key="i"
       >
-        {{ i+1 }}: {{ restaurant.name }}
+        {{ i+1 }}: {{ restaurant.name }} 
       </p>
       <form id="eventInfo" v-on:submit.prevent="submitForm">
         <label for="eventName">Name of Event:</label>
@@ -81,5 +82,8 @@ export default {
     justify-content: center;
     text-align: center;
     line-height: 4;
+}
+.selectedRestaurants {
+  border-style: solid;
 }
 </style>

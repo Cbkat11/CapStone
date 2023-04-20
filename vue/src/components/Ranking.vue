@@ -4,11 +4,11 @@
     <h1>{{ filterRank() }}</h1>
     <p>This event expires on {{ dateToDate() }} at {{ expireTime }}</p>
     <h1>{{ currentEvent.eventName }}</h1>
-    <p>
+    <h1>
       Please rank each restaurant from 1 to {{ eventRestaurants.length }}, with 1
       being your favorite
-    </p>
-    <div v-for="(restaurant, i) in eventRestaurants" v-bind:key="i">
+    </h1>
+    <div class="restaurant" v-for="(restaurant, i) in eventRestaurants" v-bind:key="i">
       <h3>{{ restaurant.name }}</h3>
       <img :src="restaurant.imgUrl" class="avatar" />
       <span class="type">{{ restaurant.type }}</span>
@@ -123,5 +123,13 @@ img {
 }
 span {
   padding: 5px;
+}
+.ranking {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    align-content: center;
+    justify-content: center;
+}
+.restaurant {
 }
 </style>
