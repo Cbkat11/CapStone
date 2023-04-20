@@ -16,12 +16,11 @@
         <input type="textbox" id="eventName" v-model="newEvent.eventName" required />
         <label for="expireDate">Event Epiration Date:</label>
         <input type="date" id="expireDate" name="expireDate" placeholder="mm/dd/yy" v-model="expireDate" required />
-        <!-- <label for="expireTime">Event Epiration Time:</label>
-        <input type="time" id="expireTime" name="expireTime" placeholder="hh:mm" v-model="expireTime" required /> -->
+        <label for="expireTime">Event Epiration Time:</label>
+        <input type="time" id="expireTime" name="expireTime" placeholder="hh:mm" v-model="expireTime" required />
         <input v-if="!(isCreated)" type="submit" value="Create Event Link"/>
         <router-link v-if="isCreated" :to="`/event/${eventID}`" >{{ eventLink }}</router-link>
       </form>
-      <p>{{ newEvent }}</p>
     </body>
   </div>
 </template>
@@ -37,7 +36,7 @@ export default {
       eventID: 0,
       eventLink: '',
       expireDate: '',
-      // expireTime: '',
+      expireTime: '',
       newEvent: {
         createDate: '',
         expDate: '',
@@ -50,7 +49,7 @@ export default {
   methods: {
     submitForm() {
       this.newEvent.createDate = Date.now();
-      this.newEvent.expDate = Date.parse(this.expireDate);
+      this.newEvent.expDate = Date.parse(this.expireDate + 'T' + this.expireTime);
       this.newEvent.userId = this.$store.state.user.id;
       let restaurantIDs = [];
       this.$store.state.selectedRestaurants.forEach(restaurant => {

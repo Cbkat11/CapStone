@@ -21,6 +21,7 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     restaurants: [],
+    types: [''],
     locationFilter: '',
     typeFilter: '',
     selectedRestaurants: [],
@@ -48,11 +49,18 @@ export default new Vuex.Store({
     },
     SET_RESTAURANTS(state, data) {
       state.restaurants = data;
+      state.restaurants.forEach(restaurant => {
+        if (!(state.types.includes(restaurant.type))) {
+          state.types.push(restaurant.type);
+        }
+      })
+
     },
     UPDATE_LOCATION(state, filter) {
       state.locationFilter = filter;
     },
     UPDATE_TYPE(state, filter) {
+      state.typeFilter = ''
       state.typeFilter = filter;
     },
     ADD_SELECTED(state, selected) {
