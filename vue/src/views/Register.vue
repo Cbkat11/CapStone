@@ -50,7 +50,7 @@ export default {
         this.registrationErrorMsg = "Password must contain at least one capital letter, one lowercase letter, and one number.";
       } else if (this.user.password.length < 8) {
         this.registrationErrors = true;
-        this.registrationErrorMsg = "Password must be at least 8 characters long.";
+        this.registrationErrorMsg = "Password must be at least 8 characters long, include one captital letter, one lowercase letter, and one number.";
       } else if (!(this.user.username.includes('@'))) {
         this.registrationErrors = true;
         this.registrationErrorMsg = "Must be a valid email address";
