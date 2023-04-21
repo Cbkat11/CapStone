@@ -57,4 +57,58 @@ export default {
 </script>
 
 <style>
+.results {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.results h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.results h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+
+.results .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0.5rem 0 1rem;
+}
+
+.results .type {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.results .address,
+.results .hours {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.results span {
+  margin-right: 1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.results span.takeout {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.results span.delivery {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
 </style>

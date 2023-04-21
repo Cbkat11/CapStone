@@ -33,7 +33,6 @@
         <div class="footer">
           <span class="address">{{ restaurant.address }}</span>
           <span class="hours">{{ restaurant.hours }}</span>
-          <button>{{ restaurant.website }}</button>
           <span v-if="restaurant.takeout" title="Takeout">🥡</span>
           <span v-if="restaurant.delivery" title="Delivery">🚚</span>
           <span class="phoneNumber">{{ restaurant.phoneNumber }}</span>

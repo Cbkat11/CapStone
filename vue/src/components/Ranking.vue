@@ -1,7 +1,6 @@
 <template>
   <div class="ranking">
-    <h1>{{ranks}}</h1>
-    <h1>{{ filterRank() }}</h1>
+
     <p>This event expires on {{ dateToDate() }} at {{ expireTime }}</p>
     <h1>{{ currentEvent.eventName }}</h1>
     <h1>
@@ -11,9 +10,9 @@
     <div class="restaurant" v-for="(restaurant, i) in eventRestaurants" v-bind:key="i">
       <h3>{{ restaurant.name }}</h3>
       <img :src="restaurant.imgUrl" class="avatar" />
-      <span class="type">{{ restaurant.type }}</span>
-      <span class="address">{{ restaurant.address }}</span>
-      <span class="hours">{{ restaurant.hours }}</span>
+      <span class="type">Type: {{ restaurant.type }} </span>
+      <span class="address">Address: {{ restaurant.address }} </span>
+      <span class="hours">Hours: {{ restaurant.hours }} </span>
       <span v-if="restaurant.takeout">takeout</span>
       <span v-if="restaurant.delivery">delivery</span>
       <form>
@@ -26,7 +25,7 @@
           Save Ranks
         </button> -->
       </form>
-    </div>
+    </div><br />
     <button class="btn btn-submit" v-on:click.prevent="saveRanks">
       Save Ranks
     </button>
@@ -115,21 +114,68 @@ export default {
 };
 </script>
 
+
 <style>
-img {
-  border-radius: 9999px;
-  width: 70px;
-  align-self: flex-start;
-}
-span {
-  padding: 5px;
-}
-.ranking {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+  body {
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-    align-content: center;
-    justify-content: center;
-}
-.restaurant {
-}
+    font-size: 16px;
+    background-color: #f5f5f5;
+  }
+  
+  .ranking {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-decoration-line: underline;
+  }
+  
+  img.avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  form {
+    margin-top: 10px;
+  }
+  
+  select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+  }
+  
+  .btn-submit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-submit:hover {
+    background-color: #0062cc;
+  }
 </style>
+
